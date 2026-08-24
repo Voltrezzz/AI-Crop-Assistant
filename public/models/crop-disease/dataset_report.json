@@ -1,0 +1,689 @@
+{
+  "dataset": "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset",
+  "class_counts_after_validation_and_deduplication": {
+    "Rice_BrownSpot": 50,
+    "Rice_Healthy": 35,
+    "Rice_Hispa": 50,
+    "Rice_LeafBlast": 50,
+    "Wheat_Aphid": 48,
+    "Wheat_BlackRust": 9,
+    "Wheat_Blast": 31,
+    "Wheat_BrownRust": 17,
+    "Wheat_CommonRootRot": 44,
+    "Wheat_FusariumHeadBlight": 50,
+    "Wheat_Healthy": 50,
+    "Wheat_LeafBlight": 2,
+    "Wheat_Mildew": 50,
+    "Wheat_Mite": 50,
+    "Wheat_Septoria": 3,
+    "Wheat_Smut": 17,
+    "Wheat_Stemfly": 33,
+    "Wheat_Tanspot": 48,
+    "Wheat_YellowRust": 50
+  },
+  "valid_unique_images": 687,
+  "invalid_files": [
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_186.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_189.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_191.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_192.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_193.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_194.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_195.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_40.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_41.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_42.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_48.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_52.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_53.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_54.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_57.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_59.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_61.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_65.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_66.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_73.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_74.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_79.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_80.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_81.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_84.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_85.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_86.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_88.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_89.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_90.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_91.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_92.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_93.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_94.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_95.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_97.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_98.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_99.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_167.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_173.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_209.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_210.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_322.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_347.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_362.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_363.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_369.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_374.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_376.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_595.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Blast\\blast_606.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1023.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1024.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1025.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1026.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1027.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1028.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1029.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1037.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1038.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1039.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1040.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1041.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1045.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1046.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1047.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1048.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1050.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1052.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1053.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1058.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1060.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1061.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1062.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1064.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1066.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1067.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1070.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1071.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1099.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1229.png"
+  ],
+  "exact_duplicates_removed": [
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Aphid\\aphid_882.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Aphid\\aphid_14.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_468.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_13.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_573.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_567.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_71.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_586.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_72.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_587.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_73.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_588.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_86.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_CommonRootRot\\common_root_rot_611.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_537.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1039.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_422.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1095.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_824.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1095.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_450.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1096.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_825.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1096.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_233.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1167.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_777.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1167.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_244.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1178.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_797.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1178.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_245.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1179.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_787.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1179.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_246.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1180.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_788.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1180.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_249.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1182.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_792.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1182.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_252.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1184.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_804.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1184.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_254.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1186.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_799.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1186.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_261.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1194.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_807.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1194.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_268.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1203.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_815.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1203.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_270.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1204.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_816.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1204.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_271.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1205.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_817.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1205.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_632.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1215.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_834.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1215.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_671.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1217.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_836.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1217.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_769.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1226.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_845.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Smut\\smut_1226.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_222.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_115.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_226.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_139.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_42.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_167.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_43.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_169.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_7.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_17.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_47.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_172.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_49.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_174.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_52.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_178.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_232.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_187.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_64.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_19.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_233.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_199.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_56.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_213.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_71.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_25.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_8.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_29.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_75.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_30.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_78.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_32.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_82.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Stemfly\\stem_fly_36.png",
+    "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Tanspot\\tan_spot_529.png == C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Tanspot\\tan_spot_264.png"
+  ],
+  "conflicting_cross_class_duplicate_groups_removed": [
+    {
+      "labels": [
+        "Wheat_BlackRust",
+        "Wheat_BrownRust"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_120.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1202.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_BlackRust",
+        "Wheat_BrownRust"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_129.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1221.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_BlackRust",
+        "Wheat_BrownRust"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BlackRust\\black_rust_135.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_BrownRust\\brown_rust_1228.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_597.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_614.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_598.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_630.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_599.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_644.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_600.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_659.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_605.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_720.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_606.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_735.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_609.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_765.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_614.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_828.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_615.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_842.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_616.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_857.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_619.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_902.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_624.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_948.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_625.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_964.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_626.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_979.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_631.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_1053.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_636.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_1101.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_640.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_19.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_646.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_78.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_647.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_95.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_648.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_109.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_649.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_124.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_650.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_140.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_651.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_155.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_653.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_279.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_655.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_578.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_666.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_418.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_669.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_430.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_671.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_443.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_673.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_481.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_674.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_493.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_675.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_505.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_677.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_541.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_678.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_553.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_681.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_579.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_685.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_628.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_691.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_703.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_770.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_476.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_775.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_94.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_776.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_307.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_781.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_604.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_782.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_477.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_784.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_508.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_786.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_537.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_787.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_552.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_788.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_569.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_789.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_583.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Septoria"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_791.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Septoria\\septoria_598.png"
+      ]
+    },
+    {
+      "labels": [
+        "Wheat_LeafBlight",
+        "Wheat_Tanspot"
+      ],
+      "files": [
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_LeafBlight\\leaf_blight_802.png",
+        "C:\\Users\\srina\\Downloads\\archive (3)\\Final_Dataset\\Wheat\\Wheat_Tanspot\\tan_spot_522.png"
+      ]
+    }
+  ],
+  "classes_excluded_for_insufficient_unique_non_conflicting_images": {
+    "Wheat_LeafBlight": 2,
+    "Wheat_Septoria": 3
+  },
+  "split": {
+    "train": 511,
+    "validation": 85,
+    "test": 86
+  }
+}

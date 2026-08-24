@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#16a34a"/>
+  <path d="M256 80 C160 130, 110 225, 135 320 C155 385, 200 415, 256 440 C312 415, 357 385, 377 320 C402 225, 352 130, 256 80Z" fill="white" opacity="0.9"/>
+  <path d="M256 130 L256 390" stroke="#16a34a" stroke-width="6" opacity="0.5"/>
+  <path d="M256 170 L200 225" stroke="#16a34a" stroke-width="5" opacity="0.4"/>
+  <path d="M256 225 L312 280" stroke="#16a34a" stroke-width="5" opacity="0.4"/>
+  <path d="M256 280 L200 335" stroke="#16a34a" stroke-width="5" opacity="0.4"/>
+  <circle cx="370" cy="140" r="45" fill="#3b82f6"/>
+  <text x="370" y="152" text-anchor="middle" fill="white" font-size="40" font-weight="bold" font-family="sans-serif">AI</text>
+</svg>
