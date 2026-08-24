@@ -17,7 +17,7 @@ export const chatWithGemini = async (
   userContext: ChatUserContext = {},
 ): Promise<string> => {
   if (!isSupabaseConfigured()) {
-    throw new Error('Gemini chat requires the CropSense cloud service.');
+    throw new Error('Gemini chat requires the Marudham 360 cloud service.');
   }
 
   const { data, error } = await getSupabaseClient().functions.invoke('gemini-chat', {

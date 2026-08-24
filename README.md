@@ -1,10 +1,10 @@
-# 🌾 CropSense AI
+# 🌾 Marudham 360
 
 **AI-powered crop health analysis and protection — even without internet.**
 
 > _"Analyze. Protect. Grow."_
 
-CropSense AI is an offline-first Progressive Web Application (PWA) designed for Indian farmers to analyze paddy and wheat crop health using AI-powered image analysis. It provides disease detection, severity assessment, treatment recommendations, weather-aware advisories, and field management — all working without an internet connection.
+Marudham 360 is an offline-first Progressive Web Application (PWA) designed for Indian farmers to analyze paddy and wheat crop health using AI-powered image analysis. It provides disease detection, severity assessment, treatment recommendations, weather-aware advisories, and field management — all working without an internet connection.
 
 ---
 

@@ -206,7 +206,7 @@ export default function AppShell() {
             <Leaf className="text-primary-600" size={24} />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-gray-900">CropSense AI</h1>
+            <h1 className="text-lg font-bold text-gray-900">Marudham 360</h1>
             <p className="text-xs text-gray-500">Smart Farm Manager</p>
           </div>
         </div>
@@ -234,7 +234,7 @@ export default function AppShell() {
                 <div className="w-9 h-9 bg-primary-100 rounded-xl flex items-center justify-center">
                   <Leaf className="text-primary-600" size={20} />
                 </div>
-                <h1 className="text-lg font-bold text-gray-900">CropSense AI</h1>
+                <h1 className="text-lg font-bold text-gray-900">Marudham 360</h1>
               </div>
               <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800">
                 <X size={20} />
@@ -261,7 +261,7 @@ export default function AppShell() {
             </button>
             <div className="lg:hidden flex items-center gap-2">
               <Leaf className="text-primary-600" size={22} />
-              <span className="font-bold text-gray-900">CropSense AI</span>
+              <span className="font-bold text-gray-900">Marudham 360</span>
             </div>
           </div>
           <div className="flex items-center gap-2">

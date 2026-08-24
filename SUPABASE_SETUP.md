@@ -1,12 +1,12 @@
 # Supabase cloud setup
 
-CropSense remains local-first with IndexedDB. When Supabase is configured, authenticated users also synchronize profiles, fields, scan metadata, and chatbot history to the cloud. Scan images remain local and are not stored as base64 database rows.
+Marudham 360 remains local-first with IndexedDB. When Supabase is configured, authenticated users also synchronize profiles, fields, scan metadata, and chatbot history to the cloud. Scan images remain local and are not stored as base64 database rows.
 
 ## 1. Create the database
 
 Create a Supabase project, open its SQL editor, and run `supabase/migrations/20260824000000_create_cloud_records.sql`.
 
-If Auth signup reports `Database error saving new user`, also run `supabase/migrations/20260824010000_remove_stale_profile_trigger.sql`. It removes only obsolete `auth.users` triggers that call `public.handle_new_user`; CropSense creates its cloud profile record after Auth returns a valid session.
+If Auth signup reports `Database error saving new user`, also run `supabase/migrations/20260824010000_remove_stale_profile_trigger.sql`. It removes only obsolete `auth.users` triggers that call `public.handle_new_user`; Marudham 360 creates its cloud profile record after Auth returns a valid session.
 
 The migration enables Row Level Security and permits authenticated users to access only records whose `user_id` matches their Supabase identity.
 

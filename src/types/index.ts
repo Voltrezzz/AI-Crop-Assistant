@@ -1,5 +1,5 @@
 // ============================================================
-// CropSense AI — Core Type Definitions
+// Marudham 360 — Core Type Definitions
 // ============================================================
 
 // --- Crop & Disease ---

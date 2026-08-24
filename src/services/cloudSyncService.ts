@@ -40,7 +40,7 @@ function cloudPayload(payload: Record<string, unknown>) {
 function reportCloudError(operation: string, error: unknown) {
   if (!import.meta.env.DEV || !error || typeof error !== 'object') return;
   const value = error as { code?: string; message?: string; details?: string; hint?: string };
-  console.error(`[CropSense] Supabase ${operation} failed`, {
+  console.error(`[Marudham 360] Supabase ${operation} failed`, {
     code: value.code,
     message: value.message,
     details: value.details,

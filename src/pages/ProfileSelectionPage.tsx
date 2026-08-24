@@ -37,7 +37,7 @@ export default function ProfileSelectionPage() {
       <div className="max-w-4xl w-full">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-green-950">Who's farming?</h1>
-          <p className="text-green-700 mt-3">Choose a CropSense workspace profile to continue.</p>
+          <p className="text-green-700 mt-3">Choose a Marudham 360 workspace profile to continue.</p>
         </div>
         
         <div className="flex flex-wrap justify-center gap-8">

@@ -1,4 +1,4 @@
--- CropSense stores profile records in public.cloud_records after Auth succeeds.
+-- Marudham 360 stores profile records in public.cloud_records after Auth succeeds.
 -- A stale handle_new_user trigger targeting a missing public.profiles table
 -- rolls back inserts into auth.users with "Database error saving new user".
 -- Remove only non-system auth.users triggers that invoke public.handle_new_user.
@@ -29,4 +29,3 @@ begin
   end loop;
 end
 $$;
-

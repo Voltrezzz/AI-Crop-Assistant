@@ -139,7 +139,7 @@ export default function VoiceAssistantPage() {
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <Volume2 className="text-green-600" /> Voice Assistant
           </h1>
-          <p className="text-gray-600 text-sm">Control CropSense AI with your voice</p>
+          <p className="text-gray-600 text-sm">Control Marudham 360 with your voice</p>
         </div>
         
         <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border shadow-sm">

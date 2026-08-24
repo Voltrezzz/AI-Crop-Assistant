@@ -14,7 +14,7 @@ function reportSupabaseError(operation: string, error: unknown) {
     hint?: string;
     status?: number;
   };
-  console.error(`[CropSense] Supabase ${operation} failed`, {
+  console.error(`[Marudham 360] Supabase ${operation} failed`, {
     code: value.code,
     message: value.message,
     details: value.details,
@@ -185,7 +185,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       throw new Error('Password must be at least 6 characters');
     }
     if (!isSupabaseConfigured()) {
-      throw new Error('Online registration requires Supabase. CropSense does not store account passwords offline.');
+      throw new Error('Online registration requires Supabase. Marudham 360 does not store account passwords offline.');
     }
 
     const { data, error } = await getSupabaseClient().auth.signUp({

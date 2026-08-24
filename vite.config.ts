@@ -13,8 +13,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/*.svg', 'icons/*.png'],
       manifest: {
-        name: 'CropSense AI',
-        short_name: 'CropSense',
+        name: 'Marudham 360',
+        short_name: 'Marudham 360',
         description: 'AI-powered crop health analysis and protection for Indian farmers',
         theme_color: '#16a34a',
         background_color: '#f0fdf4',

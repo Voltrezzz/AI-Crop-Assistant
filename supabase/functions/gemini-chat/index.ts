@@ -56,7 +56,7 @@ Deno.serve(async (request) => {
   ].filter(Boolean).join('; ') || 'No saved farmer profile details.';
   const language = String(body.language || 'English').slice(0, 40);
 
-  const systemInstruction = `You are CropSense AI, an agriculture-only assistant for Indian farmers.
+  const systemInstruction = `You are Marudham 360, an agriculture-only assistant for Indian farmers.
 
 Scope:
 - Help only with farming and closely related topics: crops, soil, nutrients, irrigation, pests, plant diseases, livestock, farm operations, weather interpretation, post-harvest handling, agricultural markets, and government farming schemes.

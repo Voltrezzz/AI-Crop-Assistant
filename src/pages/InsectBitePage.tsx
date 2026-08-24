@@ -99,7 +99,7 @@ export default function InsectBitePage() {
     } catch (cause) {
       setPreparedImage(null);
       if (import.meta.env.DEV && !(cause instanceof PestAdvisoryError)) {
-        console.error('[CropSense] Unexpected image preparation failure', {
+        console.error('[Marudham 360] Unexpected image preparation failure', {
           name: cause instanceof Error ? cause.name : 'UnknownError',
         });
       }
@@ -143,7 +143,7 @@ export default function InsectBitePage() {
           setHistory(current => [record, ...current]);
         } catch (storageError) {
           if (import.meta.env.DEV) {
-            console.error('[CropSense] Pest advisory history save failed', {
+            console.error('[Marudham 360] Pest advisory history save failed', {
               name: storageError instanceof Error ? storageError.name : 'UnknownError',
             });
           }
@@ -151,7 +151,7 @@ export default function InsectBitePage() {
       }
     } catch (cause) {
       if (import.meta.env.DEV && !(cause instanceof PestAdvisoryError)) {
-        console.error('[CropSense] Unexpected pest advisory failure', {
+        console.error('[Marudham 360] Unexpected pest advisory failure', {
           name: cause instanceof Error ? cause.name : 'UnknownError',
         });
       }

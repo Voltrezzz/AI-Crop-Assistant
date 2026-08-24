@@ -1,4 +1,4 @@
-"""Convert the trained CropSense Keras model to TF.js Layers format (Linux/Colab)."""
+"""Convert the trained Marudham 360 Keras model to TF.js Layers format (Linux/Colab)."""
 
 from __future__ import annotations
 

@@ -12,7 +12,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 text-green-700">
             <Leaf className="h-8 w-8" />
-            <span className="text-xl font-bold tracking-tight">CropSense AI</span>
+            <span className="text-xl font-bold tracking-tight">Marudham 360</span>
           </div>
           <div>
             <button 
@@ -153,7 +153,7 @@ export default function LandingPage() {
       <section className="bg-green-700 py-20 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Ready to transform your farming?</h2>
-          <p className="text-green-100 text-lg mb-10">Join thousands of farmers using CropSense AI to protect their crops and increase yields.</p>
+          <p className="text-green-100 text-lg mb-10">Explore how Marudham 360 can support farmers with crop-health guidance and farm records.</p>
           <button 
             onClick={() => navigate('/login')}
             className="bg-white text-green-700 hover:bg-green-50 font-bold px-10 py-4 rounded-xl shadow-lg transition-colors text-lg"

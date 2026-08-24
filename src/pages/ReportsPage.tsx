@@ -72,12 +72,12 @@ export default function ReportsPage() {
       // PDF Content Generation
       doc.setFontSize(22);
       doc.setTextColor(21, 128, 61); // Green 700
-      doc.text('CropSense AI - Crop Health Report', 20, 20);
+      doc.text('Marudham 360 - Crop Health Report', 20, 20);
       
       doc.setFontSize(12);
       doc.setTextColor(75, 85, 99); // Gray 600
       doc.text(`Generated: ${dateStr}`, 20, 30);
-      doc.text(`Farmer: ${user?.name || 'CropSense user'}`, 20, 36);
+      doc.text(`Farmer: ${user?.name || 'Marudham 360 user'}`, 20, 36);
       doc.text(`Field Scope: ${fieldName}`, 20, 42);
       
       doc.setDrawColor(229, 231, 235); // Gray 200
@@ -117,7 +117,7 @@ export default function ReportsPage() {
 
       doc.setFontSize(10);
       doc.setTextColor(156, 163, 175);
-      doc.text('Prototype Report - CropSense AI', 20, 285);
+      doc.text('Prototype Report - Marudham 360', 20, 285);
 
       // Save PDF
       const filename = `CropHealthReport_${dateStr.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`;
@@ -208,7 +208,7 @@ export default function ReportsPage() {
                 <button 
                   disabled
                   className="p-2 text-gray-300 cursor-not-allowed rounded-lg"
-                  title="Generated PDF files are downloaded immediately and are not retained by CropSense."
+                  title="Generated PDF files are downloaded immediately and are not retained by Marudham 360."
                 >
                   <Download className="w-5 h-5" />
                 </button>

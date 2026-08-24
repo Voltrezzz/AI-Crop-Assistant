@@ -2,7 +2,7 @@
 
 This converts the trained model only; it does not train or modify its weights.
 
-1. Upload or mount the CropSense project in Google Colab.
+1. Upload or mount the Marudham 360 project in Google Colab.
 2. Run:
 
 ```bash

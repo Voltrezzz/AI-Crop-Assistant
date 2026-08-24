@@ -1,4 +1,4 @@
-"""Train and export CropSense's MobileNetV2 classifier from the local dataset."""
+"""Train and export Marudham 360's MobileNetV2 classifier from the local dataset."""
 
 from __future__ import annotations
 

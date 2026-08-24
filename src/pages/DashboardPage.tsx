@@ -63,7 +63,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Leaf className="h-6 w-6" />
-            <span className="font-bold text-lg">CropSense</span>
+            <span className="font-bold text-lg">Marudham 360</span>
           </div>
           <div className="flex items-center gap-4">
             <button onClick={() => navigate('/notifications')} className="p-2 hover:bg-green-600 rounded-full">

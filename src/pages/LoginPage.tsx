@@ -64,7 +64,7 @@ export default function LoginPage() {
           <Leaf className="h-12 w-12" />
         </div>
         <h2 className="mt-2 text-center text-3xl font-extrabold text-neutral-900 tracking-tight">
-          CropSense AI
+          Marudham 360
         </h2>
         <p className="mt-2 text-center text-sm text-neutral-600">
           Analyze. Protect. Grow.

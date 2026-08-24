@@ -134,7 +134,7 @@ export async function classifyCropImage(imageData: string, crop: CropType) {
   const isNormalConfidence = Boolean(best && best.confidence >= NORMAL_CONFIDENCE && margin >= NORMAL_MARGIN);
 
   if (import.meta.env.DEV) {
-    console.groupCollapsed(`[CropSense] ${crop} crop-specific model probabilities`);
+    console.groupCollapsed(`[Marudham 360] ${crop} crop-specific model probabilities`);
     console.table(ranked.slice(0, 3).map(({ className, confidence }) => ({
       className,
       probability: `${(confidence * 100).toFixed(2)}%`,

@@ -166,7 +166,7 @@ async function mapInvocationError(error: unknown): Promise<PestAdvisoryError> {
   }
 
   if (import.meta.env.DEV) {
-    console.error('[CropSense] Pest advisory request failed', {
+    console.error('[Marudham 360] Pest advisory request failed', {
       name: typeof candidate?.name === 'string' ? candidate.name : 'UnknownError',
       status: response?.status,
       serverCode: serverCode || undefined,
@@ -190,7 +190,7 @@ export async function requestPestAdvisory(
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
   if (sessionError || !sessionData.session?.access_token) {
     if (import.meta.env.DEV && sessionError) {
-      console.error('[CropSense] Pest advisory session unavailable', { name: sessionError.name });
+      console.error('[Marudham 360] Pest advisory session unavailable', { name: sessionError.name });
     }
     throw new PestAdvisoryError(friendlyErrors.auth, 'auth');
   }
@@ -215,7 +215,7 @@ export async function requestPestAdvisory(
   const parsed = pestAdvisorySchema.safeParse(data?.advisory);
   if (!parsed.success) {
     if (import.meta.env.DEV) {
-      console.error('[CropSense] Invalid pest advisory response', parsed.error.flatten());
+      console.error('[Marudham 360] Invalid pest advisory response', parsed.error.flatten());
     }
     throw new PestAdvisoryError(friendlyErrors.response, 'response');
   }

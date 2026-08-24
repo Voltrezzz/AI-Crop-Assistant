@@ -7,7 +7,7 @@ export default function AdminPage() {
       <ShieldAlert className="mb-4 h-12 w-12 text-amber-600" />
       <h1 className="text-2xl font-bold text-gray-900">Admin access disabled</h1>
       <p className="mt-3 text-gray-600">
-        CropSense does not expose an admin dashboard until a trusted server-managed role system is configured.
+        Marudham 360 does not expose an admin dashboard until a trusted server-managed role system is configured.
       </p>
     </div>
   );

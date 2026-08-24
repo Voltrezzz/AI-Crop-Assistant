@@ -35,7 +35,7 @@ const validateProjectUrl = (value?: string) => {
 const supabaseUrl = validateProjectUrl(rawSupabaseUrl);
 
 if (import.meta.env.DEV) {
-  console.info('[CropSense] Supabase configuration', {
+  console.info('[Marudham 360] Supabase configuration', {
     urlConfigured: Boolean(supabaseUrl),
     projectDomain: supabaseUrl ? new URL(supabaseUrl).hostname : undefined,
     keyConfigured: Boolean(supabaseKey),

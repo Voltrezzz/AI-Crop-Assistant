@@ -1,4 +1,4 @@
-name: Deploy CropSense AI to GitHub Pages
+name: Deploy Marudham 360 to GitHub Pages
 
 on:
   push:
