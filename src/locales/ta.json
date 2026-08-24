@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "முகப்பு பலகை",
+    "scanLeaf": "இலையை ஸ்கேன் செய்க",
+    "myFields": "என் பண்ணைகள்",
+    "cropHistory": "பயிர் வரலாறு",
+    "weather": "வானிலை",
+    "diseaseRisk": "நோய் ஆபத்து",
+    "advisories": "ஆலோசனைகள்",
+    "growthMonitoring": "வளர்ச்சி கண்காணிப்பு",
+    "reports": "அறிக்கைகள்",
+    "settings": "அமைப்புகள்",
+    "home": "முகப்பு",
+    "history": "வரலாறு",
+    "scan": "ஸ்கேன்",
+    "fields": "பண்ணைகள்",
+    "profile": "சுயவிவரம்",
+    "aiChatbot": "AI சாட்பாட்",
+    "voiceAssistant": "குரல் உதவியாளர்",
+    "farmOverview": "பண்ணை கண்ணோட்டம்",
+    "waterIrrigation": "நீர்ப்பாசனம்",
+    "animalMonitor": "கால்நடை கண்காணிப்பு",
+    "marketAnalysis": "சந்தை பகுப்பாய்வு",
+    "loansSchemes": "கடன்கள் & திட்டங்கள்",
+    "fertilizerShops": "உரக் கடைகள்",
+    "insectBite": "பூச்சிக் கடி கண்டறிதல்"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "புத்திசாலித்தனமான பயிர் சுகாதார மேலாண்மை",
+    "featuresDescriptions": "அம்சங்கள்",
+    "ctaButtons": "தொடங்குங்கள்"
+  },
+  "login": {
+    "phone": "தொலைபேசி எண்",
+    "email": "மின்னஞ்சல்",
+    "password": "கடவுச்சொல்",
+    "login": "உள்நுழைக",
+    "demoFarmer": "டெமோ விவசாயியாக தொடரவும்"
+  },
+  "dashboard": {
+    "greeting": "வணக்கம்",
+    "subtitle": "உங்கள் பண்ணையின் கண்ணோட்டம்",
+    "totalFields": "மொத்த நிலங்கள்",
+    "healthyFields": "ஆரோக்கியமான நிலங்கள்",
+    "attentionFields": "கவனிக்க வேண்டிய நிலங்கள்",
+    "scansThisMonth": "இந்த மாத ஸ்கேன்கள்",
+    "cropHealthOverview": "பயிர் சுகாதார கண்ணோட்டம்",
+    "diseaseRisk": "நோய் ஆபத்து",
+    "recentScans": "சமீபத்திய ஸ்கேன்கள்",
+    "weather": "வானிலை",
+    "growthProgress": "வளர்ச்சி முன்னேற்றம்",
+    "preventiveAdvisory": "தடுப்பு ஆலோசனை"
+  },
+  "analyzer": {
+    "scanYourCrop": "உங்கள் பயிரை ஸ்கேன் செய்க",
+    "instructions": "பாதிக்கப்பட்ட இலையின் புகைப்படத்தை எடுக்கவும் அல்லது பதிவேற்றவும்",
+    "cropSelection": "பயிரைத் தேர்ந்தெடுக்கவும்",
+    "paddy": "நெல்",
+    "wheat": "கோதுமை",
+    "useCamera": "கேமராவைப் பயன்படுத்தவும்",
+    "uploadImage": "படத்தைப் பதிவேற்றவும்",
+    "chooseGallery": "கேலரியில் இருந்து தேர்வுசெய்க",
+    "dragDrop": "இழுத்துப் போடுக",
+    "imageQuality": "நல்ல வெளிச்சம் மற்றும் தெளிவை உறுதிப்படுத்தவும்"
+  },
+  "results": {
+    "detectedCrop": "கண்டறியப்பட்ட பயிர்",
+    "disease": "நோய்",
+    "scientificName": "அறிவியல் பெயர்",
+    "confidence": "நம்பகத்தன்மை",
+    "severity": "தீவிரம்",
+    "healthScore": "சுகாதார மதிப்பெண்",
+    "symptoms": "அறிகுறிகள்",
+    "recommendations": "பரிந்துரைகள்",
+    "risk": "ஆபத்து நிலை",
+    "scanAgain": "மீண்டும் ஸ்கேன் செய்க",
+    "save": "முடிவைச் சேமிக்க",
+    "compareHistory": "வரலாற்றை ஒப்பிடவும்",
+    "generateReport": "அறிக்கையை உருவாக்கவும்"
+  },
+  "recommendations": {
+    "cultural": "பயிரிடும் முறைகள்",
+    "organic": "இயற்கை முறைகள்",
+    "chemical": "ரசாயனக் கட்டுப்பாடு",
+    "precautions": "முன்னெச்சரிக்கைகள்"
+  },
+  "fields": {
+    "myFields": "என் நிலங்கள்",
+    "addField": "நிலத்தைச் சேர்",
+    "fieldName": "நிலத்தின் பெயர்",
+    "area": "பரப்பளவு",
+    "crop": "பயிர்",
+    "variety": "ரகம்",
+    "location": "இடம்",
+    "plantingDate": "நடவு தேதி",
+    "expectedHarvest": "எதிர்பார்க்கப்படும் அறுவடை",
+    "growthStage": "வளர்ச்சி நிலை"
+  },
+  "history": {
+    "cropHistory": "பயிர் வரலாறு",
+    "filter": "வடிகட்டி",
+    "allCrops": "அனைத்து பயிர்கள்",
+    "allDiseases": "அனைத்து நோய்கள்",
+    "allSeverities": "அனைத்து தீவிரங்கள்",
+    "scanDetails": "ஸ்கேன் விவரங்கள்",
+    "comparison": "ஒப்பீடு"
+  },
+  "weather": {
+    "temperature": "வெப்பநிலை",
+    "humidity": "ஈரப்பதம்",
+    "rainfall": "மழைப்பொழிவு",
+    "windSpeed": "காற்றின் வேகம்",
+    "forecast": "வானிலை முன்னறிவிப்பு",
+    "offline": "ஆஃப்லைன் (சேமிக்கப்பட்ட தரவைக் காட்டுகிறது)"
+  },
+  "risk": {
+    "assessment": "நோய் அபாய மதிப்பீடு",
+    "prototype": "மாதிரி அபாய மதிப்பீடு",
+    "low": "குறைந்த ஆபத்து",
+    "medium": "நடுத்தர ஆபத்து",
+    "high": "அதிக ஆபத்து",
+    "extreme": "மிக தீவிர ஆபத்து"
+  },
+  "voice": {
+    "assistant": "குரல் உதவியாளர்",
+    "listening": "கேட்கிறது...",
+    "tapToSpeak": "பேச தட்டவும்",
+    "commands": "குரல் கட்டளைகள்"
+  },
+  "general": {
+    "online": "ஆன்லைன்",
+    "offline": "ஆஃப்லைன்",
+    "sync": "ஒத்திசைவு",
+    "pending": "நிலுவையில் உள்ளது",
+    "settings": "அமைப்புகள்",
+    "language": "மொழி",
+    "notifications": "அறிவிப்புகள்",
+    "reports": "அறிக்கைகள்",
+    "admin": "நிர்வாகி",
+    "save": "சேமி",
+    "cancel": "ரத்து செய்",
+    "delete": "நீக்கு",
+    "edit": "திருத்து",
+    "view": "பார்",
+    "close": "மூடு"
+  },
+  "diseases": {
+    "healthy": "ஆரோக்கியமானது",
+    "brownSpot": "பழுப்பு புள்ளி நோய்",
+    "leafBlast": "இலைக் கருகல் நோய்",
+    "bacterialLeafBlight": "பாக்டீரியா இலைக்கருகல் நோய்",
+    "leafRust": "இலை துரு நோய்",
+    "stripeRust": "மஞ்சள் துரு நோய்",
+    "powderyMildew": "சாம்பல் நோய்"
+  },
+  "crops": {
+    "paddy": "நெல்",
+    "wheat": "கோதுமை"
+  },
+  "severity": {
+    "low": "குறைவு",
+    "moderate": "மிதமானது",
+    "high": "அதிகம்",
+    "critical": "மிகத் தீவிரம்"
+  },
+  "status": {
+    "healthy": "ஆரோக்கியமானது",
+    "attention": "கவனம் தேவை",
+    "improving": "மேம்படுகிறது",
+    "stable": "நிலையானது",
+    "worsening": "மோசமடைகிறது"
+  }
+}

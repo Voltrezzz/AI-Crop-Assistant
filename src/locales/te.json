@@ -1,0 +1,165 @@
+{
+  "nav": {
+    "dashboard": "డాష్‌బోర్డ్",
+    "scanLeaf": "ఆకును స్కాన్ చేయండి",
+    "myFields": "నా పొలాలు",
+    "cropHistory": "పంట చరిత్ర",
+    "weather": "వాతావరణం",
+    "diseaseRisk": "వ్యాధి ప్రమాదం",
+    "advisories": "సలహాలు",
+    "growthMonitoring": "పెరుగుదల పర్యవేక్షణ",
+    "reports": "నివేదికలు",
+    "settings": "సెట్టింగ్‌లు",
+    "home": "హోమ్",
+    "history": "చరిత్ర",
+    "scan": "స్కాన్",
+    "fields": "పొలాలు",
+    "profile": "ప్రొఫైల్"
+  },
+  "landing": {
+    "heroTitle": "క్రాప్‌సెన్స్ ఏఐ",
+    "tagline": "తెలివైన పంట ఆరోగ్య నిర్వహణ",
+    "featuresDescriptions": "ఫీచర్లు",
+    "ctaButtons": "ప్రారంభించండి"
+  },
+  "login": {
+    "phone": "ఫోన్ నంబర్",
+    "email": "ఇమెయిల్",
+    "password": "పాస్‌వర్డ్",
+    "login": "లాగిన్",
+    "demoFarmer": "డెమో రైతుగా కొనసాగండి"
+  },
+  "dashboard": {
+    "greeting": "నమస్కారం",
+    "subtitle": "మీ పొలం యొక్క స్థూలదృష్టి",
+    "totalFields": "మొత్తం పొలాలు",
+    "healthyFields": "ఆరోగ్యకరమైన పొలాలు",
+    "attentionFields": "శ్రద్ధ వహించాల్సినవి",
+    "scansThisMonth": "ఈ నెల స్కాన్‌లు",
+    "cropHealthOverview": "పంట ఆరోగ్య స్థూలదృష్టి",
+    "diseaseRisk": "వ్యాధి ప్రమాదం",
+    "recentScans": "ఇటీవలి స్కాన్‌లు",
+    "weather": "వాతావరణం",
+    "growthProgress": "పెరుగుదల పురోగతి",
+    "preventiveAdvisory": "నివారణ సలహా"
+  },
+  "analyzer": {
+    "scanYourCrop": "మీ పంటను స్కాన్ చేయండి",
+    "instructions": "ప్రభావితమైన ఆకు చిత్రాన్ని తీయండి లేదా అప్‌లోడ్ చేయండి",
+    "cropSelection": "పంటను ఎంచుకోండి",
+    "paddy": "వరి",
+    "wheat": "గోధుమ",
+    "useCamera": "కెమెరాను ఉపయోగించండి",
+    "uploadImage": "చిత్రాన్ని అప్‌లోడ్ చేయండి",
+    "chooseGallery": "గ్యాలరీ నుండి ఎంచుకోండి",
+    "dragDrop": "లాగి వదలండి",
+    "imageQuality": "మంచి లైటింగ్ మరియు ఫోకస్ ఉండేలా చూసుకోండి"
+  },
+  "results": {
+    "detectedCrop": "గుర్తించబడిన పంట",
+    "disease": "వ్యాధి",
+    "scientificName": "శాస్త్రీయ నామం",
+    "confidence": "నమ్మకం",
+    "severity": "తీవ్రత",
+    "healthScore": "ఆరోగ్య స్కోర్",
+    "symptoms": "లక్షణాలు",
+    "recommendations": "సిఫార్సులు",
+    "risk": "ప్రమాద స్థాయి",
+    "scanAgain": "మళ్లీ స్కాన్ చేయండి",
+    "save": "ఫలితాన్ని సేవ్ చేయండి",
+    "compareHistory": "చరిత్రను సరిపోల్చండి",
+    "generateReport": "నివేదికను రూపొందించండి"
+  },
+  "recommendations": {
+    "cultural": "సాంస్కృతిక పద్ధతులు",
+    "organic": "సేంద్రీయ ఎంపికలు",
+    "chemical": "రసాయన నియంత్రణ",
+    "precautions": "జాగ్రత్తలు"
+  },
+  "fields": {
+    "myFields": "నా పొలాలు",
+    "addField": "పొలాన్ని జోడించండి",
+    "fieldName": "పొలం పేరు",
+    "area": "విస్తీర్ణం",
+    "crop": "పంట",
+    "variety": "రకం",
+    "location": "స్థానం",
+    "plantingDate": "నాటిన తేదీ",
+    "expectedHarvest": "ఆశించిన దిగుబడి",
+    "growthStage": "పెరుగుదల దశ"
+  },
+  "history": {
+    "cropHistory": "పంట చరిత్ర",
+    "filter": "ఫిల్టర్",
+    "allCrops": "అన్ని పంటలు",
+    "allDiseases": "అన్ని వ్యాధులు",
+    "allSeverities": "అన్ని తీవ్రతలు",
+    "scanDetails": "స్కాన్ వివరాలు",
+    "comparison": "పోలిక"
+  },
+  "weather": {
+    "temperature": "ఉష్ణోగ్రత",
+    "humidity": "తేమ",
+    "rainfall": "వర్షపాతం",
+    "windSpeed": "గాలి వేగం",
+    "forecast": "సూచన",
+    "offline": "ఆఫ్‌లైన్ (క్యాష్ చేయబడిన డేటా చూపుతోంది)"
+  },
+  "risk": {
+    "assessment": "వ్యాధి ప్రమాద అంచనా",
+    "prototype": "నమూనా ప్రమాద అంచనా",
+    "low": "తక్కువ ప్రమాదం",
+    "medium": "మధ్యస్థ ప్రమాదం",
+    "high": "అధిక ప్రమాదం",
+    "extreme": "తీవ్రమైన ప్రమాదం"
+  },
+  "voice": {
+    "assistant": "వాయిస్ అసిస్టెంట్",
+    "listening": "వింటున్నాను...",
+    "tapToSpeak": "మాట్లాడటానికి నొక్కండి",
+    "commands": "వాయిస్ ఆదేశాలు"
+  },
+  "general": {
+    "online": "ఆన్‌లైన్",
+    "offline": "ఆఫ్‌లైన్",
+    "sync": "సింక్",
+    "pending": "పెండింగ్",
+    "settings": "సెట్టింగ్‌లు",
+    "language": "భాష",
+    "notifications": "నోటిఫికేషన్‌లు",
+    "reports": "నివేదికలు",
+    "admin": "అడ్మిన్",
+    "save": "సేవ్",
+    "cancel": "రద్దు",
+    "delete": "తొలగించు",
+    "edit": "సవరించు",
+    "view": "చూడు",
+    "close": "మూసివేయు"
+  },
+  "diseases": {
+    "healthy": "ఆరోగ్యకరం",
+    "brownSpot": "బ్రౌన్ స్పాట్",
+    "leafBlast": "లీఫ్ బ్లాస్ట్",
+    "bacterialLeafBlight": "బాక్టీరియల్ లీఫ్ బ్లైట్",
+    "leafRust": "లీఫ్ రస్ట్",
+    "stripeRust": "స్ట్రైప్ రస్ట్",
+    "powderyMildew": "పౌడరీ మిల్డ్యూ"
+  },
+  "crops": {
+    "paddy": "వరి",
+    "wheat": "గోధుమ"
+  },
+  "severity": {
+    "low": "తక్కువ",
+    "moderate": "మధ్యస్థం",
+    "high": "అధిక",
+    "critical": "తీవ్రమైన"
+  },
+  "status": {
+    "healthy": "ఆరోగ్యకరం",
+    "attention": "శ్రద్ధ",
+    "improving": "మెరుగుపడుతోంది",
+    "stable": "స్థిరంగా ఉంది",
+    "worsening": "క్షీణిస్తోంది"
+  }
+}

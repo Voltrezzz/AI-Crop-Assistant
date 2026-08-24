@@ -11,6 +11,7 @@ dist-ssr/
 # Environment
 .env
 .env.example
+!.env.example
 .env.local
 .env.development.local
 .env.test.local
@@ -22,6 +23,9 @@ dist-ssr/
 .idea/
 *.swp
 *.swo
+
+# Local backup created while normalizing the accidentally nested src repository
+/.nested-src-git-backup/
 
 # OS
 .DS_Store

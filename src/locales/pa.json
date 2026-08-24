@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+    "scanLeaf": "ਪੱਤਾ ਸਕੈਨ ਕਰੋ",
+    "myFields": "ਮੇਰੇ ਖੇਤ",
+    "cropHistory": "ਫ਼ਸਲ ਦਾ ਇਤਿਹਾਸ",
+    "weather": "ਮੌਸਮ",
+    "diseaseRisk": "ਬਿਮਾਰੀ ਦਾ ਖ਼ਤਰਾ",
+    "advisories": "ਸਲਾਹਾਂ",
+    "growthMonitoring": "ਵਾਧੇ ਦੀ ਨਿਗਰਾਨੀ",
+    "reports": "ਰਿਪੋਰਟਾਂ",
+    "settings": "ਸੈਟਿੰਗਾਂ",
+    "home": "ਹੋਮ",
+    "history": "ਇਤਿਹਾਸ",
+    "scan": "ਸਕੈਨ",
+    "fields": "ਖੇਤ",
+    "profile": "ਪ੍ਰੋਫਾਈਲ",
+    "aiChatbot": "AI ਚੈਟਬੋਟ",
+    "voiceAssistant": "ਵੌਇਸ ਸਹਾਇਕ",
+    "farmOverview": "ਖੇਤ ਦਾ ਵੇਰਵਾ",
+    "waterIrrigation": "ਸਿੰਚਾਈ ਪ੍ਰਬੰਧ",
+    "animalMonitor": "ਪਸ਼ੂ ਨਿਗਰਾਨੀ",
+    "marketAnalysis": "ਮੰਡੀ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "loansSchemes": "ਕਰਜ਼ੇ ਅਤੇ ਸਕੀਮਾਂ",
+    "fertilizerShops": "ਖਾਦ ਦੀਆਂ ਦੁਕਾਨਾਂ",
+    "insectBite": "ਕੀੜੇ ਦੇ ਡੰਗ ਦੀ ਪਛਾਣ"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "ਸਮਾਰਟ ਫ਼ਸਲ ਸਿਹਤ ਪ੍ਰਬੰਧਨ",
+    "featuresDescriptions": "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+    "ctaButtons": "ਸ਼ੁਰੂ ਕਰੋ"
+  },
+  "login": {
+    "phone": "ਫ਼ੋਨ ਨੰਬਰ",
+    "email": "ਈਮੇਲ",
+    "password": "ਪਾਸਵਰਡ",
+    "login": "ਲਾਗਇਨ",
+    "demoFarmer": "ਡੈਮੋ ਕਿਸਾਨ ਵਜੋਂ ਜਾਰੀ ਰੱਖੋ"
+  },
+  "dashboard": {
+    "greeting": "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ",
+    "subtitle": "ਤੁਹਾਡੇ ਖੇਤ ਦਾ ਵੇਰਵਾ",
+    "totalFields": "ਕੁੱਲ ਖੇਤ",
+    "healthyFields": "ਸਿਹਤਮੰਦ ਖੇਤ",
+    "attentionFields": "ਧਿਆਨ ਦੇਣ ਯੋਗ ਖੇਤ",
+    "scansThisMonth": "ਇਸ ਮਹੀਨੇ ਦੇ ਸਕੈਨ",
+    "cropHealthOverview": "ਫ਼ਸਲ ਸਿਹਤ ਵੇਰਵਾ",
+    "diseaseRisk": "ਬਿਮਾਰੀ ਦਾ ਖ਼ਤਰਾ",
+    "recentScans": "ਤਾਜ਼ਾ ਸਕੈਨ",
+    "weather": "ਮੌਸਮ",
+    "growthProgress": "ਵਾਧੇ ਦੀ ਤਰੱਕੀ",
+    "preventiveAdvisory": "ਬਚਾਅ ਸਲਾਹ"
+  },
+  "analyzer": {
+    "scanYourCrop": "ਆਪਣੀ ਫ਼ਸਲ ਸਕੈਨ ਕਰੋ",
+    "instructions": "ਪ੍ਰਭਾਵਿਤ ਪੱਤੇ ਦੀ ਫੋਟੋ ਲਵੋ ਜਾਂ ਅੱਪਲੋਡ ਕਰੋ",
+    "cropSelection": "ਫ਼ਸਲ ਚੁਣੋ",
+    "paddy": "ਝੋਨਾ",
+    "wheat": "ਕਣਕ",
+    "useCamera": "ਕੈਮਰਾ ਵਰਤੋ",
+    "uploadImage": "ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
+    "chooseGallery": "ਗੈਲਰੀ ਵਿੱਚੋਂ ਚੁਣੋ",
+    "dragDrop": "ਖਿੱਚੋ ਅਤੇ ਸੁੱਟੋ",
+    "imageQuality": "ਵਧੀਆ ਰੌਸ਼ਨੀ ਅਤੇ ਫ਼ੋਕਸ ਯਕੀਨੀ ਬਣਾਓ"
+  },
+  "results": {
+    "detectedCrop": "ਪਛਾਣੀ ਗਈ ਫ਼ਸਲ",
+    "disease": "ਬਿਮਾਰੀ",
+    "scientificName": "ਵਿਗਿਆਨਕ ਨਾਮ",
+    "confidence": "ਭਰੋਸੇਯੋਗਤਾ",
+    "severity": "ਗੰਭੀਰਤਾ",
+    "healthScore": "ਸਿਹਤ ਸਕੋਰ",
+    "symptoms": "ਲੱਛਣ",
+    "recommendations": "ਸਿਫ਼ਾਰਸ਼ਾਂ",
+    "risk": "ਖ਼ਤਰੇ ਦਾ ਪੱਧਰ",
+    "scanAgain": "ਦੁਬਾਰਾ ਸਕੈਨ ਕਰੋ",
+    "save": "ਨਤੀਜਾ ਸੰਭਾਲੋ",
+    "compareHistory": "ਇਤਿਹਾਸ ਦੀ ਤੁਲਨਾ ਕਰੋ",
+    "generateReport": "ਰਿਪੋਰਟ ਤਿਆਰ ਕਰੋ"
+  },
+  "recommendations": {
+    "cultural": "ਕਾਸ਼ਤਕਾਰੀ ਢੰਗ",
+    "organic": "ਜੈਵਿਕ ਹੱਲ",
+    "chemical": "ਰਸਾਇਣਕ ਰੋਕਥਾਮ",
+    "precautions": "ਸਾਵਧਾਨੀਆਂ"
+  },
+  "fields": {
+    "myFields": "ਮੇਰੇ ਖੇਤ",
+    "addField": "ਖੇਤ ਜੋੜੋ",
+    "fieldName": "ਖੇਤ ਦਾ ਨਾਮ",
+    "area": "ਰਕਬਾ",
+    "crop": "ਫ਼ਸਲ",
+    "variety": "ਕਿਸਮ",
+    "location": "ਟਿਕਾਣਾ",
+    "plantingDate": "ਬਿਜਾਈ ਦੀ ਮਿਤੀ",
+    "expectedHarvest": "ਸੰਭਾਵਿਤ ਵਾਢੀ",
+    "growthStage": "ਵਾਧੇ ਦਾ ਪੜਾਅ"
+  },
+  "history": {
+    "cropHistory": "ਫ਼ਸਲ ਦਾ ਇਤਿਹਾਸ",
+    "filter": "ਫ਼ਿਲਟਰ",
+    "allCrops": "ਸਾਰੀਆਂ ਫ਼ਸਲਾਂ",
+    "allDiseases": "ਸਾਰੀਆਂ ਬਿਮਾਰੀਆਂ",
+    "allSeverities": "ਸਾਰੀਆਂ ਗੰਭੀਰਤਾਵਾਂ",
+    "scanDetails": "ਸਕੈਨ ਵੇਰਵਾ",
+    "comparison": "ਤੁਲਨਾ"
+  },
+  "weather": {
+    "temperature": "ਤਾਪਮਾਨ",
+    "humidity": "ਨਮੀ",
+    "rainfall": "ਮੀਂਹ",
+    "windSpeed": "ਹਵਾ ਦੀ ਰਫ਼ਤਾਰ",
+    "forecast": "ਮੌਸਮ ਭਵਿੱਖਬਾਣੀ",
+    "offline": "ਆਫ਼ਲਾਈਨ (ਸੰਭਾਲਿਆ ਡਾਟਾ ਦਿਖਾ ਰਿਹਾ ਹੈ)"
+  },
+  "risk": {
+    "assessment": "ਬਿਮਾਰੀ ਖ਼ਤਰਾ ਮੁਲਾਂਕਣ",
+    "prototype": "ਪ੍ਰੋਟੋਟਾਈਪ ਖ਼ਤਰਾ ਮੁਲਾਂਕਣ",
+    "low": "ਘੱਟ ਖ਼ਤਰਾ",
+    "medium": "ਦਰਮਿਆਨਾ ਖ਼ਤਰਾ",
+    "high": "ਵੱਧ ਖ਼ਤਰਾ",
+    "extreme": "ਬਹੁਤ ਜ਼ਿਆਦਾ ਖ਼ਤਰਾ"
+  },
+  "voice": {
+    "assistant": "ਵੌਇਸ ਸਹਾਇਕ",
+    "listening": "ਸੁਣ ਰਿਹਾ ਹੈ...",
+    "tapToSpeak": "ਬੋਲਣ ਲਈ ਟੈਪ ਕਰੋ",
+    "commands": "ਵੌਇਸ ਕਮਾਂਡਾਂ"
+  },
+  "general": {
+    "online": "ਆਨਲਾਈਨ",
+    "offline": "ਆਫ਼ਲਾਈਨ",
+    "sync": "ਸਿੰਕ",
+    "pending": "ਬਕਾਇਆ",
+    "settings": "ਸੈਟਿੰਗਾਂ",
+    "language": "ਭਾਸ਼ਾ",
+    "notifications": "ਸੂਚਨਾਵਾਂ",
+    "reports": "ਰਿਪੋਰਟਾਂ",
+    "admin": "ਐਡਮਿਨ",
+    "save": "ਸੰਭਾਲੋ",
+    "cancel": "ਰੱਦ ਕਰੋ",
+    "delete": "ਮਿਟਾਓ",
+    "edit": "ਸੋਧੋ",
+    "view": "ਵੇਖੋ",
+    "close": "ਬੰਦ ਕਰੋ"
+  },
+  "diseases": {
+    "healthy": "ਤੰਦਰੁਸਤ",
+    "brownSpot": "ਭੂਰੇ ਧੱਬਿਆਂ ਦਾ ਰੋਗ (ਬ੍ਰਾਊਨ ਸਪੌਟ)",
+    "leafBlast": "ਪੱਤਾ ਝੁਲਸ ਰੋਗ (ਲੀਫ਼ ਬਲਾਸਟ)",
+    "bacterialLeafBlight": "ਜੀਵਾਣੂ ਪੱਤਾ ਝੁਲਸ ਰੋਗ",
+    "leafRust": "ਭੂਰੀ ਕੁੰਗੀ (ਲੀਫ਼ ਰਸਟ)",
+    "stripeRust": "ਪੀਲੀ ਕੁੰਗੀ (ਸਟ੍ਰਾਈਪ ਰਸਟ)",
+    "powderyMildew": "ਚਿੱਟਾ ਰੋਗ (ਪਾਊਡਰੀ ਮਿਲਡਿਊ)"
+  },
+  "crops": {
+    "paddy": "ਝੋਨਾ",
+    "wheat": "ਕਣਕ"
+  },
+  "severity": {
+    "low": "ਘੱਟ",
+    "moderate": "ਦਰਮਿਆਨੀ",
+    "high": "ਜ਼ਿਆਦਾ",
+    "critical": "ਨਾਜ਼ੁਕ"
+  },
+  "status": {
+    "healthy": "ਤੰਦਰੁਸਤ",
+    "attention": "ਧਿਆਨ ਦਿਓ",
+    "improving": "ਸੁਧਾਰ ਹੋ ਰਿਹਾ ਹੈ",
+    "stable": "ਸਥਿਰ",
+    "worsening": "ਵਿਗੜ ਰਿਹਾ ਹੈ"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "ഡാഷ്‌ബോർഡ്",
+    "scanLeaf": "ഇല സ്കാൻ ചെയ്യുക",
+    "myFields": "എന്റെ കൃഷിയിടങ്ങൾ",
+    "cropHistory": "വിള ചരിത്രം",
+    "weather": "കാലാവസ്ഥ",
+    "diseaseRisk": "രോഗ സാധ്യത",
+    "advisories": "നിർദ്ദേശങ്ങൾ",
+    "growthMonitoring": "വളർച്ചാ നിരീക്ഷണം",
+    "reports": "റിപ്പോർട്ടുകൾ",
+    "settings": "ക്രമീകരണങ്ങൾ",
+    "home": "ഹോം",
+    "history": "ചരിത്രം",
+    "scan": "സ്കാൻ",
+    "fields": "പാടങ്ങൾ",
+    "profile": "പ്രൊഫൈൽ",
+    "aiChatbot": "AI ചാറ്റ്ബോട്ട്",
+    "voiceAssistant": "വോയ്സ് അസിസ്റ്റന്റ്",
+    "farmOverview": "ഫാം അവലോകനം",
+    "waterIrrigation": "ജലസേചനം",
+    "animalMonitor": "മൃഗ നിരീക്ഷണം",
+    "marketAnalysis": "വിപണി വിശകലനം",
+    "loansSchemes": "വായ്പകളും പദ്ധതികളും",
+    "fertilizerShops": "വളക്കടകൾ",
+    "insectBite": "പ്രാണികളുടെ കടി കണ്ടെത്തൽ"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "വിവേകപൂർണ്ണമായ വിള ആരോഗ്യ പരിപാലനം",
+    "featuresDescriptions": "സവിശേഷതകൾ",
+    "ctaButtons": "ആരംഭിക്കുക"
+  },
+  "login": {
+    "phone": "ഫോൺ നമ്പർ",
+    "email": "ഇമെയിൽ",
+    "password": "പാസ്‌വേഡ്",
+    "login": "ലോഗിൻ",
+    "demoFarmer": "ഡെമോ കർഷകനായി തുടരുക"
+  },
+  "dashboard": {
+    "greeting": "നമസ്കാരം",
+    "subtitle": "നിങ്ങളുടെ കൃഷിയിടത്തിന്റെ അവലോകനം",
+    "totalFields": "ആകെ പാടങ്ങൾ",
+    "healthyFields": "ആരോഗ്യമുള്ള പാടങ്ങൾ",
+    "attentionFields": "ശ്രദ്ധിക്കേണ്ട പാടങ്ങൾ",
+    "scansThisMonth": "ഈ മാസത്തെ സ്കാനുകൾ",
+    "cropHealthOverview": "വിള ആരോഗ്യ അവലോകനം",
+    "diseaseRisk": "രോഗ സാധ്യത",
+    "recentScans": "സമീപകാല സ്കാനുകൾ",
+    "weather": "കാലാവസ്ഥ",
+    "growthProgress": "വളർച്ച പുരോഗതി",
+    "preventiveAdvisory": "പ്രതിരോധ നിർദ്ദേശം"
+  },
+  "analyzer": {
+    "scanYourCrop": "നിങ്ങളുടെ വിള സ്കാൻ ചെയ്യുക",
+    "instructions": "രോഗബാധയുള്ള ഇലയുടെ ഫോട്ടോ എടുക്കുകയോ അപ്‌ലോഡ് ചെയ്യുകയോ ചെയ്യുക",
+    "cropSelection": "വിള തിരഞ്ഞെടുക്കുക",
+    "paddy": "നെല്ല്",
+    "wheat": "ഗോതമ്പ്",
+    "useCamera": "ക്യാമറ ഉപയോഗിക്കുക",
+    "uploadImage": "ചിത്രം അപ്‌ലോഡ് ചെയ്യുക",
+    "chooseGallery": "ഗാലറിയിൽ നിന്ന് തിരഞ്ഞെടുക്കുക",
+    "dragDrop": "വലിച്ചിടുക",
+    "imageQuality": "നല്ല വെളിച്ചവും ഫോക്കസും ഉറപ്പാക്കുക"
+  },
+  "results": {
+    "detectedCrop": "കണ്ടെത്തിയ വിള",
+    "disease": "രോഗം",
+    "scientificName": "ശാസ്ത്രീയ നാമം",
+    "confidence": "കൃത്യത",
+    "severity": "തീവ്രത",
+    "healthScore": "ആരോഗ്യ സ്കോർ",
+    "symptoms": "ലക്ഷണങ്ങൾ",
+    "recommendations": "ശുപാർശകൾ",
+    "risk": "അപകടസാധ്യത നില",
+    "scanAgain": "വീണ്ടും സ്കാൻ ചെയ്യുക",
+    "save": "ഫലം സംരക്ഷിക്കുക",
+    "compareHistory": "ചരിത്രം താരതമ്യം ചെയ്യുക",
+    "generateReport": "റിപ്പോർട്ട് തയ്യാറാക്കുക"
+  },
+  "recommendations": {
+    "cultural": "കാർഷിക രീതികൾ",
+    "organic": "ജൈവ രീതികൾ",
+    "chemical": "രാസ നിയന്ത്രണം",
+    "precautions": "മുൻകരുതലുകൾ"
+  },
+  "fields": {
+    "myFields": "എന്റെ കൃഷിയിടങ്ങൾ",
+    "addField": "കൃഷിയിടം ചേർക്കുക",
+    "fieldName": "കൃഷിയിടത്തിന്റെ പേര്",
+    "area": "വിസ്തീർണ്ണം",
+    "crop": "വിള",
+    "variety": "ഇനം",
+    "location": "സ്ഥലം",
+    "plantingDate": "നട്ട തീയതി",
+    "expectedHarvest": "പ്രതീക്ഷിക്കുന്ന വിളവെടുപ്പ്",
+    "growthStage": "വളർച്ചാ ഘട്ടം"
+  },
+  "history": {
+    "cropHistory": "വിള ചരിത്രം",
+    "filter": "ഫിൽട്ടർ",
+    "allCrops": "എല്ലാ വിളകളും",
+    "allDiseases": "എല്ലാ രോഗങ്ങളും",
+    "allSeverities": "എല്ലാ തീവ്രതകളും",
+    "scanDetails": "സ്കാൻ വിവരങ്ങൾ",
+    "comparison": "താരതമ്യം"
+  },
+  "weather": {
+    "temperature": "താപനില",
+    "humidity": "ഈർപ്പം",
+    "rainfall": "മഴ",
+    "windSpeed": "കാറ്റിന്റെ വേഗത",
+    "forecast": "കാലാവസ്ഥാ പ്രവചനം",
+    "offline": "ഓഫ്‌ലൈൻ (സംഭരിച്ച വിവരങ്ങൾ കാണിക്കുന്നു)"
+  },
+  "risk": {
+    "assessment": "രോഗസാധ്യത വിലയിരുത്തൽ",
+    "prototype": "പ്രോട്ടോടൈപ്പ് അപകടസാധ്യത വിലയിരുത്തൽ",
+    "low": "കുറഞ്ഞ അപകടസാധ്യത",
+    "medium": "ഇടത്തരം അപകടസാധ്യത",
+    "high": "കൂടിയ അപകടസാധ്യത",
+    "extreme": "അതീവ അപകടസാധ്യത"
+  },
+  "voice": {
+    "assistant": "വോയ്സ് അസിസ്റ്റന്റ്",
+    "listening": "കേൾക്കുന്നു...",
+    "tapToSpeak": "സംസാരിക്കാൻ ടാപ്പ് ചെയ്യുക",
+    "commands": "ശബ്ദ നിർദ്ദേശങ്ങൾ"
+  },
+  "general": {
+    "online": "ഓൺലൈൻ",
+    "offline": "ഓഫ്‌ലൈൻ",
+    "sync": "സിങ്ക്",
+    "pending": "തീർപ്പുകൽപ്പിക്കാത്തത്",
+    "settings": "ക്രമീകരണങ്ങൾ",
+    "language": "ഭാഷ",
+    "notifications": "അറിയിപ്പുകൾ",
+    "reports": "റിപ്പോർട്ടുകൾ",
+    "admin": "അഡ്മിൻ",
+    "save": "സംരക്ഷിക്കുക",
+    "cancel": "റദ്ദാക്കുക",
+    "delete": "മായ്ക്കുക",
+    "edit": "തിരുത്തുക",
+    "view": "കാണുക",
+    "close": "അടയ്ക്കുക"
+  },
+  "diseases": {
+    "healthy": "ആരോഗ്യമുള്ളത്",
+    "brownSpot": "തവിട്ടുപുള്ളി രോഗം (ബ്രൗൺ സ്പോട്ട്)",
+    "leafBlast": "ഇലക്കരിച്ചിൽ (ലീഫ് ബ്ലാസ്റ്റ്)",
+    "bacterialLeafBlight": "ബാക്ടീരിയൽ ഇലക്കരിച്ചിൽ",
+    "leafRust": "തുരുമ്പ് രോഗം (ലീഫ് റസ്റ്റ്)",
+    "stripeRust": "വരമ്പൻ തുരുമ്പ് രോഗം (സ്ട്രൈപ്പ് റസ്റ്റ്)",
+    "powderyMildew": "ചാരരോഗം (പൗഡറി മിൽഡ്യൂ)"
+  },
+  "crops": {
+    "paddy": "നെല്ല്",
+    "wheat": "ഗോതമ്പ്"
+  },
+  "severity": {
+    "low": "കുറവ്",
+    "moderate": "മിതമായത്",
+    "high": "കൂടുതൽ",
+    "critical": "ഗുരുതരം"
+  },
+  "status": {
+    "healthy": "ആരോഗ്യമുള്ളത്",
+    "attention": "ശ്രദ്ധിക്കുക",
+    "improving": "മെച്ചപ്പെടുന്നു",
+    "stable": "സ്ഥിരതയുള്ളത്",
+    "worsening": "മോശമാകുന്നു"
+  }
+}

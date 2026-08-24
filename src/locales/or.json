@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "ଡ୍ୟାସବୋର୍ଡ",
+    "scanLeaf": "ପତ୍ର ସ୍କାନ କରନ୍ତୁ",
+    "myFields": "ମୋର ଜମି",
+    "cropHistory": "ଫସଲ ଇତିହାସ",
+    "weather": "ପାଣିପାଗ",
+    "diseaseRisk": "ରୋଗ ଆଶଙ୍କା",
+    "advisories": "ପରାମର୍ଶ",
+    "growthMonitoring": "ବୃଦ୍ଧି ନିରୀକ୍ଷଣ",
+    "reports": "ରିପୋର୍ଟ",
+    "settings": "ସେଟିଂସ",
+    "home": "ମୁଖ୍ୟ ପୃଷ୍ଠା",
+    "history": "ଇତିହାସ",
+    "scan": "ସ୍କାନ",
+    "fields": "ଜମି",
+    "profile": "ପ୍ରୋଫାଇଲ",
+    "aiChatbot": "AI ଚାଟବଟ",
+    "voiceAssistant": "ଭଏସ ସହାୟକ",
+    "farmOverview": "ଚାଷ ଜମି ସମୀକ୍ଷା",
+    "waterIrrigation": "ଜଳସେଚନ",
+    "animalMonitor": "ପଶୁପାଳନ ନିରୀକ୍ଷଣ",
+    "marketAnalysis": "ବଜାର ବିଶ୍ଳେଷଣ",
+    "loansSchemes": "ଋଣ ଏବଂ ଯୋଜନା",
+    "fertilizerShops": "ଖତ ଓ ସାର ଦୋକାନ",
+    "insectBite": "କୀଟ କାମୁଡ଼ା ଚିହ୍ନଟକାରୀ"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "ବୁଦ୍ଧିମାନ ଫସଲ ସ୍ୱାସ୍ଥ୍ୟ ପରିଚାଳନା",
+    "featuresDescriptions": "ବିଶେଷତା",
+    "ctaButtons": "ଆରମ୍ଭ କରନ୍ତୁ"
+  },
+  "login": {
+    "phone": "ଫୋନ ନମ୍ବର",
+    "email": "ଇମେଲ",
+    "password": "ପାସୱାର୍ଡ",
+    "login": "ଲଗଇନ",
+    "demoFarmer": "ଡେମୋ କୃଷକ ଭାବରେ ଆଗକୁ ବଢ଼ନ୍ତୁ"
+  },
+  "dashboard": {
+    "greeting": "ନମସ୍କାର",
+    "subtitle": "ଆପଣଙ୍କ ଚାଷ ଜମିର ସମୀକ୍ଷା",
+    "totalFields": "ମୋଟ ଜମି",
+    "healthyFields": "ସୁସ୍ଥ ଜମି",
+    "attentionFields": "ଧ୍ୟାନ ଆବଶ୍ୟକ ଥିବା ଜମି",
+    "scansThisMonth": "ଏହି ମାସର ସ୍କାନ",
+    "cropHealthOverview": "ଫସଲ ସ୍ୱାସ୍ଥ୍ୟ ସମୀକ୍ଷା",
+    "diseaseRisk": "ରୋଗ ଆଶଙ୍କା",
+    "recentScans": "ସାମ୍ପ୍ରତିକ ସ୍କାନ",
+    "weather": "ପାଣିପାଗ",
+    "growthProgress": "ବୃଦ୍ଧି ଅଗ୍ରଗତି",
+    "preventiveAdvisory": "ପ୍ରତିଷେଧକ ପରାମର୍ଶ"
+  },
+  "analyzer": {
+    "scanYourCrop": "ଆପଣଙ୍କ ଫସଲ ସ୍କାନ କରନ୍ତୁ",
+    "instructions": "ପ୍ରଭାବିତ ପତ୍ରର ଫଟୋ ଉଠାନ୍ତୁ କିମ୍ବା ଅପଲୋଡ କରନ୍ତୁ",
+    "cropSelection": "ଫସଲ ବାଛନ୍ତୁ",
+    "paddy": "ଧାନ",
+    "wheat": "ଗହମ",
+    "useCamera": "କ୍ୟାମେରା ବ୍ୟବହାର କରନ୍ତୁ",
+    "uploadImage": "ଫଟୋ ଅପଲୋଡ କରନ୍ତୁ",
+    "chooseGallery": "ଗ୍ୟାଲେରୀରୁ ବାଛନ୍ତୁ",
+    "dragDrop": "ଟାଣି ଆଣି ଛାଡନ୍ତୁ",
+    "imageQuality": "ଉପଯୁକ୍ତ ଆଲୋକ ଏବଂ ଫୋକସ ସୁନିଶ୍ଚିତ କରନ୍ତୁ"
+  },
+  "results": {
+    "detectedCrop": "ଚିହ୍ନଟ ହୋଇଥିବା ଫସଲ",
+    "disease": "ରୋଗ",
+    "scientificName": "ବୈଜ୍ଞାନିକ ନାମ",
+    "confidence": "ବିଶ୍ୱାସନୀୟତା",
+    "severity": "ତୀବ୍ରତା",
+    "healthScore": "ସ୍ୱାସ୍ଥ୍ୟ ସ୍କୋର",
+    "symptoms": "ଲକ୍ଷଣ",
+    "recommendations": "ପରାମର୍ଶ",
+    "risk": "ବିପଦ ସ୍ତର",
+    "scanAgain": "ପୁଣି ସ୍କାନ କରନ୍ତୁ",
+    "save": "ଫଳାଫଳ ସଂରକ୍ଷଣ କରନ୍ତୁ",
+    "compareHistory": "ଇତିହାସ ତୁଳନା କରନ୍ତୁ",
+    "generateReport": "ରିପୋର୍ଟ ପ୍ରସ୍ତୁତ କରନ୍ତୁ"
+  },
+  "recommendations": {
+    "cultural": "କୃଷି ପଦ୍ଧତି",
+    "organic": "ଜୈବିକ ଉପାୟ",
+    "chemical": "ରାସାୟନିକ ନିୟନ୍ତ୍ରଣ",
+    "precautions": "ସାବଧାନତା"
+  },
+  "fields": {
+    "myFields": "ମୋର ଜମି",
+    "addField": "ଜମି ଯୋଡ଼ନ୍ତୁ",
+    "fieldName": "ଜମିର ନାମ",
+    "area": "କ୍ଷେତ୍ରଫଳ",
+    "crop": "ଫସଲ",
+    "variety": "କିସମ",
+    "location": "ସ୍ଥାନ",
+    "plantingDate": "ରୋପଣ ତାରିଖ",
+    "expectedHarvest": "ଅମଳ ହେବା ସମୟ",
+    "growthStage": "ବୃଦ୍ଧି ପର୍ଯ୍ୟାୟ"
+  },
+  "history": {
+    "cropHistory": "ଫସଲ ଇତିହାସ",
+    "filter": "ଫିଲ୍ଟର",
+    "allCrops": "ସମସ୍ତ ଫସଲ",
+    "allDiseases": "ସମସ୍ତ ରୋଗ",
+    "allSeverities": "ସମସ୍ତ ତୀବ୍ରତା",
+    "scanDetails": "ସ୍କାନ ବିବରଣୀ",
+    "comparison": "ତୁଳନା"
+  },
+  "weather": {
+    "temperature": "ତାପମାତ୍ରା",
+    "humidity": "ଆର୍ଦ୍ରତା",
+    "rainfall": "ବର୍ଷା",
+    "windSpeed": "ପବନର ବେଗ",
+    "forecast": "ପୂର୍ବାନୁମାନ",
+    "offline": "ଅଫଲାଇନ (ସଂରକ୍ଷିତ ତଥ୍ୟ ଦେଖାଉଛି)"
+  },
+  "risk": {
+    "assessment": "ରୋଗ ବିପଦ ମୂଲ୍ୟାଙ୍କନ",
+    "prototype": "ପ୍ରୋଟୋଟାଇପ ବିପଦ ମୂଲ୍ୟାଙ୍କନ",
+    "low": "କମ ବିପଦ",
+    "medium": "ମଧ୍ୟମ ବିପଦ",
+    "high": "ଅଧିକ ବିପଦ",
+    "extreme": "ଅତ୍ୟଧିକ ବିପଦ"
+  },
+  "voice": {
+    "assistant": "ଭଏସ ସହାୟକ",
+    "listening": "ଶୁଣୁଛି...",
+    "tapToSpeak": "କହିବା ପାଇଁ ଟ୍ୟାପ କରନ୍ତୁ",
+    "commands": "ଭଏସ ନିର୍ଦ୍ଦେଶ"
+  },
+  "general": {
+    "online": "ଅନଲାଇନ",
+    "offline": "ଅଫଲାଇନ",
+    "sync": "ସିଙ୍କ",
+    "pending": "ବାକି ଅଛି",
+    "settings": "ସେଟିଂସ",
+    "language": "ଭାଷା",
+    "notifications": "ବିଜ୍ଞପ୍ତି",
+    "reports": "ରିପୋର୍ଟ",
+    "admin": "ଆଡମିନ",
+    "save": "ସାଇତନ୍ତୁ",
+    "cancel": "ବାତିଲ କରନ୍ତୁ",
+    "delete": "ଲିଭାନ୍ତୁ",
+    "edit": "ସମ୍ପାଦନ କରନ୍ତୁ",
+    "view": "ଦେଖନ୍ତୁ",
+    "close": "ବନ୍ଦ କରନ୍ତୁ"
+  },
+  "diseases": {
+    "healthy": "ସୁସ୍ଥ",
+    "brownSpot": "ବାଦାମୀ ଦାଗ ରୋଗ (ବ୍ରାଉନ ସ୍ପଟ)",
+    "leafBlast": "ପତ୍ର ପୋଡ଼ା ରୋଗ (ଲିଫ ବ୍ଲାଷ୍ଟ)",
+    "bacterialLeafBlight": "ଜୀବାଣୁ ଜନିତ ପତ୍ର ପୋଡ଼ା ରୋଗ",
+    "leafRust": "ପତ୍ର କଳଙ୍କୀ ରୋଗ (ଲିଫ ରଷ୍ଟ)",
+    "stripeRust": "ପଟ୍ଟା କଳଙ୍କୀ ରୋଗ (ଷ୍ଟ୍ରାଇପ ରଷ୍ଟ)",
+    "powderyMildew": "ଧଳାଗୁଣ୍ଡ ରୋଗ (ପାଉଡରୀ ମିଲଡ୍ୟୁ)"
+  },
+  "crops": {
+    "paddy": "ଧାନ",
+    "wheat": "ଗହମ"
+  },
+  "severity": {
+    "low": "କମ",
+    "moderate": "ମଧ୍ୟମ",
+    "high": "ଅଧିକ",
+    "critical": "ଗୁରୁତର"
+  },
+  "status": {
+    "healthy": "ସୁସ୍ଥ",
+    "attention": "ଧ୍ୟାନ ଦିଅନ୍ତୁ",
+    "improving": "ଉନ୍ନତି ହେଉଛି",
+    "stable": "ସ୍ଥିର",
+    "worsening": "ଖରାପ ହେଉଛି"
+  }
+}

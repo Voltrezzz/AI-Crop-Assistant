@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+    "scanLeaf": "ಎಲೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+    "myFields": "ನನ್ನ ಜಮೀನುಗಳು",
+    "cropHistory": "ಬೆಳೆ ಇತಿಹಾಸ",
+    "weather": "ಹವಾಮಾನ",
+    "diseaseRisk": "ರೋಗದ ಅಪಾಯ",
+    "advisories": "ಸಲಹೆಗಳು",
+    "growthMonitoring": "ಬೆಳವಣಿಗೆ ಮೇಲ್ವಿಚಾರಣೆ",
+    "reports": "ವರದಿಗಳು",
+    "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+    "home": "ಮುಖಪುಟ",
+    "history": "ಇತಿಹಾಸ",
+    "scan": "ಸ್ಕ್ಯಾನ್",
+    "fields": "ಜಮೀನುಗಳು",
+    "profile": "ಪ್ರೊಫೈಲ್",
+    "aiChatbot": "AI ಚಾಟ್‌ಬಾಟ್",
+    "voiceAssistant": "ಧ್ವನಿ ಸಹಾಯಕ",
+    "farmOverview": "ಕೃಷಿ ಅವಲೋಕನ",
+    "waterIrrigation": "ನೀರಾವರಿ",
+    "animalMonitor": "ಪ್ರಾಣಿ ಮೇಲ್ವಿಚಾರಣೆ",
+    "marketAnalysis": "ಮಾರುಕಟ್ಟೆ ವಿಶ್ಲೇಷಣೆ",
+    "loansSchemes": "ಸಾಲಗಳು ಮತ್ತು ಯೋಜನೆಗಳು",
+    "fertilizerShops": "ಗೊಬ್ಬರದ ಅಂಗಡಿಗಳು",
+    "insectBite": "ಕೀಟ ಕಡಿತ ಪತ್ತೆಕಾರಕ"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "ಬುದ್ಧಿವಂತ ಬೆಳೆ ಆರೋಗ್ಯ ನಿರ್ವಹಣೆ",
+    "featuresDescriptions": "ವೈಶಿಷ್ಟ್ಯಗಳು",
+    "ctaButtons": "ಪ್ರಾರಂಭಿಸಿ"
+  },
+  "login": {
+    "phone": "ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
+    "email": "ಇಮೇಲ್",
+    "password": "ಪಾಸ್‌ವರ್ಡ್",
+    "login": "ಲಾಗಿನ್",
+    "demoFarmer": "ಡೆಮೊ ರೈತನಾಗಿ ಮುಂದುವರಿಯಿರಿ"
+  },
+  "dashboard": {
+    "greeting": "ನಮಸ್ಕಾರ",
+    "subtitle": "ನಿಮ್ಮ ಜಮೀನಿನ ಅವಲೋಕನ",
+    "totalFields": "ಒಟ್ಟು ಜಮೀನುಗಳು",
+    "healthyFields": "ಆರೋಗ್ಯಕರ ಜಮೀನುಗಳು",
+    "attentionFields": "ಗಮನಿಸಬೇಕಾದ ಜಮೀನುಗಳು",
+    "scansThisMonth": "ಈ ತಿಂಗಳ ಸ್ಕ್ಯಾನ್‌ಗಳು",
+    "cropHealthOverview": "ಬೆಳೆ ಆರೋಗ್ಯ ಅವಲೋಕನ",
+    "diseaseRisk": "ರೋಗದ ಅಪಾಯ",
+    "recentScans": "ಇತ್ತೀಚಿನ ಸ್ಕ್ಯಾನ್‌ಗಳು",
+    "weather": "ಹವಾಮಾನ",
+    "growthProgress": "ಬೆಳವಣಿಗೆಯ ಪ್ರಗತಿ",
+    "preventiveAdvisory": "ಮುನ್ನೆಚ್ಚರಿಕೆ ಸಲಹೆ"
+  },
+  "analyzer": {
+    "scanYourCrop": "ನಿಮ್ಮ ಬೆಳೆಯನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+    "instructions": "ಬಾಧಿತ ಎಲೆಯ ಫೋಟೋ ತೆಗೆಯಿರಿ ಅಥವಾ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    "cropSelection": "ಬೆಳೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    "paddy": "ಭತ್ತ",
+    "wheat": "ಗೋಧಿ",
+    "useCamera": "ಕ್ಯಾಮೆರಾ ಬಳಸಿ",
+    "uploadImage": "ಚಿತ್ರ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    "chooseGallery": "ಗ್ಯಾಲರಿಯಿಂದ ಆಯ್ಕೆಮಾಡಿ",
+    "dragDrop": "ಡ್ರ್ಯಾಗ್ ಮತ್ತು ಡ್ರಾಪ್ ಮಾಡಿ",
+    "imageQuality": "ಉತ್ತಮ ಬೆಳಕು ಮತ್ತು ಫೋಕಸ್ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ"
+  },
+  "results": {
+    "detectedCrop": "ಪತ್ತೆಯಾದ ಬೆಳೆ",
+    "disease": "ರೋಗ",
+    "scientificName": "ವೈಜ್ಞಾನಿಕ ಹೆಸರು",
+    "confidence": "ವಿಶ್ವಾಸಾರ್ಹತೆ",
+    "severity": "ತೀವ್ರತೆ",
+    "healthScore": "ಆರೋಗ್ಯ ಸ್ಕೋರ್",
+    "symptoms": "ರೋಗಲಕ್ಷಣಗಳು",
+    "recommendations": "ಶಿಫಾರಸುಗಳು",
+    "risk": "ಅಪಾಯದ ಮಟ್ಟ",
+    "scanAgain": "ಮತ್ತೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+    "save": "ಫಲಿತಾಂಶ ಉಳಿಸಿ",
+    "compareHistory": "ಇತಿಹಾಸ ಹೋಲಿಸಿ",
+    "generateReport": "ವರದಿ ತಯಾರಿಸಿ"
+  },
+  "recommendations": {
+    "cultural": "ಕೃಷಿ ಪದ್ಧತಿಗಳು",
+    "organic": "ಸಾವಯವ ವಿಧಾನಗಳು",
+    "chemical": "ರಾಸಾಯನಿಕ ನಿಯಂತ್ರಣ",
+    "precautions": "ಮುನ್ನೆಚ್ಚರಿಕೆಗಳು"
+  },
+  "fields": {
+    "myFields": "ನನ್ನ ಜಮೀನುಗಳು",
+    "addField": "ಜಮೀನು ಸೇರಿಸಿ",
+    "fieldName": "ಜಮೀನಿನ ಹೆಸರು",
+    "area": "ವಿಸ್ತೀರ್ಣ",
+    "crop": "ಬೆಳೆ",
+    "variety": "ತಳಿ",
+    "location": "ಸ್ಥಳ",
+    "plantingDate": "ನಾಟಿ ದಿನಾಂಕ",
+    "expectedHarvest": "ನಿರೀಕ್ಷಿತ ಕೊಯ್ಲು",
+    "growthStage": "ಬೆಳವಣಿಗೆಯ ಹಂತ"
+  },
+  "history": {
+    "cropHistory": "ಬೆಳೆ ಇತಿಹಾಸ",
+    "filter": "ಫಿಲ್ಟರ್",
+    "allCrops": "ಎಲ್ಲ ಬೆಳೆಗಳು",
+    "allDiseases": "ಎಲ್ಲ ರೋಗಗಳು",
+    "allSeverities": "ಎಲ್ಲ ತೀವ್ರತೆಗಳು",
+    "scanDetails": "ಸ್ಕ್ಯಾನ್ ವಿವರಗಳು",
+    "comparison": "ಹೋಲಿಕೆ"
+  },
+  "weather": {
+    "temperature": "ತಾಪಮಾನ",
+    "humidity": "ಆರ್ದ್ರತೆ",
+    "rainfall": "ಮಳೆ",
+    "windSpeed": "ಗಾಳಿಯ ವೇಗ",
+    "forecast": "ಮುನ್ಸೂಚನೆ",
+    "offline": "ಆಫ್‌ಲೈನ್ (ಸಂಗ್ರಹಿಸಿದ ಡೇಟಾ ತೋರಿಸಲಾಗುತ್ತಿದೆ)"
+  },
+  "risk": {
+    "assessment": "ರೋಗ ಅಪಾಯ ಮೌಲ್ಯಮಾಪನ",
+    "prototype": "ಮಾದರಿ ಅಪಾಯ ಮೌಲ್ಯಮಾಪನ",
+    "low": "ಕಡಿಮೆ ಅಪಾಯ",
+    "medium": "ಮಧ್ಯಮ ಅಪಾಯ",
+    "high": "ಹೆಚ್ಚಿನ ಅಪಾಯ",
+    "extreme": "ಅತ್ಯಂತ ಹೆಚ್ಚಿನ ಅಪಾಯ"
+  },
+  "voice": {
+    "assistant": "ಧ್ವನಿ ಸಹಾಯಕ",
+    "listening": "ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದೆ...",
+    "tapToSpeak": "ಮಾತನಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ",
+    "commands": "ಧ್ವನಿ ಆಜ್ಞೆಗಳು"
+  },
+  "general": {
+    "online": "ಆನ್‌ಲೈನ್",
+    "offline": "ಆಫ್‌ಲೈನ್",
+    "sync": "ಸಿಂಕ್",
+    "pending": "ಬಾಕಿ ಇದೆ",
+    "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+    "language": "ಭಾಷೆ",
+    "notifications": "ಅಧಿಸೂಚನೆಗಳು",
+    "reports": "ವರದಿಗಳು",
+    "admin": "ನಿರ್ವಾಹಕ",
+    "save": "ಉಳಿಸಿ",
+    "cancel": "ರದ್ದುಮಾಡಿ",
+    "delete": "ಅಳಿಸಿ",
+    "edit": "ತಿದ್ದುಪಡಿ",
+    "view": "ನೋಡಿ",
+    "close": "ಮುಚ್ಚಿ"
+  },
+  "diseases": {
+    "healthy": "ಆರೋಗ್ಯಕರ",
+    "brownSpot": "ಕಂದು ಚುಕ್ಕೆ ರೋಗ",
+    "leafBlast": "ಎಲೆ ಬ್ಲಾಸ್ಟ್ (ಬೆಂಕಿ ರೋಗ)",
+    "bacterialLeafBlight": "ಬ್ಯಾಕ್ಟೀರಿಯಲ್ ಎಲೆ ಕರಕಲು ರೋಗ",
+    "leafRust": "ಎಲೆ ತುಕ್ಕು ರೋಗ",
+    "stripeRust": "ಪಟ್ಟಿ ತುಕ್ಕು ರೋಗ",
+    "powderyMildew": "ಬೂದಿ ರೋಗ"
+  },
+  "crops": {
+    "paddy": "ಭತ್ತ",
+    "wheat": "ಗೋಧಿ"
+  },
+  "severity": {
+    "low": "ಕಡಿಮೆ",
+    "moderate": "ಮಧ್ಯಮ",
+    "high": "ಹೆಚ್ಚು",
+    "critical": "ಗಂಭೀರ"
+  },
+  "status": {
+    "healthy": "ಆರೋಗ್ಯಕರ",
+    "attention": "ಗಮನ ಬೇಕು",
+    "improving": "ಸುಧಾರಿಸುತ್ತಿದೆ",
+    "stable": "ಸ್ಥಿರವಾಗಿದೆ",
+    "worsening": "ಹದಗೆಡುತ್ತಿದೆ"
+  }
+}

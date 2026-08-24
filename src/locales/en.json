@@ -1,0 +1,176 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "scanLeaf": "Scan Leaf",
+    "myFields": "My Fields",
+    "cropHistory": "Crop History",
+    "weather": "Weather",
+    "diseaseRisk": "Disease Risk",
+    "advisories": "Advisories",
+    "growthMonitoring": "Growth Monitoring",
+    "reports": "Reports",
+    "settings": "Settings",
+    "home": "Home",
+    "history": "History",
+    "scan": "Scan",
+    "fields": "Fields",
+    "profile": "Profile",
+    "aiChatbot": "AI Chatbot",
+    "voiceAssistant": "Voice Assistant",
+    "farmOverview": "Farm Overview",
+    "waterIrrigation": "Water Irrigation",
+    "animalMonitor": "Animal Monitor",
+    "marketAnalysis": "Market Analysis",
+    "loansSchemes": "Loans & Schemes",
+    "fertilizerShops": "Fertilizer Shops",
+    "insectBite": "Insect Bite Detector",
+    "pestAdvisory": "AI Pest Advisory",
+    "fertilizerCalculator": "Fertilizer Calculator"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "Intelligent Crop Health Management",
+    "featuresDescriptions": "Features",
+    "ctaButtons": "Get Started"
+  },
+  "login": {
+    "phone": "Phone Number",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "demoFarmer": "Continue as Demo Farmer"
+  },
+  "dashboard": {
+    "greeting": "Hello",
+    "subtitle": "Overview of your farm",
+    "totalFields": "Total Fields",
+    "healthyFields": "Healthy Fields",
+    "attentionFields": "Attention Fields",
+    "scansThisMonth": "Scans this Month",
+    "cropHealthOverview": "Crop Health Overview",
+    "diseaseRisk": "Disease Risk",
+    "recentScans": "Recent Scans",
+    "weather": "Weather",
+    "growthProgress": "Growth Progress",
+    "preventiveAdvisory": "Preventive Advisory"
+  },
+  "analyzer": {
+    "scanYourCrop": "Scan your crop",
+    "instructions": "Capture or upload an image of the affected leaf",
+    "cropSelection": "Select Crop",
+    "paddy": "Paddy",
+    "wheat": "Wheat",
+    "useCamera": "Use Camera",
+    "uploadImage": "Upload Image",
+    "chooseGallery": "Choose from Gallery",
+    "dragDrop": "Drag and Drop",
+    "imageQuality": "Ensure good lighting and focus"
+  },
+  "results": {
+    "detectedCrop": "Detected Crop",
+    "disease": "Disease",
+    "scientificName": "Scientific Name",
+    "confidence": "Confidence",
+    "severity": "Severity",
+    "healthScore": "Health Score",
+    "symptoms": "Symptoms",
+    "recommendations": "Recommendations",
+    "risk": "Risk Level",
+    "scanAgain": "Scan Again",
+    "save": "Save Result",
+    "compareHistory": "Compare History",
+    "generateReport": "Generate Report"
+  },
+  "recommendations": {
+    "cultural": "Cultural Practices",
+    "organic": "Organic Options",
+    "chemical": "Chemical Control",
+    "precautions": "Precautions"
+  },
+  "fields": {
+    "myFields": "My Fields",
+    "addField": "Add Field",
+    "fieldName": "Field Name",
+    "area": "Area",
+    "crop": "Crop",
+    "variety": "Variety",
+    "location": "Location",
+    "plantingDate": "Planting Date",
+    "expectedHarvest": "Expected Harvest",
+    "growthStage": "Growth Stage"
+  },
+  "history": {
+    "cropHistory": "Crop History",
+    "filter": "Filter",
+    "allCrops": "All Crops",
+    "allDiseases": "All Diseases",
+    "allSeverities": "All Severities",
+    "scanDetails": "Scan Details",
+    "comparison": "Comparison"
+  },
+  "weather": {
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "rainfall": "Rainfall",
+    "windSpeed": "Wind Speed",
+    "forecast": "Forecast",
+    "offline": "Offline showing cached data"
+  },
+  "risk": {
+    "assessment": "Disease Risk Assessment",
+    "prototype": "Prototype Risk Assessment",
+    "low": "Low Risk",
+    "medium": "Medium Risk",
+    "high": "High Risk",
+    "extreme": "Extreme Risk"
+  },
+  "voice": {
+    "assistant": "Voice Assistant",
+    "listening": "Listening...",
+    "tapToSpeak": "Tap to speak",
+    "commands": "Voice Commands"
+  },
+  "general": {
+    "online": "Online",
+    "offline": "Offline",
+    "sync": "Sync",
+    "pending": "Pending",
+    "settings": "Settings",
+    "language": "Language",
+    "notifications": "Notifications",
+    "reports": "Reports",
+    "admin": "Admin",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close"
+  },
+  "diseases": {
+    "healthy": "Healthy",
+    "brownSpot": "Brown Spot",
+    "leafBlast": "Leaf Blast",
+    "bacterialLeafBlight": "Bacterial Leaf Blight",
+    "leafRust": "Leaf Rust",
+    "stripeRust": "Stripe Rust",
+    "powderyMildew": "Powdery Mildew"
+  },
+  "crops": {
+    "paddy": "Paddy",
+    "wheat": "Wheat"
+  },
+  "severity": {
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "status": {
+    "healthy": "Healthy",
+    "attention": "Attention",
+    "improving": "Improving",
+    "stable": "Stable",
+    "worsening": "Worsening"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "ડેશબોર્ડ",
+    "scanLeaf": "પાન સ્કેન કરો",
+    "myFields": "મારા ખેતરો",
+    "cropHistory": "પાક ઇતિહાસ",
+    "weather": "હવામાન",
+    "diseaseRisk": "રોગનું જોખમ",
+    "advisories": "સલાહ",
+    "growthMonitoring": "વિકાસ પર નજર",
+    "reports": "અહેવાલો",
+    "settings": "સેટિંગ્સ",
+    "home": "હોમ",
+    "history": "ઇતિહાસ",
+    "scan": "સ્કેન",
+    "fields": "ખેતરો",
+    "profile": "પ્રોફાઇલ",
+    "aiChatbot": "AI ચેટબોટ",
+    "voiceAssistant": "વૉઇસ સહાયક",
+    "farmOverview": "ખેતર પરિચય",
+    "waterIrrigation": "સિંચાઈ વ્યવસ્થા",
+    "animalMonitor": "પશુધન નિરીક્ષણ",
+    "marketAnalysis": "બજાર વિશ્લેષણ",
+    "loansSchemes": "ધિરાણ અને યોજનાઓ",
+    "fertilizerShops": "ખાતરની દુકાનો",
+    "insectBite": "જીવાત ડંખ ડિટેક્ટર"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "બુદ્ધિશાળી પાક સ્વાસ્થ્ય સંચાલન",
+    "featuresDescriptions": "સુવિધાઓ",
+    "ctaButtons": "શરૂ કરો"
+  },
+  "login": {
+    "phone": "ફોન નંબર",
+    "email": "ઈમેઇલ",
+    "password": "પાસવર્ડ",
+    "login": "લૉગિન",
+    "demoFarmer": "ડેમો ખેડૂત તરીકે ચાલુ રાખો"
+  },
+  "dashboard": {
+    "greeting": "નમસ્તે",
+    "subtitle": "તમારા ખેતરની ઝાંખી",
+    "totalFields": "કુલ ખેતરો",
+    "healthyFields": "સ્વસ્થ ખેતરો",
+    "attentionFields": "ધ્યાન માંગતા ખેતરો",
+    "scansThisMonth": "આ મહિનાના સ્કેન",
+    "cropHealthOverview": "પાક સ્વાસ્થ્ય ઝાંખી",
+    "diseaseRisk": "રોગનું જોખમ",
+    "recentScans": "તાજેતરના સ્કેન",
+    "weather": "હવામાન",
+    "growthProgress": "વિકાસની પ્રગતિ",
+    "preventiveAdvisory": "નિવારક સલાહ"
+  },
+  "analyzer": {
+    "scanYourCrop": "તમારા પાકને સ્કેન કરો",
+    "instructions": "રોગગ્રસ્ત પાંદડાનો ફોટો લો અથવા અપલોડ કરો",
+    "cropSelection": "પાક પસંદ કરો",
+    "paddy": "ડાંગર",
+    "wheat": "ઘઉં",
+    "useCamera": "કેમેરા વાપરો",
+    "uploadImage": "ફોટો અપલોડ કરો",
+    "chooseGallery": "ગેલેરીમાંથી પસંદ કરો",
+    "dragDrop": "ખેંચો અને મૂકો",
+    "imageQuality": "સારો પ્રકાશ અને ફોકસ સુનિશ્ચિત કરો"
+  },
+  "results": {
+    "detectedCrop": "ઓળખાયેલ પાક",
+    "disease": "રોગ",
+    "scientificName": "વૈજ્ઞાનિક નામ",
+    "confidence": "ચોકસાઈ",
+    "severity": "તીવ્રતા",
+    "healthScore": "સ્વાસ્થ્ય સ્કોર",
+    "symptoms": "લક્ષણો",
+    "recommendations": "ભલામણો",
+    "risk": "જોખમ સ્તર",
+    "scanAgain": "ફરી સ્કેન કરો",
+    "save": "પરિણામ સાચવો",
+    "compareHistory": "ઇતિહાસ સરખાવો",
+    "generateReport": "અહેવાલ બનાવો"
+  },
+  "recommendations": {
+    "cultural": "ખેતી પદ્ધતિઓ",
+    "organic": "જૈવિક ઉપાયો",
+    "chemical": "રાસાયણિક નિયંત્રણ",
+    "precautions": "સાવચેતીઓ"
+  },
+  "fields": {
+    "myFields": "મારા ખેતરો",
+    "addField": "ખેતર ઉમેરો",
+    "fieldName": "ખેતરનું નામ",
+    "area": "વિસ્તાર",
+    "crop": "પાક",
+    "variety": "જાત",
+    "location": "સ્થળ",
+    "plantingDate": "વાવણીની તારીખ",
+    "expectedHarvest": "અપેક્ષિત કાપણી",
+    "growthStage": "વિકાસનો તબક્કો"
+  },
+  "history": {
+    "cropHistory": "પાક ઇતિહાસ",
+    "filter": "ફિલ્ટર",
+    "allCrops": "બધા પાકો",
+    "allDiseases": "બધા રોગો",
+    "allSeverities": "તમામ તીવ્રતા",
+    "scanDetails": "સ્કેન વિગતો",
+    "comparison": "સરખામણી"
+  },
+  "weather": {
+    "temperature": "તાપમાન",
+    "humidity": "ભેજ",
+    "rainfall": "વરસાદ",
+    "windSpeed": "પવનની ગતિ",
+    "forecast": "હવામાન આગાહી",
+    "offline": "ઑફલાઇન (કેશ કરેલો ડેટા દર્શાવે છે)"
+  },
+  "risk": {
+    "assessment": "રોગ જોખમ મૂલ્યાંકન",
+    "prototype": "પ્રોટોટાઇપ જોખમ મૂલ્યાંકન",
+    "low": "ઓછું જોખમ",
+    "medium": "મધ્યમ જોખમ",
+    "high": "વધુ જોખમ",
+    "extreme": "અતિ ભારે જોખમ"
+  },
+  "voice": {
+    "assistant": "વૉઇસ સહાયક",
+    "listening": "સાંભળી રહ્યું છે...",
+    "tapToSpeak": "બોલવા માટે ટેપ કરો",
+    "commands": "વૉઇસ આદેશો"
+  },
+  "general": {
+    "online": "ઓનલાઇન",
+    "offline": "ઓફલાઇન",
+    "sync": "સિંક",
+    "pending": "બાકી",
+    "settings": "સેટિંગ્સ",
+    "language": "ભાષા",
+    "notifications": "સૂચનાઓ",
+    "reports": "અહેવાલો",
+    "admin": "એડમિન",
+    "save": "સાચવો",
+    "cancel": "રદ કરો",
+    "delete": "કાઢી નાખો",
+    "edit": "સુધારો",
+    "view": "જુઓ",
+    "close": "બંધ કરો"
+  },
+  "diseases": {
+    "healthy": "તંદુરસ્ત",
+    "brownSpot": "કથ્થઈ ટપકાંનો રોગ (બ્રાઉન સ્પોટ)",
+    "leafBlast": "પાનનો કરપો (લીફ બ્લાસ્ટ)",
+    "bacterialLeafBlight": "બેક્ટેરિયલ લીફ બ્લાઈટ",
+    "leafRust": "ગેરુ રોગ (લીફ રસ્ટ)",
+    "stripeRust": "પીળો ગેરુ રોગ (સ્ટ્રાઈપ રસ્ટ)",
+    "powderyMildew": "છારો રોગ (પાવડરી મિલ્ડ્યુ)"
+  },
+  "crops": {
+    "paddy": "ડાંગર",
+    "wheat": "ઘઉં"
+  },
+  "severity": {
+    "low": "ઓછી",
+    "moderate": "મધ્યમ",
+    "high": "વધુ",
+    "critical": "ગંભીર"
+  },
+  "status": {
+    "healthy": "તંદુરસ્ત",
+    "attention": "ધ્યાન આપો",
+    "improving": "સુધરી રહ્યું છે",
+    "stable": "સ્થિર",
+    "worsening": "બગડી રહ્યું છે"
+  }
+}

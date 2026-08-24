@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "dashboard": "डॅशबोर्ड",
+    "scanLeaf": "पान स्कॅन करा",
+    "myFields": "माझी शेतं",
+    "cropHistory": "पिकांचा इतिहास",
+    "weather": "हवामान",
+    "diseaseRisk": "रोगाचा धोका",
+    "advisories": "सल्ला व मार्गदर्शन",
+    "growthMonitoring": "वाढीचे निरीक्षण",
+    "reports": "अहवाल",
+    "settings": "सेटिंग्ज",
+    "home": "मुख्यपृष्ठ",
+    "history": "इतिहास",
+    "scan": "स्कॅन",
+    "fields": "शेतं",
+    "profile": "प्रोफाइल",
+    "aiChatbot": "AI चॅटबॉट",
+    "voiceAssistant": "व्हॉइस असिस्टंट",
+    "farmOverview": "शेतीचा आढावा",
+    "waterIrrigation": "पाणी व सिंचन",
+    "animalMonitor": "पशुधन निरीक्षण",
+    "marketAnalysis": "बाजार विश्लेषण",
+    "loansSchemes": "कर्ज आणि योजना",
+    "fertilizerShops": "खत दुकाने",
+    "insectBite": "कीटक चावण्याचे डिटेक्टर"
+  },
+  "landing": {
+    "heroTitle": "CropSense AI",
+    "tagline": "बुद्धिमान पीक आरोग्य व्यवस्थापन",
+    "featuresDescriptions": "वैशिष्ट्ये",
+    "ctaButtons": "सुरुवात करा"
+  },
+  "login": {
+    "phone": "फोन नंबर",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "login": "लॉगिन",
+    "demoFarmer": "डेमो शेतकरी म्हणून सुरू ठेवा"
+  },
+  "dashboard": {
+    "greeting": "नमस्कार",
+    "subtitle": "तुमच्या शेताचा आढावा",
+    "totalFields": "एकूण शेतं",
+    "healthyFields": "निरोगी शेतं",
+    "attentionFields": "लक्ष देण्याजोगी शेतं",
+    "scansThisMonth": "या महिन्यातील स्कॅन",
+    "cropHealthOverview": "पीक आरोग्य आढावा",
+    "diseaseRisk": "रोगाचा धोका",
+    "recentScans": "अलीकडील स्कॅन",
+    "weather": "हवामान",
+    "growthProgress": "वाढीची प्रगती",
+    "preventiveAdvisory": "प्रतिबंधात्मक सल्ला"
+  },
+  "analyzer": {
+    "scanYourCrop": "तुमचे पीक स्कॅन करा",
+    "instructions": "बाधित पानाचा फोटो घ्या किंवा अपलोड करा",
+    "cropSelection": "पीक निवडा",
+    "paddy": "भात / धान",
+    "wheat": "गहू",
+    "useCamera": "कॅमेरा वापरा",
+    "uploadImage": "फोटो अपलोड करा",
+    "chooseGallery": "गॅलरीमधून निवडा",
+    "dragDrop": "ड्रॅग आणि ड्रॉप करा",
+    "imageQuality": "चांगला प्रकाश आणि फोकस सुनिश्चित करा"
+  },
+  "results": {
+    "detectedCrop": "शोधलेले पीक",
+    "disease": "रोग",
+    "scientificName": "शास्त्रीय नाव",
+    "confidence": "विश्वासार्हता",
+    "severity": "तीव्रता",
+    "healthScore": "आरोग्य स्कोअर",
+    "symptoms": "लक्षणे",
+    "recommendations": "शिफारसी",
+    "risk": "धोका पातळी",
+    "scanAgain": "पुन्हा स्कॅन करा",
+    "save": "निकाल जतन करा",
+    "compareHistory": "इतिहासाची तुलना करा",
+    "generateReport": "अहवाल तयार करा"
+  },
+  "recommendations": {
+    "cultural": "मशागतीचे उपाय",
+    "organic": "सेंद्रिय पर्याय",
+    "chemical": "रासायनिक नियंत्रण",
+    "precautions": "खबरदारी"
+  },
+  "fields": {
+    "myFields": "माझी शेतं",
+    "addField": "शेत जोडा",
+    "fieldName": "शेताचे नाव",
+    "area": "क्षेत्रफळ",
+    "crop": "पीक",
+    "variety": "वाण/प्रकार",
+    "location": "स्थान",
+    "plantingDate": "पेरणी तारीख",
+    "expectedHarvest": "अपेक्षित काढणी",
+    "growthStage": "वाढीचा टप्पा"
+  },
+  "history": {
+    "cropHistory": "पिकांचा इतिहास",
+    "filter": "फिल्टर",
+    "allCrops": "सर्व पिके",
+    "allDiseases": "सर्व रोग",
+    "allSeverities": "सर्व तीव्रता",
+    "scanDetails": "स्कॅन तपशील",
+    "comparison": "तुलना"
+  },
+  "weather": {
+    "temperature": "तापमान",
+    "humidity": "आर्द्रता",
+    "rainfall": "पाऊस",
+    "windSpeed": "वाऱ्याचा वेग",
+    "forecast": "हवामान अंदाज",
+    "offline": "ऑफलाइन (कॅश केलेला डेटा दाखवत आहे)"
+  },
+  "risk": {
+    "assessment": "रोग जोखीम मूल्यांकन",
+    "prototype": "प्रोटोटाइप जोखीम मूल्यांकन",
+    "low": "कमी धोका",
+    "medium": "मध्यम धोका",
+    "high": "उच्च धोका",
+    "extreme": "अत्यंत तीव्र धोका"
+  },
+  "voice": {
+    "assistant": "व्हॉइस असिस्टंट",
+    "listening": "ऐकत आहे...",
+    "tapToSpeak": "बोलण्यासाठी टॅप करा",
+    "commands": "व्हॉइस कमांड्स"
+  },
+  "general": {
+    "online": "ऑनलाइन",
+    "offline": "ऑफलाइन",
+    "sync": "सिंक करा",
+    "pending": "प्रलंबित",
+    "settings": "सेटिंग्ज",
+    "language": "भाषा",
+    "notifications": "सूचना",
+    "reports": "अहवाल",
+    "admin": "प्रशासक",
+    "save": "जतन करा",
+    "cancel": "रद्द करा",
+    "delete": "हटवा",
+    "edit": "संपादित करा",
+    "view": "पहा",
+    "close": "बंद करा"
+  },
+  "diseases": {
+    "healthy": "निरोगी",
+    "brownSpot": "तपकिरी ठिपके (ब्राउन स्पॉट)",
+    "leafBlast": "पानांवरील करपा (लीफ ब्लास्ट)",
+    "bacterialLeafBlight": "जिवाणूजन्य पानांचा करपा",
+    "leafRust": "तांबेरा रोग (लीफ रस्ट)",
+    "stripeRust": "पट्टेदार तांबेरा (स्ट्राइप रस्ट)",
+    "powderyMildew": "भुरी रोग (पावडरी मिल्ड्यू)"
+  },
+  "crops": {
+    "paddy": "भात / धान",
+    "wheat": "गहू"
+  },
+  "severity": {
+    "low": "कमी",
+    "moderate": "मध्यम",
+    "high": "जास्त",
+    "critical": "गंभीर"
+  },
+  "status": {
+    "healthy": "निरोगी",
+    "attention": "लक्ष द्या",
+    "improving": "सुधारत आहे",
+    "stable": "स्थिर",
+    "worsening": "बिघडत आहे"
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "scanLeaf": "पत्ता स्कैन करें",
+    "myFields": "मेरे खेत",
+    "cropHistory": "फसल का इतिहास",
+    "weather": "मौसम",
+    "diseaseRisk": "रोग का खतरा",
+    "advisories": "सलाह",
+    "growthMonitoring": "विकास की निगरानी",
+    "reports": "रिपोर्ट",
+    "settings": "सेटिंग्स",
+    "home": "होम",
+    "history": "इतिहास",
+    "scan": "स्कैन",
+    "fields": "खेत",
+    "profile": "प्रोफ़ाइल"
+  },
+  "landing": {
+    "heroTitle": "क्रॉपसेंस एआई",
+    "tagline": "बुद्धिमान फसल स्वास्थ्य प्रबंधन",
+    "featuresDescriptions": "विशेषताएं",
+    "ctaButtons": "शुरू करें"
+  },
+  "login": {
+    "phone": "फ़ोन नंबर",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "login": "लॉग इन",
+    "demoFarmer": "डेमो किसान के रूप में जारी रखें"
+  },
+  "dashboard": {
+    "greeting": "नमस्ते",
+    "subtitle": "आपके खेत का अवलोकन",
+    "totalFields": "कुल खेत",
+    "healthyFields": "स्वस्थ खेत",
+    "attentionFields": "ध्यान देने योग्य खेत",
+    "scansThisMonth": "इस महीने के स्कैन",
+    "cropHealthOverview": "फसल स्वास्थ्य का अवलोकन",
+    "diseaseRisk": "रोग का खतरा",
+    "recentScans": "हाल के स्कैन",
+    "weather": "मौसम",
+    "growthProgress": "विकास की प्रगति",
+    "preventiveAdvisory": "निवारक सलाह"
+  },
+  "analyzer": {
+    "scanYourCrop": "अपनी फसल स्कैन करें",
+    "instructions": "प्रभावित पत्ते की तस्वीर लें या अपलोड करें",
+    "cropSelection": "फसल चुनें",
+    "paddy": "धान",
+    "wheat": "गेहूं",
+    "useCamera": "कैमरा का उपयोग करें",
+    "uploadImage": "छवि अपलोड करें",
+    "chooseGallery": "गैलरी से चुनें",
+    "dragDrop": "खींचें और छोड़ें",
+    "imageQuality": "अच्छी रोशनी और फोकस सुनिश्चित करें"
+  },
+  "results": {
+    "detectedCrop": "पता लगाई गई फसल",
+    "disease": "बीमारी",
+    "scientificName": "वैज्ञानिक नाम",
+    "confidence": "विश्वास",
+    "severity": "गंभीरता",
+    "healthScore": "स्वास्थ्य स्कोर",
+    "symptoms": "लक्षण",
+    "recommendations": "सिफारिशें",
+    "risk": "जोखिम स्तर",
+    "scanAgain": "फिर से स्कैन करें",
+    "save": "परिणाम सहेजें",
+    "compareHistory": "इतिहास की तुलना करें",
+    "generateReport": "रिपोर्ट तैयार करें"
+  },
+  "recommendations": {
+    "cultural": "सांस्कृतिक अभ्यास",
+    "organic": "जैविक विकल्प",
+    "chemical": "रासायनिक नियंत्रण",
+    "precautions": "सावधानियां"
+  },
+  "fields": {
+    "myFields": "मेरे खेत",
+    "addField": "खेत जोड़ें",
+    "fieldName": "खेत का नाम",
+    "area": "क्षेत्रफल",
+    "crop": "फसल",
+    "variety": "किस्म",
+    "location": "स्थान",
+    "plantingDate": "रोपण की तारीख",
+    "expectedHarvest": "अपेक्षित फसल",
+    "growthStage": "विकास का चरण"
+  },
+  "history": {
+    "cropHistory": "फसल का इतिहास",
+    "filter": "फ़िल्टर",
+    "allCrops": "सभी फसलें",
+    "allDiseases": "सभी बीमारियां",
+    "allSeverities": "सभी गंभीरताएं",
+    "scanDetails": "स्कैन विवरण",
+    "comparison": "तुलना"
+  },
+  "weather": {
+    "temperature": "तापमान",
+    "humidity": "नमी",
+    "rainfall": "बारिश",
+    "windSpeed": "हवा की गति",
+    "forecast": "पूर्वानुमान",
+    "offline": "ऑफ़लाइन (कैश किया गया डेटा दिखा रहा है)"
+  },
+  "risk": {
+    "assessment": "रोग जोखिम मूल्यांकन",
+    "prototype": "प्रोटोटाइप जोखिम मूल्यांकन",
+    "low": "कम जोखिम",
+    "medium": "मध्यम जोखिम",
+    "high": "उच्च जोखिम",
+    "extreme": "अत्यधिक जोखिम"
+  },
+  "voice": {
+    "assistant": "वॉयस असिस्टेंट",
+    "listening": "सुन रहा है...",
+    "tapToSpeak": "बोलने के लिए टैप करें",
+    "commands": "वॉयस कमांड्स"
+  },
+  "general": {
+    "online": "ऑनलाइन",
+    "offline": "ऑफ़लाइन",
+    "sync": "सिंक",
+    "pending": "लंबित",
+    "settings": "सेटिंग्स",
+    "language": "भाषा",
+    "notifications": "सूचनाएं",
+    "reports": "रिपोर्ट",
+    "admin": "व्यवस्थापक",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "view": "देखें",
+    "close": "बंद करें"
+  },
+  "diseases": {
+    "healthy": "स्वस्थ",
+    "brownSpot": "ब्राउन स्पॉट",
+    "leafBlast": "लीफ ब्लास्ट",
+    "bacterialLeafBlight": "बैक्टीरियल लीफ ब्लाइट",
+    "leafRust": "लीफ रस्ट",
+    "stripeRust": "स्ट्राइप रस्ट",
+    "powderyMildew": "पाउडरी मिल्ड्यू"
+  },
+  "crops": {
+    "paddy": "धान",
+    "wheat": "गेहूं"
+  },
+  "severity": {
+    "low": "कम",
+    "moderate": "मध्यम",
+    "high": "उच्च",
+    "critical": "गंभीर"
+  },
+  "status": {
+    "healthy": "स्वस्थ",
+    "attention": "ध्यान देने योग्य",
+    "improving": "सुधर रहा है",
+    "stable": "स्थिर",
+    "worsening": "बदतर"
+  }
+}

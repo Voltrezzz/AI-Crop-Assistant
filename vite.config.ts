@@ -3,7 +3,10 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
+const basePath = '/CropSense-AI/';
+
 export default defineConfig({
+  base: basePath,
   plugins: [
     react(),
     VitePWA({
@@ -16,12 +19,12 @@ export default defineConfig({
         theme_color: '#16a34a',
         background_color: '#f0fdf4',
         display: 'standalone',
-        scope: '/',
-        start_url: '/',
+        scope: basePath,
+        start_url: basePath,
         icons: [
-          { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
-          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: `${basePath}icons/icon-192.png`, sizes: '192x192', type: 'image/png' },
+          { src: `${basePath}icons/icon-512.png`, sizes: '512x512', type: 'image/png' },
+          { src: `${basePath}icons/icon-512.png`, sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
