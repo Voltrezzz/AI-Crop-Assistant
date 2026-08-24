@@ -13,33 +13,49 @@ export default function DashboardPage() {
   
   const [stats, setStats] = useState({ totalFields: 0, healthyFields: 0, attentionFields: 0, scansThisMonth: 0 });
   const [recentScans, setRecentScans] = useState<any[]>([]);
+  const [healthData, setHealthData] = useState<Array<{ name: string; score: number }>>([]);
   
   useEffect(() => {
+    let cancelled = false;
+
     async function loadData() {
       try {
         if (!user?.id) {
           setStats({ totalFields: 0, healthyFields: 0, attentionFields: 0, scansThisMonth: 0 });
           setRecentScans([]);
+          setHealthData([]);
           return;
         }
         const fields = await db.fields.where('userId').equals(user.id).toArray();
         const scans = await db.scans.where('userId').equals(user.id).toArray();
+        if (cancelled) return;
 
         const healthyFields = fields.filter((f: any) => f.status === 'healthy').length;
         const scansThisMonth = scans.filter((s: any) => new Date(s.date).getTime() >= new Date().setDate(1)).length;
         setStats({ totalFields: fields.length, healthyFields, attentionFields: fields.length - healthyFields, scansThisMonth });
-        setRecentScans(scans.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3));
+        setRecentScans([...scans].sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3));
+        setHealthData(
+          scans
+            .filter(scan => typeof scan.healthScore === 'number' && Number.isFinite(scan.healthScore))
+            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+            .slice(-7)
+            .map(scan => ({
+              name: new Date(scan.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+              score: Number(scan.healthScore),
+            })),
+        );
       } catch (err) {
-        console.error('Error loading dashboard data', err);
+        if (!cancelled) {
+          setHealthData([]);
+          console.error('Error loading dashboard data', err);
+        }
       }
     }
-    loadData();
+    void loadData();
+    return () => {
+      cancelled = true;
+    };
   }, [user?.id]);
-
-  const healthData = [
-    { name: 'Mon', score: 85 }, { name: 'Tue', score: 82 }, { name: 'Wed', score: 88 },
-    { name: 'Thu', score: 89 }, { name: 'Fri', score: 86 }, { name: 'Sat', score: 92 }, { name: 'Sun', score: 94 },
-  ];
 
   return (
     <div className="min-h-screen bg-neutral-100 font-sans pb-20 md:pb-8">
@@ -61,7 +77,7 @@ export default function DashboardPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        <PrototypeNotice>The health chart, disease-risk card, and weather card are sample dashboard visuals; field and scan counts are local records.</PrototypeNotice>
+        <PrototypeNotice>The health chart uses this account's stored records when available. Disease-risk and weather cards remain sample dashboard visuals.</PrototypeNotice>
         <div>
           <h1 className="text-2xl font-bold text-neutral-900">Vanakkam, {user?.name || 'Farmer'} 👋</h1>
           <p className="text-neutral-500">Here's your farm overview for today.</p>
@@ -104,21 +120,29 @@ export default function DashboardPage() {
               <h2 className="text-lg font-bold text-neutral-900">Crop Health Overview</h2>
             </div>
             <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={healthData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                  <YAxis axisLine={false} tickLine={false} domain={[0, 100]} />
-                  <Tooltip />
-                  <Area type="monotone" dataKey="score" stroke="#16a34a" strokeWidth={3} fillOpacity={1} fill="url(#colorScore)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              {healthData.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={healthData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                    <YAxis axisLine={false} tickLine={false} domain={[0, 100]} />
+                    <Tooltip />
+                    <Area type="monotone" dataKey="score" stroke="#16a34a" strokeWidth={3} fillOpacity={1} fill="url(#colorScore)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="flex h-full flex-col items-center justify-center text-center text-neutral-500">
+                  <Activity className="mb-3 h-10 w-10 text-neutral-300" />
+                  <p className="font-medium text-neutral-700">No crop-health history yet</p>
+                  <p className="mt-1 max-w-sm text-sm">This chart will show this account's stored health records when available.</p>
+                </div>
+              )}
             </div>
           </div>
 
