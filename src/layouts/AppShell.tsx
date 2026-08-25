@@ -4,7 +4,7 @@ import {
   LayoutDashboard, ScanLine, Map, History, Cloud, AlertTriangle,
   BookOpen, TrendingUp, FileText, Settings, Menu, X, Bell, Wifi, WifiOff, HardDrive, FlaskConical,
   User, Leaf, Droplets, LandPlot, MessageCircle, Dog, Landmark,
-  Store, BarChart3, Bug, Mic, ChevronDown, ChevronUp, LogOut
+  Store, BarChart3, Bug, Mic, ChevronDown, ChevronUp, LogOut, Users, Scale
 } from 'lucide-react';
 import { cn } from '@/utils';
 import { useAuthStore } from '@/stores/authStore';
@@ -58,6 +58,13 @@ const navSections: NavSection[] = [
       { path: '/market', label: 'Market Analysis', icon: <BarChart3 size={20} /> },
       { path: '/loans', label: 'Loans & Schemes', icon: <Landmark size={20} /> },
       { path: '/shops', label: 'Fertilizer Shops', icon: <Store size={20} /> },
+    ],
+  },
+  {
+    title: 'Community',
+    items: [
+      { path: '/friends', label: 'Friends', icon: <Users size={20} /> },
+      { path: '/compare', label: 'Compare Farms', icon: <Scale size={20} /> },
     ],
   },
   {

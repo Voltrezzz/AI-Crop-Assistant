@@ -205,6 +205,7 @@ export interface Profile { id?: number; cloudId?: string; userId?: number; name:
 export interface User {
   id?: number;
   cloudId?: string;
+  contractId?: string;
   name: string;
   phone: string;
   email: string;
@@ -555,3 +556,35 @@ export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
 
 export interface DocumentFile { id?: number; userId?: number; name: string; type: string; size: number; date: string; dataUrl?: string; }
 
+// --- Social & Chat ---
+
+export interface Friend {
+  id?: number;
+  userId?: number;
+  friendId: string; // we'll use cloudId as friendId for cross-device syncing
+  name: string;
+  avatarUrl?: string;
+  status: 'pending' | 'accepted' | 'blocked';
+  isIncoming: boolean;
+  createdAt: string;
+}
+
+export interface DirectMessage {
+  id?: number;
+  userId?: number;
+  conversationId: string; // The friend's cloudId
+  senderId: string;
+  receiverId: string;
+  content: string;
+  timestamp: string;
+  readStatus: boolean;
+}
+
+export interface ComparisonResult {
+  userId: string;
+  userName: string;
+  contractId: string;
+  fields: Field[];
+  scans: Scan[];
+  landParcels: LandParcel[];
+}

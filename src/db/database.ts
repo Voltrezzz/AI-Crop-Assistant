@@ -27,6 +27,8 @@ import {
   PestAdvisoryRecord,
   ChatMessage,
   DocumentFile,
+  Friend,
+  DirectMessage,
 } from '@/types';
 
 export class CropSenseDatabase extends Dexie {
@@ -59,6 +61,8 @@ export class CropSenseDatabase extends Dexie {
   pestAdvisories!: Table<PestAdvisoryRecord, number>;
   chatMessages!: Table<ChatMessage, number>;
   documents!: Table<DocumentFile, number>;
+  friends!: Table<Friend, number>;
+  directMessages!: Table<DirectMessage, number>;
 
   constructor() {
     super('CropSenseDB');
@@ -236,6 +240,13 @@ export class CropSenseDatabase extends Dexie {
     // Legacy prototype insectBiteScans are retained but no longer used by the UI.
     this.version(7).stores({
       pestAdvisories: '++id, userId, date, selectedCrop, confidence',
+    });
+
+    // Version 8 - Added social features (Friends, Compare, Direct Messages)
+    this.version(8).stores({
+      friends: '++id, userId, friendId, status',
+      directMessages: '++id, userId, conversationId, timestamp, readStatus',
+      users: '++id, &email, cloudId, contractId, name, phone' // updated index for contractId
     });
   }
 }

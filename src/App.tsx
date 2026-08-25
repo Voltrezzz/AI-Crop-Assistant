@@ -38,6 +38,10 @@ const InsectBitePage = lazy(() => import('@/pages/InsectBitePage'));
 
 const FertilizerCalculatorPage = lazy(() => import('@/pages/FertilizerCalculatorPage'));
 
+const ComparePage = lazy(() => import('@/pages/ComparePage'));
+const FriendsPage = lazy(() => import('@/pages/FriendsPage'));
+const ChatPage = lazy(() => import('@/pages/ChatPage'));
+
 function LoadingFallback() {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
@@ -95,6 +99,10 @@ export default function App() {
             <Route path="/fertilizer-calculator" element={<FertilizerCalculatorPage />} />
             <Route path="/market" element={<MarketAnalysisPage />} />
             <Route path="/insect-bite" element={<InsectBitePage />} />
+            
+            <Route path="/compare" element={<ComparePage />} />
+            <Route path="/friends" element={<FriendsPage />} />
+            <Route path="/chat/:friendId" element={<ChatPage />} />
           </Route>
 
           {/* Catch all */}
