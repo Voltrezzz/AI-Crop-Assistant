@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-10-06",
+  "testGeometry": "synthetic Chennai polygon; no user records",
+  "sceneId": "S2A_MSIL2A_20261003T050231_R119_T44PMV_20261003T100809",
+  "processingBaseline": "05.13",
+  "expression": "(where(B08>1000,B08-1000,0)-where(B04>1000,B04-1000,0))/(where(B08>1000,B08-1000,0)+where(B04>1000,B04-1000,0))",
+  "tileJsonStatus": 200,
+  "cors": "*",
+  "tileStatus": 200,
+  "tileType": "image/png",
+  "pngSignatureValid": true,
+  "statisticsMean": 0.17750190326086318,
+  "validPixels": 306.0,
+  "notes": "Real search, baseline metadata, polygon statistics and PNG response checked. Not visually inspected."
+}

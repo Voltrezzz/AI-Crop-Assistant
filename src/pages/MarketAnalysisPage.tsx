@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { db } from '@/db/database';
 import { cn } from '@/utils';
-import { Calculator, TrendingUp, Download, IndianRupee, MapPin, Store, Leaf, Save, AlertCircle } from 'lucide-react';
+import { TrendingUp, Store, Save, AlertCircle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import PrototypeNotice from '@/components/PrototypeNotice';
+import { useAuthStore } from '@/stores/authStore';
 
 type Crop = 'Paddy' | 'Wheat';
 type Quality = 'A' | 'B' | 'C';
@@ -50,6 +51,7 @@ const VARIETIES = {
 const STATES = ['Tamil Nadu', 'Andhra Pradesh', 'Punjab', 'Haryana', 'UP', 'Karnataka', 'Maharashtra'];
 
 export default function MarketAnalysisPage() {
+  const { user } = useAuthStore();
   const [stage, setStage] = useState<Stage>('pre');
   const [crop, setCrop] = useState<Crop>('Paddy');
   const [variety, setVariety] = useState(VARIETIES['Paddy'][0]);
@@ -69,14 +71,16 @@ export default function MarketAnalysisPage() {
 
   const totalYield = area * expectedYield;
   const currentPrices = DEMO_PRICES[crop];
-  
+
   const bestMarket = [...currentPrices].sort((a, b) => b.modal - a.modal)[0];
   const expectedRevenue = totalYield * bestMarket.modal;
   const actualRevenue = actualYield * bestMarket.modal;
 
   const handleSave = async () => {
     try {
+      if (!user) return;
       await db.harvestAnalysis?.add({
+        userId: user.id,
         crop: crop.toLowerCase(),
         variety,
         estimatedYieldKg: totalYield * 100,
@@ -110,8 +114,8 @@ export default function MarketAnalysisPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-white p-4 rounded-xl shadow-sm border border-green-100">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Crop</label>
-          <select 
-            value={crop} 
+          <select
+            value={crop}
             onChange={(e) => {
               const c = e.target.value as Crop;
               setCrop(c);
@@ -125,8 +129,8 @@ export default function MarketAnalysisPage() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Variety</label>
-          <select 
-            value={variety} 
+          <select
+            value={variety}
             onChange={(e) => setVariety(e.target.value)}
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-green-500 focus:border-green-500"
           >
@@ -135,8 +139,8 @@ export default function MarketAnalysisPage() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
-          <select 
-            value={state} 
+          <select
+            value={state}
             onChange={(e) => setState(e.target.value)}
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-green-500 focus:border-green-500"
           >
@@ -267,8 +271,8 @@ export default function MarketAnalysisPage() {
               <div className="flex items-start gap-2">
                 <AlertCircle className={cn("w-5 h-5 shrink-0", moisture > 14 ? "text-amber-600" : "text-emerald-600")} />
                 <p className="text-sm">
-                  {moisture > 14 
-                    ? `High moisture (${moisture}%). Needs drying before storage to prevent fungal growth.` 
+                  {moisture > 14
+                    ? `High moisture (${moisture}%). Needs drying before storage to prevent fungal growth.`
                     : `Good moisture level (${moisture}%). Safe for long-term storage in dry warehouse.`}
                 </p>
               </div>
@@ -284,7 +288,7 @@ export default function MarketAnalysisPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Actual Yield Harvested (Quintals)</label>
               <input type="number" value={actualYield} onChange={e => setActualYield(Number(e.target.value))} className="w-full border rounded p-3 text-lg focus:ring-green-500" />
             </div>
-            
+
             <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex flex-col justify-center">
               <h3 className="text-sm font-semibold text-green-800 mb-1">Potential Revenue</h3>
               <p className="text-3xl font-bold text-green-900">₹{actualRevenue.toLocaleString('en-IN')}</p>
@@ -328,7 +332,7 @@ export default function MarketAnalysisPage() {
       )}
 
       <div className="flex justify-end">
-        <button 
+        <button
           onClick={handleSave}
           className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
         >

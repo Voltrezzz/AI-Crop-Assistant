@@ -1,3 +1,5 @@
+import type { SatelliteSearch } from '@/services/sentinelService';
+import type { ModuleDraft } from '@/services/moduleDraftService';
 import Dexie, { Table } from 'dexie';
 
 import {
@@ -29,14 +31,27 @@ import {
   DocumentFile,
   Friend,
   DirectMessage,
+  Farm,
+  FieldBoundary,
+  FarmActivity,
+  FertilizerRecord,
+  PesticideRecord,
+  ObservationRecord,
+  ProductionRecord,
+  InventoryBatch,
+  SaleRecord,
 } from '@/types';
 
 export class CropSenseDatabase extends Dexie {
+  satelliteSearches!: Table<SatelliteSearch, number>;
+  moduleDrafts!: Table<ModuleDraft, number>;
   users!: Table<User, number>;
   profiles!: Table<Profile, number>;
 
   fields!: Table<Field, number>;
   cropCycles!: Table<CropCycle, number>;
+  inventoryBatches!: Table<InventoryBatch, number>;
+  salesRecords!: Table<SaleRecord, number>;
   scans!: Table<Scan, number>;
   growthRecords!: Table<GrowthRecord, number>;
   weather!: Table<WeatherData, number>;
@@ -63,6 +78,15 @@ export class CropSenseDatabase extends Dexie {
   documents!: Table<DocumentFile, number>;
   friends!: Table<Friend, number>;
   directMessages!: Table<DirectMessage, number>;
+
+  // Phase 2 Entities
+  farms!: Table<Farm, number>;
+  fieldBoundaries!: Table<FieldBoundary, number>;
+  farmActivities!: Table<FarmActivity, number>;
+  fertilizerRecords!: Table<FertilizerRecord, number>;
+  pesticideRecords!: Table<PesticideRecord, number>;
+  observations!: Table<ObservationRecord, number>;
+  productionRecords!: Table<ProductionRecord, number>;
 
   constructor() {
     super('CropSenseDB');
@@ -160,7 +184,7 @@ export class CropSenseDatabase extends Dexie {
       advisories: '++id, userId, type, date, isRead',
       notifications: '++id, userId, type, date, isRead',
       settings: '++id, userId',
-      
+
       // Global/shared tables
       weather: '++id, location, updatedAt',
       recommendations: '++id, disease',
@@ -175,7 +199,7 @@ export class CropSenseDatabase extends Dexie {
       animalHealth: '++id, userId, animalId, date, status',
       loans: '++id, userId, loanType, bankName, status, nextPaymentDate',
       governmentSchemes: '++id, userId, schemeName, category, isApplied',
-      
+
       // Global reference data
       fertilizerShops: '++id, name, city, type',
       marketPrices: '++id, crop, marketType, date, state',
@@ -189,17 +213,17 @@ export class CropSenseDatabase extends Dexie {
       // Migration: Assign existing data to demo user
       const users = await trans.table('users').toArray();
       const demoUser = users.find(u => u.isDemo) || users[0];
-      
+
       if (demoUser && demoUser.id) {
         // Update all existing records to belong to demo user
         const tablesToUpdate = [
-          'fields', 'cropCycles', 'scans', 'growthRecords', 
+          'fields', 'cropCycles', 'scans', 'growthRecords',
           'advisories', 'notifications', 'settings', 'syncQueue',
-          'irrigationRecords', 'landParcels', 'animals', 
+          'irrigationRecords', 'landParcels', 'animals',
           'vaccinations', 'animalHealth', 'loans', 'governmentSchemes',
           'harvestAnalysis', 'insectBiteScans', 'chatMessages', 'documents'
         ];
-        
+
         for (const tableName of tablesToUpdate) {
           const table = trans.table(tableName);
           const records = await table.toArray();
@@ -248,6 +272,27 @@ export class CropSenseDatabase extends Dexie {
       directMessages: '++id, userId, conversationId, timestamp, readStatus',
       users: '++id, &email, cloudId, contractId, name, phone' // updated index for contractId
     });
+
+    // Version 9 - Phase 2: Core Data Model & Digital Farm Memory
+    this.version(9).stores({
+      farms: '++id, userId, cloudId, name, location',
+      fieldBoundaries: '++id, userId, cloudId, fieldId', // payload contains GeoJSON
+      farmActivities: '++id, userId, cloudId, fieldId, cropCycleId, type, date', // type: irrigation, fertilizer, pesticide, observation, etc.
+      fertilizerRecords: '++id, userId, cloudId, fieldId, cropCycleId, date',
+      pesticideRecords: '++id, userId, cloudId, fieldId, cropCycleId, date',
+      observations: '++id, userId, cloudId, fieldId, cropCycleId, date',
+      productionRecords: '++id, userId, cloudId, fieldId, cropCycleId, date'
+    });
+    // Add stores without replacing or deleting existing farm records.
+    this.version(10).stores({
+      cropCycles: '++id, userId, cloudId, fieldId, crop, status',
+      inventoryBatches: '++id, userId, cloudId, fieldId, cropCycleId, status',
+      salesRecords: '++id, userId, cloudId, inventoryBatchId, saleDate',
+    });
+    // Local-only drafts for the presentation modules; never dispatched or uploaded.
+    this.version(11).stores({ moduleDrafts: '++id, userId, kind, createdAt' });
+    this.version(12).stores({ satelliteSearches: '++id, &[userId+fieldId], userId, fieldId' });
+
   }
 }
 

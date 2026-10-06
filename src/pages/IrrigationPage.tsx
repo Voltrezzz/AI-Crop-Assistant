@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { db } from '@/db/database';
 import { Droplets, Clock, Zap, IndianRupee, Settings2, Save } from 'lucide-react';
-import { cn } from '@/utils';
+
 import { useAuthStore } from '@/stores/authStore';
 
 export default function IrrigationPage() {
   const { user } = useAuthStore();
   const [fields, setFields] = useState<any[]>([]);
   const [history, setHistory] = useState<any[]>([]);
-  
+
   const [formData, setFormData] = useState({
     fieldId: '',
     area: 1,
@@ -24,11 +24,9 @@ export default function IrrigationPage() {
 
   const [results, setResults] = useState<any>(null);
 
-  useEffect(() => {
-    loadData();
-  }, [user?.id]);
 
-  const loadData = async () => {
+
+  const loadData = useCallback(async () => {
     try {
       if (!user?.id) return;
       if (db.fields) setFields(await db.fields.where('userId').equals(user.id).toArray());
@@ -36,33 +34,37 @@ export default function IrrigationPage() {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [user]);
+
+  // IndexedDB reads synchronize external persisted state; event handlers reuse this loader.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { void loadData(); }, [loadData]);
 
   const calculate = () => {
     let baseWaterPerWeek = formData.cropType === 'paddy' ? 60 : 40;
     if (formData.soilType === 'sandy') baseWaterPerWeek *= 1.2;
     if (formData.soilType === 'clay') baseWaterPerWeek *= 0.9;
-    
+
     let areaMultiplier = 1;
     if (formData.areaUnit === 'acres') areaMultiplier = 4046.86;
     if (formData.areaUnit === 'hectares') areaMultiplier = 10000;
     if (formData.areaUnit === 'bigha') areaMultiplier = 2529.29; // approximate
-    
+
     // Water needed in liters
     const waterNeeded = baseWaterPerWeek * areaMultiplier * formData.area;
-    
+
     // Flow rate (LPM)
     const flowRateLPM = (formData.motorHP * 746 * (formData.motorEfficiency / 100)) / (9.81 * formData.waterDepth * 1000) * 60000;
-    
+
     // Duration in hours
     const durationHours = waterNeeded / (flowRateLPM * 60);
-    
+
     // Electricity consumption
     const electricityKWh = formData.motorHP * 0.746 * durationHours;
-    
+
     // Cost
     const cost = electricityKWh * 8;
-    
+
     setResults({
       waterNeeded,
       flowRateLPM,
@@ -92,13 +94,13 @@ export default function IrrigationPage() {
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold text-green-800 mb-6">Water Irrigation Calculator</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-1 space-y-6 bg-white p-6 rounded-2xl shadow-sm border border-green-100">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <Settings2 className="text-green-600" /> Parameters
           </h2>
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Field</label>
@@ -107,7 +109,7 @@ export default function IrrigationPage() {
                 {fields.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
               </select>
             </div>
-            
+
             <div className="flex gap-2">
               <div className="flex-1">
                 <label className="block text-sm font-medium mb-1">Area</label>
@@ -194,7 +196,7 @@ export default function IrrigationPage() {
                     <p className="text-2xl font-bold">{Math.round(results.waterNeeded).toLocaleString()} L</p>
                   </div>
                 </div>
-                
+
                 <div className="bg-purple-50 p-6 rounded-2xl border border-purple-100 flex items-center gap-4">
                   <div className="p-4 bg-purple-100 rounded-full text-purple-600"><Clock size={32} /></div>
                   <div>
@@ -219,7 +221,7 @@ export default function IrrigationPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-green-100">
                 <h3 className="font-semibold text-lg mb-2">Recommendations</h3>
                 <ul className="list-disc pl-5 space-y-2 text-gray-700">

@@ -6,7 +6,7 @@ import { syncDeviceContacts } from '@/services/socialService';
 
 export default function FriendsPage() {
   const navigate = useNavigate();
-  const { friends, loadFriends, addFriend, acceptFriend, loading } = useSocialStore();
+  const { friends, loadFriends, addFriend, acceptFriend } = useSocialStore();
   const [activeTab, setActiveTab] = useState<'friends' | 'find'>('friends');
   const [suggestedContacts, setSuggestedContacts] = useState<any[]>([]);
   const [syncing, setSyncing] = useState(false);

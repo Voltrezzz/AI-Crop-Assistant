@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Map, Plus, Trash2, Droplets } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { db } from '@/db/database';
 import { LandParcel } from '@/types';
-import { cn } from '@/utils';
+
 import DocumentDrive from '@/components/DocumentDrive';
 import { useAuthStore } from '@/stores/authStore';
 
@@ -30,16 +30,14 @@ export default function LandSegregationPage() {
   const [totalArea, setTotalArea] = useState(0);
   const [parcels, setParcels] = useState<LandParcel[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const [newParcel, setNewParcel] = useState<Omit<LandParcel, 'id'>>({
     name: '', area: 1, areaUnit: 'acres', crop: 'paddy', variety: '', soilType: 'loam', irrigationType: 'borewell', status: 'cultivated', color: COLORS.paddy, notes: ''
   });
 
-  useEffect(() => {
-    loadParcels();
-  }, [user?.id]);
 
-  const loadParcels = async () => {
+
+  const loadParcels = useCallback(async () => {
     try {
       if (db.landParcels) {
         if (!user?.id) {
@@ -48,20 +46,24 @@ export default function LandSegregationPage() {
         }
         let items = await db.landParcels.where('userId').equals(user.id).toArray();
         if (items.length === 0 && user.isDemo) {
-          for (let p of DEMO_PARCELS) {
+          for (const p of DEMO_PARCELS) {
             await db.landParcels.add({ ...p, userId: user.id } as LandParcel);
           }
           items = await db.landParcels.where('userId').equals(user.id).toArray();
         }
         setParcels(items);
         const sum = items.reduce((acc, p) => acc + Number(p.area), 0);
-        if (sum > totalArea) setTotalArea(Math.ceil(sum));
+        setTotalArea(previous => Math.max(previous, Math.ceil(sum)));
       }
     } catch (e) {
       console.error(e);
       setParcels([]);
     }
-  };
+  }, [user]);
+
+  // IndexedDB reads synchronize external persisted state; event handlers reuse this loader.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { void loadParcels(); }, [loadParcels]);
 
   const handleAdd = async () => {
     try {
@@ -92,7 +94,7 @@ export default function LandSegregationPage() {
 
   const cultivatedArea = parcels.filter(p => p.status === 'cultivated').reduce((sum, p) => sum + p.area, 0);
   const fallowArea = parcels.filter(p => p.status === 'fallow' || p.status === 'preparation').reduce((sum, p) => sum + p.area, 0);
-  
+
   const pieData = Object.keys(COLORS).map(cropKey => {
     const area = parcels.filter(p => p.crop?.toLowerCase() === cropKey.toLowerCase()).reduce((acc, p) => acc + Number(p.area), 0);
     return { name: cropKey.charAt(0).toUpperCase() + cropKey.slice(1), value: area, color: (COLORS as any)[cropKey] };
@@ -135,11 +137,11 @@ export default function LandSegregationPage() {
               <Plus size={16} /> Add Parcel
             </button>
           </div>
-          
+
           <div className="w-full min-h-[200px] bg-green-50 rounded-xl relative overflow-hidden border-2 border-green-100 flex flex-wrap p-2 gap-2">
             {parcels.map((p, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="flex items-center justify-center text-white font-semibold text-sm rounded-lg shadow-sm transition-transform hover:scale-[1.02]"
                 style={{
                   backgroundColor: p.color,

@@ -1,4 +1,4 @@
-import { CropType, Prediction } from '@/types';
+import { CropType } from '@/types';
 import { loadModel, getActiveModel } from './modelLoader';
 import { checkImageQuality } from './imagePreprocessor';
 import { getDiseaseInfo } from '../services/diseaseDatabase';
@@ -12,13 +12,13 @@ export async function initAIService() {
 
 export async function analyzeImage(imageData: string, crop: CropType, demoScenario?: string): Promise<any> {
   const model = getActiveModel();
-  
+
   const quality = await checkImageQuality(imageData);
-  
+
   const rawPrediction = await model.predict(imageData, crop, demoScenario);
-  
+
   const diseaseInfo = getDiseaseInfo(rawPrediction.disease);
-  
+
   const riskAssessment = assessRisk({
     crop,
     diseaseHistory: [], // mock history
@@ -28,13 +28,13 @@ export async function analyzeImage(imageData: string, crop: CropType, demoScenar
     growthStage: 'vegetative',
     currentDisease: rawPrediction.disease
   });
-  
+
   const healthScore = calculateHealthScore(
-    rawPrediction.disease, 
-    rawPrediction.severity, 
+    rawPrediction.disease,
+    rawPrediction.severity,
     riskAssessment.level
   );
-  
+
   const recommendations = getRecommendations(rawPrediction.disease, rawPrediction.severity);
 
   return {

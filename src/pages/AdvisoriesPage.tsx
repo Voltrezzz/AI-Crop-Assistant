@@ -12,7 +12,7 @@ export default function AdvisoriesPage() {
   const [filterType, setFilterType] = useState<string>('all');
   const [filterCrop, setFilterCrop] = useState<string>('all');
 
-  const demoAdvisories: Advisory[] = [
+  const [demoAdvisories] = useState<Advisory[]>(() => [
     {
       id: -1,
       title: 'Inspect paddy leaves after recent rainfall',
@@ -52,7 +52,7 @@ export default function AdvisoriesPage() {
       date: new Date(Date.now() - 259200000).toISOString(),
       isRead: true
     }
-  ];
+  ]);
 
   useEffect(() => {
     const loadAdvisories = async () => {
@@ -69,7 +69,7 @@ export default function AdvisoriesPage() {
       }
     };
     loadAdvisories();
-  }, [user?.id]);
+  }, [user, demoAdvisories]);
 
   const markAsRead = async (id: number) => {
     try {
@@ -78,7 +78,7 @@ export default function AdvisoriesPage() {
         await db.advisories.update(id, { isRead: true });
       }
       setAdvisories(prev => prev.map(a => a.id === id ? { ...a, isRead: true } : a));
-    } catch (err) {
+    } catch {
       // If it's a demo advisory not in db
       setAdvisories(prev => prev.map(a => a.id === id ? { ...a, isRead: true } : a));
     }
@@ -115,7 +115,7 @@ export default function AdvisoriesPage() {
       {user?.isDemo && <PrototypeNotice>Demo-account advisories are sample guidance, not live alerts.</PrototypeNotice>}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h1 className="text-3xl font-bold text-gray-900">Agricultural Advisories</h1>
-        <button 
+        <button
           onClick={markAllRead}
           className="text-sm font-medium text-green-600 hover:text-green-700 bg-green-50 px-4 py-2 rounded-lg transition-colors"
         >
@@ -129,8 +129,8 @@ export default function AdvisoriesPage() {
           <Filter className="w-4 h-4" />
           <span className="text-sm font-medium">Filter by:</span>
         </div>
-        
-        <select 
+
+        <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
           className="text-sm border-gray-200 rounded-md shadow-sm focus:border-green-500 focus:ring-green-500"
@@ -142,7 +142,7 @@ export default function AdvisoriesPage() {
           <option value="preventive">Preventive</option>
         </select>
 
-        <select 
+        <select
           value={filterCrop}
           onChange={(e) => setFilterCrop(e.target.value)}
           className="text-sm border-gray-200 rounded-md shadow-sm focus:border-green-500 focus:ring-green-500"
@@ -161,8 +161,8 @@ export default function AdvisoriesPage() {
           </div>
         ) : (
           filtered.map(advisory => (
-            <div 
-              key={advisory.id} 
+            <div
+              key={advisory.id}
               className={cn(
                 "bg-white rounded-xl p-5 border shadow-sm transition-all relative overflow-hidden",
                 advisory.isRead ? "border-gray-100 opacity-80" : "border-l-4 border-green-500 border-y-gray-100 border-r-gray-100"
@@ -171,12 +171,12 @@ export default function AdvisoriesPage() {
               {!advisory.isRead && (
                 <div className="absolute top-5 right-5 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               )}
-              
+
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-gray-50 rounded-lg shrink-0">
                   {getIcon(advisory.type)}
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
                     <span className={cn(
@@ -195,18 +195,18 @@ export default function AdvisoriesPage() {
                       {formatDate(advisory.date)}
                     </div>
                   </div>
-                  
+
                   <h3 className={cn(
                     "text-lg font-semibold mb-2",
                     advisory.isRead ? "text-gray-700" : "text-gray-900"
                   )}>
                     {advisory.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 text-sm leading-relaxed mb-4">
                     {advisory.message}
                   </p>
-                  
+
                   {!advisory.isRead && advisory.id !== undefined && (
                     <button
                       onClick={() => markAsRead(advisory.id!)}
