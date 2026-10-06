@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Leaf, Activity, Layers, ScanLine, CloudSun, Droplets, Wind, AlertTriangle, ChevronRight, Settings, Bell } from 'lucide-react';
-import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { Leaf, Activity, Layers, ScanLine, CloudSun, Droplets, Wind, AlertTriangle, Settings, Bell, Mic, TrendingUp, Satellite, ArrowRight } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { db } from '@/db/database';
 import { cn } from '@/utils';
 import { useAuthStore } from '@/stores/authStore';
@@ -10,11 +10,11 @@ import PrototypeNotice from '@/components/PrototypeNotice';
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  
+
   const [stats, setStats] = useState({ totalFields: 0, healthyFields: 0, attentionFields: 0, scansThisMonth: 0 });
   const [recentScans, setRecentScans] = useState<any[]>([]);
   const [healthData, setHealthData] = useState<Array<{ name: string; score: number }>>([]);
-  
+
   useEffect(() => {
     let cancelled = false;
 
@@ -83,6 +83,11 @@ export default function DashboardPage() {
           <p className="text-neutral-500">Here's your farm overview for today.</p>
         </div>
 
+        <button onClick={() => navigate('/satellite')} className="w-full rounded-2xl bg-green-800 text-white p-5 sm:p-6 text-left flex items-center gap-4 shadow-sm hover:bg-green-900">
+          <Satellite size={36} className="shrink-0" />
+          <span className="flex-1"><span className="block text-xl font-bold">Satellite Preview</span><span className="block text-sm text-green-100 mt-1">Choose your location and see real Sentinel-2 imagery. No JSON needed.</span></span>
+          <ArrowRight className="shrink-0" />
+        </button>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-2xl shadow-sm border border-neutral-200 cursor-pointer" onClick={() => navigate('/fields')}>
             <div className="flex items-center gap-3 mb-2 text-neutral-500">
@@ -114,7 +119,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-4 gap-6">
           <div className="lg:col-span-2 bg-white p-5 rounded-2xl shadow-sm border border-neutral-200">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-bold text-neutral-900">Crop Health Overview</h2>
@@ -205,7 +210,7 @@ export default function DashboardPage() {
             <div className="space-y-3">
               {recentScans.length > 0 ? recentScans.map((scan, i) => (
                 <div key={i} className="flex items-center gap-4 p-3 hover:bg-neutral-50 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-neutral-100">
-                  <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center shrink-0", 
+                  <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center shrink-0",
                     scan.result === 'healthy' ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
                   )}>
                     {scan.result === 'healthy' ? <Activity className="h-6 w-6" /> : <AlertTriangle className="h-6 w-6" />}
@@ -223,6 +228,54 @@ export default function DashboardPage() {
                 <div className="text-center py-8 text-neutral-500 text-sm">No recent scans found.</div>
               )}
             </div>
+          </div>
+        </div>
+
+        <nav aria-label="Farm services" className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[['documents', 'Document locker'], ['marketplace', 'Marketplace preview'], ['community', 'Community preview'], ['livelihood', 'Livelihood ideas']].map(([route, label]) => <button key={route} className="bg-white rounded-xl p-4 border text-green-800" onClick={() => navigate(`/${route}`)}>{label}</button>)}
+        </nav>
+        {/* Quick Actions & Next Task & Market */}
+        <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="bg-white p-5 rounded-2xl shadow-sm border border-neutral-200">
+             <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold text-neutral-900">Next Farm Task</h2>
+            </div>
+            <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl flex gap-3 h-[110px]">
+              <Droplets className="h-6 w-6 text-blue-500 shrink-0 mt-1" />
+              <div>
+                <h3 className="font-bold text-blue-900">Irrigation Due</h3>
+                <p className="text-sm text-blue-800 mt-1 line-clamp-2">Soil moisture is low in Field 1. Apply 2 inches of water.</p>
+                <button onClick={() => navigate('/irrigation')} className="mt-2 text-sm font-bold text-blue-700">Plan Irrigation &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl shadow-sm border border-neutral-200">
+            <h2 className="text-lg font-bold text-neutral-900 mb-4">Market Snapshot</h2>
+            <div className="flex flex-col justify-between h-[110px]">
+              <div className="flex justify-between items-center p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+                <div>
+                  <div className="font-bold text-neutral-900">Paddy (Govt Mandi)</div>
+                  <div className="text-xs text-neutral-500">Modal Price</div>
+                </div>
+                <div className="text-right">
+                  <div className="font-bold text-green-600">₹2,200/q</div>
+                  <div className="text-xs text-green-600 flex items-center justify-end"><TrendingUp size={12} className="mr-1"/>+2.5%</div>
+                </div>
+              </div>
+              <button onClick={() => navigate('/market')} className="text-sm font-bold text-green-600 w-full text-center mt-2">View Market Analysis</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={() => navigate('/analyzer')} className="flex flex-col items-center justify-center p-4 bg-green-50 rounded-2xl border border-green-100 hover:bg-green-100 transition-colors h-[175px]">
+              <div className="bg-green-600 text-white p-3 rounded-full mb-3"><ScanLine size={28} /></div>
+              <span className="font-bold text-green-900">Quick Scan</span>
+            </button>
+            <button onClick={() => navigate('/voice')} className="flex flex-col items-center justify-center p-4 bg-blue-50 rounded-2xl border border-blue-100 hover:bg-blue-100 transition-colors h-[175px]">
+              <div className="bg-blue-600 text-white p-3 rounded-full mb-3"><Mic size={28} /></div>
+              <span className="font-bold text-blue-900">Voice Assistant</span>
+            </button>
           </div>
         </div>
       </main>

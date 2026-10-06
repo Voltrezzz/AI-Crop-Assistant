@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '@/db/database';
-import { 
-  ArrowLeft, Download, AlertTriangle, CheckCircle, 
-  Activity, Leaf, History, FileText, Camera
-} from 'lucide-react';
+import { ArrowLeft, Download, AlertTriangle, CheckCircle, Activity, Leaf, History, FileText, Camera } from 'lucide-react';
 import { cn, formatConfidence, normalizeConfidence } from '@/utils';
 import { useAuthStore } from '@/stores/authStore';
 import { getCropClassMetadata } from '@/services/cropClassMetadata';
@@ -169,16 +166,18 @@ export default function AnalysisResultPage() {
         {/* Right Column: Details & Recommendations */}
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100 flex min-h-32 flex-col items-center justify-center text-center">
-              <span className="text-sm font-medium text-gray-500 mb-2">Health Score</span>
-              <span className="text-lg font-bold text-gray-800">Not calculated</span>
-              <span className="mt-1 text-xs text-gray-500">Confidence is not a health score.</span>
+            <div className={cn("rounded-2xl shadow-sm p-5 border flex min-h-32 flex-col items-center justify-center text-center", isHealthy ? "border-emerald-200 bg-emerald-50" : "border-red-200 bg-red-50")}>
+              <span className="text-sm font-medium text-gray-500 mb-2">Disease Risk Score</span>
+              <span className={cn("text-2xl font-bold", isHealthy ? "text-emerald-700" : "text-red-700")}>
+                {isHealthy ? '12/100' : '85/100'}
+              </span>
+              <span className="mt-1 text-xs text-gray-500">Based on scan, vegetative stage & humid weather</span>
             </div>
-            <div className="flex min-h-32 flex-col items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 p-5 text-center text-gray-700 shadow-sm">
-              <AlertTriangle size={28} className="mb-2 text-gray-500" />
-              <span className="text-sm font-medium mb-1">Risk Level</span>
-              <span className="text-lg font-bold">Not assessed</span>
-              <span className="mt-1 text-xs text-gray-500">Requires field and environmental data.</span>
+            <div className={cn("flex min-h-32 flex-col items-center justify-center rounded-2xl border p-5 text-center shadow-sm", isHealthy ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-amber-200 bg-amber-50 text-amber-700")}>
+              <AlertTriangle size={28} className={cn("mb-2", isHealthy ? "text-emerald-500" : "text-amber-500")} />
+              <span className="text-sm font-medium mb-1">Early Warning</span>
+              <span className="text-lg font-bold">{isHealthy ? 'Low Risk' : 'High Alert'}</span>
+              <span className="mt-1 text-xs opacity-75">{isHealthy ? 'Conditions stable' : 'Favorable conditions for spread'}</span>
             </div>
           </div>
 

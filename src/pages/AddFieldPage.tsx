@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '@/db/database';
+import { createField } from '@/services/fieldService';
 import { Field, CropType, GrowthStage, FieldStatus, RiskLevel } from '@/types';
 import { ArrowLeft } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
-import { queueCloudChange } from '@/services/cloudSyncService';
+
 
 export default function AddFieldPage() {
   const navigate = useNavigate();
@@ -18,16 +18,18 @@ export default function AddFieldPage() {
     plantingDate: '',
     expectedHarvest: ''
   });
+  const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.area || isNaN(Number(formData.area))) newErrors.area = 'Valid area is required';
+    if (!Number.isFinite(Number(formData.area)) || Number(formData.area) <= 0) newErrors.area = 'Area must be a positive number';
     if (!formData.variety.trim()) newErrors.variety = 'Variety is required';
     if (!formData.location.trim()) newErrors.location = 'Location is required';
-    if (!formData.plantingDate) newErrors.plantingDate = 'Planting date is required';
-    if (!formData.expectedHarvest) newErrors.expectedHarvest = 'Expected harvest date is required';
+    if (!Number.isFinite(Date.parse(formData.plantingDate))) newErrors.plantingDate = 'Valid planting date is required';
+    if (!Number.isFinite(Date.parse(formData.expectedHarvest))) newErrors.expectedHarvest = 'Valid harvest date is required';
+    else if (Date.parse(formData.expectedHarvest) < Date.parse(formData.plantingDate)) newErrors.expectedHarvest = 'Harvest date must be on or after planting';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -35,7 +37,7 @@ export default function AddFieldPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (saving || !validate()) return;
     if (!user?.id) {
       setErrors({ form: 'Please log in before adding a field.' });
       return;
@@ -57,12 +59,14 @@ export default function AddFieldPage() {
       diseaseRisk: 'low' as RiskLevel
     };
 
+    setSaving(true);
     try {
-      const id = await db.fields.add(newField as Field);
-      await queueCloudChange(user.id, 'fields', 'create', { ...newField, id } as unknown as Record<string, unknown>);
+      await createField(newField);
       navigate('/fields');
     } catch (error) {
-      console.error('Failed to add field', error);
+      setErrors({ form: error instanceof Error ? error.message : 'Unable to save field. Please retry.' });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -92,9 +96,10 @@ export default function AddFieldPage() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Field Name</label>
+              <label htmlFor="field-name" className="block text-sm font-medium text-gray-700">Field Name</label>
               <input
                 type="text"
+                id="field-name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
@@ -105,9 +110,10 @@ export default function AddFieldPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Area (Acres)</label>
+              <label htmlFor="field-area" className="block text-sm font-medium text-gray-700">Area (Acres)</label>
               <input
                 type="number"
+                id="field-area"
                 name="area"
                 value={formData.area}
                 onChange={handleChange}
@@ -119,8 +125,9 @@ export default function AddFieldPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Crop Type</label>
+              <label htmlFor="field-crop" className="block text-sm font-medium text-gray-700">Crop Type</label>
               <select
+                id="field-crop"
                 name="crop"
                 value={formData.crop}
                 onChange={handleChange}
@@ -132,9 +139,10 @@ export default function AddFieldPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Variety</label>
+              <label htmlFor="field-variety" className="block text-sm font-medium text-gray-700">Variety</label>
               <input
                 type="text"
+                id="field-variety"
                 name="variety"
                 value={formData.variety}
                 onChange={handleChange}
@@ -145,9 +153,10 @@ export default function AddFieldPage() {
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">Location</label>
+              <label htmlFor="field-location" className="block text-sm font-medium text-gray-700">Location</label>
               <input
                 type="text"
+                id="field-location"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
@@ -158,9 +167,10 @@ export default function AddFieldPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Planting Date</label>
+              <label htmlFor="field-plantingDate" className="block text-sm font-medium text-gray-700">Planting Date</label>
               <input
                 type="date"
+                id="field-plantingDate"
                 name="plantingDate"
                 value={formData.plantingDate}
                 onChange={handleChange}
@@ -170,9 +180,10 @@ export default function AddFieldPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Expected Harvest Date</label>
+              <label htmlFor="field-expectedHarvest" className="block text-sm font-medium text-gray-700">Expected Harvest Date</label>
               <input
                 type="date"
+                id="field-expectedHarvest"
                 name="expectedHarvest"
                 value={formData.expectedHarvest}
                 onChange={handleChange}
@@ -192,9 +203,10 @@ export default function AddFieldPage() {
             </button>
             <button
               type="submit"
+              disabled={saving}
               className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
             >
-              Save Field
+              {saving ? 'Saving…' : 'Save Field'}
             </button>
           </div>
         </form>

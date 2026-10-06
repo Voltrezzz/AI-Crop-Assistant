@@ -11,11 +11,10 @@ type Props = {
 
 export default function NearbyPlacesMap({ keyword, title, actionLabel = 'Search Nearby Places' }: Props) {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
-  const [status, setStatus] = useState('Requesting your location...');
+  const [status, setStatus] = useState(() => navigator.geolocation ? 'Requesting your location...' : 'Location is not available in this browser.');
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setStatus('Location is not available in this browser.');
       return;
     }
 

@@ -5,6 +5,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import PublicRoute from '@/components/PublicRoute';
 
 // Lazy load all pages for performance
+const Marudham360Page = lazy(() => import('@/pages/Marudham360Page'));
 const ProfileSelectionPage = lazy(() => import('@/pages/ProfileSelectionPage'));
 const OnboardingPage = lazy(() => import('@/pages/OnboardingPage'));
 const LandingPage = lazy(() => import('@/pages/LandingPage'));
@@ -17,6 +18,8 @@ const ScanDetailPage = lazy(() => import('@/pages/ScanDetailPage'));
 const FieldsPage = lazy(() => import('@/pages/FieldsPage'));
 const AddFieldPage = lazy(() => import('@/pages/AddFieldPage'));
 const FieldDetailPage = lazy(() => import('@/pages/FieldDetailPage'));
+const SatelliteHealthPage = lazy(() => import('@/pages/SatelliteHealthPage'));
+const CropPlanPage = lazy(() => import('@/pages/CropPlanPage'));
 const GrowthPage = lazy(() => import('@/pages/GrowthPage'));
 const WeatherPage = lazy(() => import('@/pages/WeatherPage'));
 const RiskPage = lazy(() => import('@/pages/RiskPage'));
@@ -28,6 +31,7 @@ const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 
 // New feature pages
 const IrrigationPage = lazy(() => import('@/pages/IrrigationPage'));
+const AddActivityPage = lazy(() => import('@/pages/AddActivityPage'));
 const LandSegregationPage = lazy(() => import('@/pages/LandSegregationPage'));
 const ChatbotPage = lazy(() => import('@/pages/ChatbotPage'));
 const AnimalsPage = lazy(() => import('@/pages/AnimalsPage'));
@@ -41,6 +45,12 @@ const FertilizerCalculatorPage = lazy(() => import('@/pages/FertilizerCalculator
 const ComparePage = lazy(() => import('@/pages/ComparePage'));
 const FriendsPage = lazy(() => import('@/pages/FriendsPage'));
 const ChatPage = lazy(() => import('@/pages/ChatPage'));
+const MarketplacePage = lazy(() => import('@/pages/MarketplacePage'));
+const CommunityPage = lazy(() => import('@/pages/CommunityPage'));
+const DocumentLockerPage = lazy(() => import('@/pages/DocumentLockerPage'));
+const LivelihoodPage = lazy(() => import('@/pages/LivelihoodPage'));
+const HarvestJourneyPage = lazy(() => import('@/pages/HarvestJourneyPage'));
+import VoiceFAB from '@/components/VoiceFAB';
 
 function LoadingFallback() {
   return (
@@ -56,27 +66,40 @@ function LoadingFallback() {
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <VoiceFAB />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-          
+
           {/* Protected routes */}
           <Route path="/profiles" element={<ProtectedRoute><ProfileSelectionPage /></ProtectedRoute>} />
           <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
 
           {/* App routes (inside AppShell, all protected) */}
           <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
-            
-          <Route path="/dashboard" element={<DashboardPage />} />
+
+          <Route path="/marudham360" element={<Marudham360Page />} />
+            <Route path="/marudham360/:module" element={<Marudham360Page />} />
+            <Route path="/farm-memory" element={<Marudham360Page moduleName="memory" />} />
+            <Route path="/health-alerts" element={<Marudham360Page moduleName="health" />} />
+            <Route path="/offline" element={<Marudham360Page moduleName="offline" />} />
+            <Route path="/post-harvest" element={<Marudham360Page moduleName="post-harvest" />} />
+            <Route path="/finance" element={<Marudham360Page moduleName="finance" />} />
+            <Route path="/satellite" element={<SatelliteHealthPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/analyzer" element={<AnalyzerPage />} />
             <Route path="/analyzer/result/:id" element={<AnalysisResultPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/history/:id" element={<ScanDetailPage />} />
             <Route path="/fields" element={<FieldsPage />} />
             <Route path="/fields/new" element={<AddFieldPage />} />
+            <Route path="/crop-plan" element={<CropPlanPage />} />
             <Route path="/fields/:id" element={<FieldDetailPage />} />
+            <Route path="/fields/:id/satellite" element={<SatelliteHealthPage />} />
+            <Route path="/harvest/:id" element={<HarvestJourneyPage />} />
+            <Route path="/add-activity" element={<AddActivityPage />} />
             <Route path="/fields/:id/progress" element={<GrowthPage />} />
             <Route path="/growth" element={<GrowthPage />} />
             <Route path="/weather" element={<WeatherPage />} />
@@ -99,7 +122,11 @@ export default function App() {
             <Route path="/fertilizer-calculator" element={<FertilizerCalculatorPage />} />
             <Route path="/market" element={<MarketAnalysisPage />} />
             <Route path="/insect-bite" element={<InsectBitePage />} />
-            
+
+            <Route path="/marketplace" element={<MarketplacePage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/documents" element={<DocumentLockerPage />} />
+            <Route path="/livelihood" element={<LivelihoodPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/friends" element={<FriendsPage />} />
             <Route path="/chat/:friendId" element={<ChatPage />} />

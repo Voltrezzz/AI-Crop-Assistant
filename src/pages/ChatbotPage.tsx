@@ -7,7 +7,7 @@ import { chatWithGemini } from '@/services/geminiService';
 import { queueCloudChange } from '@/services/cloudSyncService';
 
 const LANGUAGE_NAMES = [
-  'English', 'Hindi', 'Marathi', 'Gujarati', 'Tamil', 'Telugu', 
+  'English', 'Hindi', 'Marathi', 'Gujarati', 'Tamil', 'Telugu',
   'Kannada', 'Malayalam', 'Punjabi', 'Bengali', 'Odia'
 ];
 
@@ -39,30 +39,28 @@ export default function ChatbotPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    loadMessages();
-  }, [user?.id]);
-
-  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const loadMessages = async () => {
-    try {
-      if (db.chatMessages) {
-        const history = user?.id ? await db.chatMessages.where('userId').equals(user.id).toArray() : [];
-        setMessages(history);
+  useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        if (db.chatMessages) {
+          const history = user?.id ? await db.chatMessages.where('userId').equals(user.id).toArray() : [];
+          setMessages(history);
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+    };
+    loadMessages();
+  }, [user?.id]);
 
   const handleSend = async (text: string) => {
     if (!text.trim() || isSending) return;
-    
+
     if (!user?.id) return;
     const userMsg = { userId: user.id, role: 'user', content: text, timestamp: new Date().toISOString(), language } as any;
-    setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsSending(true);
 
@@ -70,6 +68,7 @@ export default function ChatbotPage() {
       if (db.chatMessages) {
         userMsg.id = await db.chatMessages.add(userMsg);
         await queueCloudChange(user.id, 'chatMessages', 'create', userMsg);
+        setMessages(prev => [...prev, userMsg]);
       }
       const aiRespText = await chatWithGemini(text.trim(), messages.slice(-16), language, {
         name: activeProfile?.name || user.name,
@@ -78,10 +77,10 @@ export default function ChatbotPage() {
         profileType: activeProfile?.type,
       });
       const aiMsg = { userId: user.id, role: 'assistant', content: aiRespText, timestamp: new Date().toISOString(), language } as any;
-      setMessages(prev => [...prev, aiMsg]);
       if (db.chatMessages) {
         aiMsg.id = await db.chatMessages.add(aiMsg);
         await queueCloudChange(user.id, 'chatMessages', 'create', aiMsg);
+        setMessages(prev => [...prev, aiMsg]);
       }
     } catch (e) {
       console.error(e);
@@ -125,7 +124,7 @@ export default function ChatbotPage() {
     const recognition = new (window as any).webkitSpeechRecognition();
     recognition.lang = 'en-US';
     recognition.continuous = false;
-    
+
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (e: any) => {
       const text = e.results[0][0].transcript;
@@ -133,7 +132,7 @@ export default function ChatbotPage() {
     };
     recognition.onerror = () => setIsListening(false);
     recognition.onend = () => setIsListening(false);
-    
+
     recognition.start();
   };
 
@@ -144,14 +143,14 @@ export default function ChatbotPage() {
           <MessageSquare /> AI Agri Advisor
         </h1>
         <div className="flex items-center gap-2">
-          <button 
+          <button
             onClick={clearHistory}
             title="Clear History"
             className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition"
           >
             <Trash2 size={20} />
           </button>
-          <select 
+          <select
             className="p-2 border rounded-lg bg-gray-50 text-sm font-medium"
             value={language}
             onChange={e => setLanguage(e.target.value)}
@@ -163,8 +162,8 @@ export default function ChatbotPage() {
 
       <div className="p-3 bg-white border-b flex gap-2 overflow-x-auto no-scrollbar shrink-0">
         {CATEGORIES.map(c => (
-          <button 
-            key={c.id} 
+          <button
+            key={c.id}
             onClick={() => handleSend(`Tell me about ${c.label.toLowerCase()}`)}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-green-100"
           >
@@ -182,8 +181,8 @@ export default function ChatbotPage() {
             <h2 className="text-2xl font-bold text-gray-700">How can I help you farm better today?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
               {PRELOADED_QUERIES.map((q, i) => (
-                <button 
-                  key={i} 
+                <button
+                  key={i}
                   onClick={() => handleSend(q)}
                   className="p-3 text-sm text-left bg-white border border-gray-200 rounded-xl hover:border-green-400 hover:shadow-sm transition"
                 >
@@ -219,21 +218,21 @@ export default function ChatbotPage() {
 
       <div className="p-4 bg-white border-t shrink-0">
         <div className="flex gap-2 max-w-4xl mx-auto">
-          <button 
+          <button
             onClick={startVoiceInput}
             className={cn("p-3 rounded-xl transition", isListening ? "bg-red-100 text-red-600 animate-pulse" : "bg-gray-100 text-gray-600 hover:bg-gray-200")}
           >
             <Mic size={24} />
           </button>
-          <input 
-            type="text" 
+          <input
+            type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend(input)}
             placeholder={`Ask in ${language}...`}
             className="flex-1 p-3 bg-gray-50 border rounded-xl outline-none focus:border-green-400 transition"
           />
-          <button 
+          <button
             onClick={() => handleSend(input)}
             disabled={isSending || !input.trim()}
             className="p-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition disabled:cursor-not-allowed disabled:opacity-50"

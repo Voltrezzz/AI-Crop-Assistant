@@ -1,15 +1,20 @@
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '@/db/database';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Bell, Wifi, Moon, Sun, LogOut, Globe } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
 import { SUPPORTED_LANGUAGES, useTranslation } from '@/hooks/useTranslation';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useSyncStore } from '@/stores/syncStore';
 import { AppSettings } from '@/types';
 
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const { settings, language, theme, updateSettings, setLanguage } = useSettingsStore();
+  const { retryFailed, lastSynced, accountId, loading: syncing, error: syncError } = useSyncStore();
   const { t } = useTranslation();
+  const pendingCount = useLiveQuery(() => user?.id ? db.syncQueue.where('userId').equals(user.id).filter(item => item.status !== 'synced').count() : Promise.resolve(0), [user?.id], 0);
 
   const updateSetting = (key: keyof AppSettings, value: AppSettings[keyof AppSettings]) => {
     if (key === 'language') {
@@ -61,7 +66,7 @@ export default function SettingsPage() {
                 <Globe className="h-5 w-5 text-neutral-500" />
                 <span className="font-medium text-neutral-900 dark:text-slate-100">{t('general.language')}</span>
               </div>
-              <select 
+              <select
                 value={language}
                 onChange={(e) => updateSetting('language', e.target.value as AppSettings['language'])}
                 className="bg-neutral-50 border border-neutral-200 rounded-lg p-2 text-sm"
@@ -107,6 +112,12 @@ export default function SettingsPage() {
                 <span className="font-medium text-neutral-900">Auto-Sync</span>
               </div>
               <input type="checkbox" checked={settings?.autoSync ?? true} onChange={(e) => updateSetting('autoSync', e.target.checked)} className="h-5 w-5 text-green-600 rounded" />
+            </div>
+            <div className="p-4 space-y-2 text-sm">
+                <p>Pending changes: {pendingCount}</p>
+                <p>{lastSynced && accountId === user?.id ? `Last successful sync this session: ${new Date(lastSynced).toLocaleString()}` : 'No successful sync recorded this session.'}</p>
+                {syncError && accountId === user?.id && <p role="alert" className="text-red-700">{syncError}</p>}
+                <button disabled={syncing} onClick={() => void retryFailed()} className="text-green-700 font-bold">{syncing ? 'Syncing…' : 'Sync / retry changes'}</button>
             </div>
           </div>
         </div>

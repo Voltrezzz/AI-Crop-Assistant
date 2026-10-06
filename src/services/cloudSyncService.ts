@@ -1,9 +1,13 @@
+import Dexie from 'dexie';
 import { db } from '@/db/database';
 import type { SyncItem } from '@/types';
 import { getSupabaseClient, isSupabaseConfigured } from './supabaseClient';
 
 const MAX_RETRIES = 5;
-const SYNC_ENTITIES = ['profiles', 'fields', 'scans', 'chatMessages'] as const;
+const SYNC_ENTITIES = [
+  'profiles', 'farms', 'fields', 'cropCycles', 'inventoryBatches', 'salesRecords', 'scans', 'chatMessages', 'fieldBoundaries', 'farmActivities',
+  'fertilizerRecords', 'pesticideRecords', 'observations', 'productionRecords'
+] as const;
 type SyncEntity = typeof SYNC_ENTITIES[number];
 
 function createCloudId(): string {
@@ -23,17 +27,15 @@ async function isAutoSyncEnabled(userId: number): Promise<boolean> {
 }
 
 function cloudPayload(payload: Record<string, unknown>) {
-  const {
-    id: _id,
-    localId: _localId,
-    cloudId: _cloudId,
-    fieldId: _fieldId,
-    userId: _userId,
-    password: _password,
-    imageData: _imageData,
-    thumbnailData: _thumbnailData,
-    ...safePayload
-  } = payload;
+  const safePayload = { ...payload };
+  delete safePayload.id;
+  delete safePayload.localId;
+  delete safePayload.cloudId;
+  for (const key of Object.keys(RELATIONS)) delete safePayload[key];
+  delete safePayload.userId;
+  delete safePayload.password;
+  delete safePayload.imageData;
+  delete safePayload.thumbnailData;
   return safePayload;
 }
 
@@ -48,14 +50,9 @@ function reportCloudError(operation: string, error: unknown) {
   });
 }
 
-async function ensureFieldCloudId(userId: number, fieldId: number): Promise<string | undefined> {
-  const field = await db.fields.get(fieldId);
-  if (!field || field.userId !== userId) return undefined;
-  if (field.cloudId) return field.cloudId;
-  const cloudId = createCloudId();
-  await db.fields.update(fieldId, { cloudId });
-  return cloudId;
-}
+const RELATIONS: Record<string, string> = {
+  farmId: 'farms', fieldId: 'fields', cropCycleId: 'cropCycles', inventoryBatchId: 'inventoryBatches',
+};
 
 /** Adds or recovers a stable UUID before an operation enters or leaves the queue. */
 async function ensureCloudIdentity(
@@ -72,6 +69,7 @@ async function ensureCloudIdentity(
     ? await table.get(localId) as Record<string, unknown> | undefined
     : undefined;
 
+  if (existing && existing.userId !== userId) throw new Error('Record belongs to another account.');
   let cloudId = typeof payload.cloudId === 'string' ? payload.cloudId : undefined;
   if (!cloudId && typeof existing?.cloudId === 'string') cloudId = existing.cloudId;
   if (!cloudId) cloudId = createCloudId();
@@ -80,12 +78,20 @@ async function ensureCloudIdentity(
   if (existing && Number.isSafeInteger(localId)) {
     const updates: Record<string, unknown> = {};
     if (existing.cloudId !== cloudId) updates.cloudId = cloudId;
-    if (entity === 'scans' && typeof existing.fieldId === 'number') {
-      const fieldCloudId = await ensureFieldCloudId(userId, existing.fieldId);
-      if (fieldCloudId) {
-        payload.fieldCloudId = fieldCloudId;
-        if (existing.fieldCloudId !== fieldCloudId) updates.fieldCloudId = fieldCloudId;
+    for (const [key, parentTable] of Object.entries(RELATIONS)) {
+      const parentId = existing[key];
+      if (typeof parentId !== 'number') continue;
+      const parent = await db.table(parentTable).get(parentId);
+      if (!parent || parent.userId !== userId) throw new Error('Related record is unavailable for this account.');
+      const parentCloudId = parent.cloudId || createCloudId();
+      if (!parent.cloudId) {
+        await db.table(parentTable).update(parentId, { cloudId: parentCloudId });
+        // A newly identified parent must reach the cloud before its child.
+        await queueCloudChange(userId, parentTable, 'update', { ...parent, cloudId: parentCloudId }, { deferSync: true });
       }
+      const cloudKey = key.replace(/Id$/, 'CloudId');
+      payload[cloudKey] = parentCloudId;
+      updates[cloudKey] = parentCloudId;
     }
     if (Object.keys(updates).length) await table.update(localId, updates);
   }
@@ -93,17 +99,19 @@ async function ensureCloudIdentity(
   return payload;
 }
 
-async function getAuthenticatedCloudUser() {
+async function getAuthenticatedCloudUser(userId: number) {
   const client = getSupabaseClient();
   const { data, error } = await client.auth.getSession();
   const user = data.session?.user;
   if (error || !user) throw error || new Error('Sign in to Supabase before syncing.');
+  const localUser = await db.users.get(userId);
+  if (!localUser || localUser.isDemo || localUser.cloudId !== user.id) throw new Error('Sync account does not match the signed-in account.');
   return { client, user };
 }
 
 async function uploadItem(item: SyncItem) {
   if (!item.userId) throw new Error(`Sync item ${item.id} is missing its local user ID.`);
-  const { client, user } = await getAuthenticatedCloudUser();
+  const { client, user } = await getAuthenticatedCloudUser(item.userId);
   const parsed = JSON.parse(item.payload) as Record<string, unknown>;
   const payload = await ensureCloudIdentity(item.userId, item.entity, parsed);
   const cloudId = String(payload.cloudId || '');
@@ -140,9 +148,11 @@ export async function queueCloudChange(
   entity: string,
   operation: SyncItem['operation'],
   input: Record<string, unknown>,
+  options: { deferSync?: boolean } = {},
 ) {
   const localUser = await db.users.get(userId);
-  if (localUser?.isDemo) return 0;
+  if (!localUser) throw new Error('Local account unavailable.');
+  if (localUser.isDemo) return 0;
   const payload = await ensureCloudIdentity(userId, entity, input);
   const queueId = await db.syncQueue.add({
     userId,
@@ -153,23 +163,37 @@ export async function queueCloudChange(
     retryCount: 0,
     status: 'pending',
   });
-  if (isSupabaseConfigured() && await isAutoSyncEnabled(userId)) {
-    void processPendingCloudChanges(userId);
-  }
+  const scheduleSync = () => {
+    if (!isSupabaseConfigured()) return;
+    void isAutoSyncEnabled(userId).then(enabled => enabled ? processPendingCloudChanges(userId) : undefined)
+      .catch(error => reportCloudError('background sync', error));
+  };
+  if (options.deferSync && Dexie.currentTransaction) Dexie.currentTransaction.on('complete', scheduleSync);
+  else if (!options.deferSync) scheduleSync();
   return queueId;
 }
 
-export async function processPendingCloudChanges(userId: number, options: { force?: boolean } = {}) {
+const runningSync = new Map<number, Promise<void>>();
+export function processPendingCloudChanges(userId: number, options: { force?: boolean } = {}) {
+  const running = runningSync.get(userId);
+  if (running) return running;
+  const task = processQueue(userId, options).finally(() => runningSync.delete(userId));
+  runningSync.set(userId, task);
+  return task;
+}
+
+async function processQueue(userId: number, options: { force?: boolean } = {}) {
   if (!isSupabaseConfigured()) return;
   if (!options.force && !await isAutoSyncEnabled(userId)) return;
 
   const items = await db.syncQueue
     .where('userId').equals(userId)
-    .filter(item => item.status === 'pending' || (item.status === 'failed' && item.retryCount < MAX_RETRIES))
+    .filter(item => item.status === 'pending' || item.status === 'failed')
     .sortBy('createdAt');
 
   for (const item of items) {
     if (!item.id) continue;
+    if (item.retryCount >= MAX_RETRIES) throw new Error('Sync needs a manual retry.');
     try {
       await uploadItem(item);
       await db.syncQueue.update(item.id, { status: 'synced' });
@@ -183,6 +207,9 @@ export async function processPendingCloudChanges(userId: number, options: { forc
         status: 'failed',
         retryCount: item.retryCount + 1,
       });
+      const failure = new Error('Cloud sync failed. Changes remain saved locally; retry from Settings.') as Error & { cause: unknown };
+      failure.cause = error;
+      throw failure;
     }
   }
 }
@@ -191,7 +218,7 @@ export async function hydrateCloudData(userId: number, options: { force?: boolea
   if (!isSupabaseConfigured()) return;
   if (!options.force && !await isAutoSyncEnabled(userId)) return;
 
-  const { client, user } = await getAuthenticatedCloudUser();
+  const { client, user } = await getAuthenticatedCloudUser(userId);
   const { data, error } = await client
     .from('cloud_records')
     .select('entity, local_id, cloud_id, payload')
@@ -211,28 +238,24 @@ export async function hydrateCloudData(userId: number, options: { force?: boolea
     delete remotePayload.localId;
     delete remotePayload.cloudId;
     delete remotePayload.userId;
-    delete remotePayload.fieldId;
+    for (const key of Object.keys(RELATIONS)) delete remotePayload[key];
 
     if (row.entity === 'scans' && typeof remotePayload.confidence === 'number' && remotePayload.confidence > 1) {
       remotePayload.confidence = Math.min(remotePayload.confidence / 100, 1);
     }
 
-    let existing = await table.where('cloudId').equals(row.cloud_id).first() as Record<string, unknown> | undefined;
-    if (existing && existing.userId !== userId) existing = undefined;
+    const existing = await table.where('cloudId').equals(row.cloud_id).filter(record => record.userId === userId).first() as Record<string, unknown> | undefined;
 
-    // One-time reconciliation for records uploaded before cloud_id existed.
-    if (!existing) {
-      const legacyLocalId = Number(row.local_id);
-      if (Number.isSafeInteger(legacyLocalId)) {
-        const legacyRecord = await table.get(legacyLocalId) as Record<string, unknown> | undefined;
-        if (legacyRecord?.userId === userId && !legacyRecord.cloudId) existing = legacyRecord;
-      }
+    for (const [key, parentTable] of Object.entries(RELATIONS)) {
+      const cloudKey = key.replace(/Id$/, 'CloudId');
+      if (typeof remotePayload[cloudKey] !== 'string') continue;
+      const parent = await db.table(parentTable).where('cloudId').equals(remotePayload[cloudKey] as string).filter(record => record.userId === userId).first();
+      if (!parent?.id) throw new Error('A related cloud record is missing. Retry sync after its parent is uploaded.');
+      remotePayload[key] = parent.id;
     }
-
-    if (row.entity === 'scans' && typeof remotePayload.fieldCloudId === 'string') {
-      const localField = await db.fields.where('cloudId').equals(remotePayload.fieldCloudId).first();
-      if (localField?.id && localField.userId === userId) remotePayload.fieldId = localField.id;
-    }
+    const pending = await db.syncQueue.where('userId').equals(userId).filter(item =>
+      item.entity === row.entity && item.status !== 'synced' && JSON.parse(item.payload).cloudId === row.cloud_id).count();
+    if (pending) continue;
 
     const value = { ...remotePayload, cloudId: row.cloud_id, userId };
     if (typeof existing?.id === 'number') await table.update(existing.id, value);

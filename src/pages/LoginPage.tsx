@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Leaf, Mail, Lock, ArrowRight, UserCircle2, UserPlus } from 'lucide-react';
+import { Leaf, Mail, Lock, ArrowRight, UserCircle2 } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { loginAsDemo, register, login, profiles } = useAuthStore();
+  const { loginAsDemo, register, login } = useAuthStore();
   const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -79,7 +79,7 @@ export default function LoginPage() {
                 {error}
               </div>
             )}
-            
+
             {isRegistering && (
               <div>
                 <label className="block text-sm font-medium text-neutral-700">Full Name</label>
@@ -162,9 +162,9 @@ export default function LoginPage() {
               </button>
             </div>
           </div>
-          
+
           <div className="mt-6 text-center">
-            <button 
+            <button
               onClick={() => setIsRegistering(!isRegistering)}
               className="text-sm font-medium text-green-600 hover:text-green-500"
             >

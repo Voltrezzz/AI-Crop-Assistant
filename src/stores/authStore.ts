@@ -95,6 +95,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isDemo: false,
 
   initializeAuth: async () => {
+    // Only the explicitly selected demo account may be restored without cloud auth.
+    const demoId = Number(sessionStorage.getItem('marudham-demo-user'));
+    if (Number.isSafeInteger(demoId) && demoId > 0) {
+      const demoUser = await db.users.get(demoId);
+      if (demoUser?.isDemo) {
+        const profiles = await db.profiles.where('userId').equals(demoId).toArray();
+        set({ user: demoUser, isLoggedIn: true, isDemo: true, profiles, activeProfile: profiles[0] || null });
+        return;
+      }
+      sessionStorage.removeItem('marudham-demo-user');
+    }
     if (!isSupabaseConfigured()) return;
     if (initializeAuthPromise) return initializeAuthPromise;
 
@@ -125,6 +136,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   restoreCloudUser: async (cloudUser) => {
+    sessionStorage.removeItem('marudham-demo-user');
     const current = get().user;
     if (current?.cloudId === cloudUser.id && get().isLoggedIn) return;
     if (restoreInFlight && restoringCloudId === cloudUser.id) return restoreInFlight;
@@ -151,7 +163,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         await queueCloudChange(user.id, 'profiles', 'create', profile as unknown as Record<string, unknown>);
       }
       set({ profiles, activeProfile: profiles[0] || null });
-      void processPendingCloudChanges(user.id);
+      void processPendingCloudChanges(user.id).catch(error => console.error('Background sync failed:', error));
     })();
 
     try {
@@ -165,6 +177,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   clearSession: () => {
+    sessionStorage.removeItem('marudham-demo-user');
     set({ user: null, activeProfile: null, profiles: [], isLoggedIn: false, isDemo: false });
     void resetUserScopedRuntimeState();
   },
@@ -247,6 +260,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       profile.id = await db.profiles.add(profile);
       profiles = [profile];
     }
+    sessionStorage.setItem('marudham-demo-user', String(demoUser.id));
     set({ user: demoUser, isLoggedIn: true, isDemo: true, profiles, activeProfile: profiles[0] });
   },
 

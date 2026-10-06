@@ -1,9 +1,6 @@
 import { subDays } from 'date-fns';
 import { db } from './database';
-import { 
-  User, Field, Scan, WeatherData, GrowthRecord, 
-  Advisory, AppNotification, AppSettings, Profile 
-} from '@/types';
+import { User, Field, Scan, WeatherData, AppNotification, AppSettings, Profile } from '@/types';
 
 export const seedDatabase = async () => {
   const userCount = await db.users.count();
@@ -111,7 +108,7 @@ export const seedDatabase = async () => {
       diseaseRisk: 'low'
     }
   ];
-  
+
   const fieldIds = [];
   for (const f of fields) {
     const id = await db.fields.add(f);

@@ -6,6 +6,8 @@ import path from 'path';
 const basePath = '/AI-Crop-Assistant/';
 
 export default defineConfig({
+  // Preserve the previous browser targets when migrating Vite.
+  build: { sourcemap: false, minify: true, target: ['chrome87', 'edge88', 'firefox78', 'safari14'] },
   base: basePath,
   plugins: [
     react(),

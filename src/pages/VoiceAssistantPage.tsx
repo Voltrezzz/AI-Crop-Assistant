@@ -1,49 +1,68 @@
+import { VOICE_COMMANDS as COMMANDS, matchVoiceCommand } from '@/data/voiceCommands';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getSpeechLocale } from '@/utils/voice';
 import { cn } from '@/utils';
-import { Mic, MicOff, Globe, Loader2, Volume2, MessageSquare, Terminal, HelpCircle } from 'lucide-react';
+import { Mic, Globe, Loader2, Volume2, MessageSquare, Terminal } from 'lucide-react';
 import { LANGUAGE_NAMES } from '@/types';
 
 type VoiceState = 'idle' | 'listening' | 'processing' | 'responding' | 'error';
 
-const COMMANDS = [
-  { text: 'Show crop health', path: '/dashboard', icon: '🌱' },
-  { text: 'Scan my crop', path: '/analyzer', icon: '📷' },
-  { text: 'Show weather', path: '/weather', icon: '🌤️' },
-  { text: 'Check disease risk', path: '/risk', icon: '⚠️' },
-  { text: 'Show my fields', path: '/fields', icon: '🗺️' },
-  { text: 'Open chat', path: '/chatbot', icon: '💬' },
-  { text: 'Calculate water', path: '/irrigation', icon: '💧' },
-  { text: 'Show my animals', path: '/animals', icon: '🐄' },
-  { text: 'Check loans', path: '/loans', icon: '💰' },
-  { text: 'Find fertilizer shop', path: '/shops', icon: '🏪' },
-  { text: 'Market prices', path: '/market', icon: '📈' },
-  { text: 'Insect bite', path: '/insect-bite', icon: '🐜' },
-  { text: 'Show farm overview', path: '/land', icon: '🚜' },
-  { text: 'Generate report', path: '/reports', icon: '📊' }
-];
 
 export default function VoiceAssistantPage() {
   const navigate = useNavigate();
   const [state, setState] = useState<VoiceState>('idle');
   const [language, setLanguage] = useState<keyof typeof LANGUAGE_NAMES>('en');
+  const [typedCommand, setTypedCommand] = useState('');
   const [transcript, setTranscript] = useState('');
   const [response, setResponse] = useState('');
-  const [supported, setSupported] = useState(true);
-  
+  const [supported] = useState<boolean>(() => {
+    return !!((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+  });
+
   const recognitionRef = useRef<any>(null);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const clearTimers = React.useCallback(() => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  }, []);
+  const schedule = React.useCallback((callback: () => void, delay: number) => {
+    timersRef.current.push(setTimeout(callback, delay));
+  }, []);
+  useEffect(() => clearTimers, [clearTimers]);
+
+  const processCommand = React.useCallback((text: string) => {
+    clearTimers();
+    setState('processing');
+
+
+    schedule(() => {
+      const command = matchVoiceCommand(text);
+      const matched = Boolean(command);
+      if (command) {
+        setResponse(`Navigating to ${command.text}...`);
+        setState('responding');
+        schedule(() => navigate(command.path), 1500);
+      }
+
+      if (!matched) {
+        setResponse("I'm sorry, I didn't catch a recognized command. Try looking at the supported commands below.");
+        setState('responding');
+        schedule(() => setState('idle'), 4000);
+      }
+    }, 1000);
+  }, [navigate, clearTimers, schedule]);
 
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      setSupported(false);
       return;
     }
 
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
-    
+
     recognition.onresult = (event: any) => {
       let finalTranscript = '';
       for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -61,33 +80,37 @@ export default function VoiceAssistantPage() {
 
     recognition.onerror = (event: any) => {
       console.error('Speech recognition error', event.error);
+      setResponse(event.error === 'not-allowed' ? 'Microphone permission was denied. Use the command buttons below.' : 'Speech recognition failed. Please retry or use the command buttons below.');
       setState('error');
-      setTimeout(() => setState('idle'), 3000);
+      schedule(() => setState('idle'), 3000);
     };
 
     recognition.onend = () => {
-      if (state === 'listening') {
-        setState('processing');
-      }
+      setState((prevState) => {
+        if (prevState === 'listening') return 'idle';
+        return prevState;
+      });
     };
 
     recognitionRef.current = recognition;
-  }, []);
+    return () => { recognition.onresult = null; recognition.onerror = null; recognition.onend = null; recognition.abort(); };
+  }, [processCommand, schedule]);
 
   useEffect(() => {
     if (recognitionRef.current) {
       // Map basic languages to BCP-47 codes if needed, simple approach for now
-      recognitionRef.current.lang = language === 'en' ? 'en-US' : language === 'hi' ? 'hi-IN' : language === 'ta' ? 'ta-IN' : 'en-US';
+      recognitionRef.current.lang = getSpeechLocale(language);
     }
   }, [language]);
 
   const toggleListening = () => {
-    if (!supported) return;
-    
+    if (!supported || state === 'processing' || state === 'responding') return;
+
     if (state === 'listening') {
       recognitionRef.current?.stop();
-      setState('processing');
+      setState('idle');
     } else {
+      clearTimers();
       setTranscript('');
       setResponse('');
       setState('listening');
@@ -95,41 +118,16 @@ export default function VoiceAssistantPage() {
         recognitionRef.current?.start();
       } catch (e) {
         console.error(e);
+        setResponse('Unable to start the microphone. Use a command button or retry.');
+        setState('error');
       }
     }
   };
 
-  const processCommand = (text: string) => {
-    setState('processing');
-    const lowerText = text.toLowerCase();
-    
-    setTimeout(() => {
-      let matched = false;
-      for (const cmd of COMMANDS) {
-        if (lowerText.includes(cmd.text.toLowerCase()) || 
-           (cmd.text === 'Water irrigation' && lowerText.includes('water')) ||
-           (cmd.text === 'Calculate water' && lowerText.includes('irrigation'))) {
-          setResponse(`Navigating to ${cmd.text}...`);
-          setState('responding');
-          matched = true;
-          setTimeout(() => {
-            navigate(cmd.path);
-          }, 1500);
-          break;
-        }
-      }
-
-      if (!matched) {
-        setResponse("I'm sorry, I didn't catch a recognized command. Try looking at the supported commands below.");
-        setState('responding');
-        setTimeout(() => setState('idle'), 4000);
-      }
-    }, 1000);
-  };
-
   const handleManualCommand = (cmd: typeof COMMANDS[0]) => {
-    setTranscript(cmd.text);
-    processCommand(cmd.text);
+    clearTimers();
+    recognitionRef.current?.abort();
+    navigate(cmd.path);
   };
 
   return (
@@ -139,12 +137,12 @@ export default function VoiceAssistantPage() {
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <Volume2 className="text-green-600" /> Voice Assistant
           </h1>
-          <p className="text-gray-600 text-sm">Control Marudham 360 with your voice</p>
+          <p className="text-gray-600 text-sm">Say a supported Tamil or English phrase, type it, or use the buttons. Speech recognition availability varies by browser.</p>
         </div>
-        
+
         <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border shadow-sm">
           <Globe size={16} className="text-gray-500" />
-          <select 
+          <select
             value={language}
             onChange={(e) => setLanguage(e.target.value as any)}
             className="bg-transparent text-sm font-medium outline-none text-gray-700"
@@ -157,7 +155,7 @@ export default function VoiceAssistantPage() {
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center space-y-8 mb-8">
-        
+
         <div className="relative flex items-center justify-center">
           {/* Animated Background Rings */}
           {state === 'listening' && (
@@ -166,10 +164,11 @@ export default function VoiceAssistantPage() {
               <div className="absolute w-48 h-48 bg-green-300 rounded-full animate-pulse opacity-20" style={{ animationDuration: '2s' }}></div>
             </>
           )}
-          
+
           <button
             onClick={toggleListening}
-            disabled={!supported && state !== 'idle'}
+            aria-label={state === 'listening' ? 'Stop listening' : 'Start listening'}
+            disabled={!supported || state === 'processing' || state === 'responding'}
             className={cn(
               "relative z-10 w-28 h-28 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl",
               state === 'idle' ? "bg-green-600 hover:bg-green-700 text-white hover:scale-105" :
@@ -179,15 +178,15 @@ export default function VoiceAssistantPage() {
               "bg-gray-400 text-white"
             )}
           >
-            {state === 'processing' ? <Loader2 className="w-12 h-12 animate-spin" /> : 
+            {state === 'processing' ? <Loader2 className="w-12 h-12 animate-spin" /> :
              state === 'listening' ? <Mic className="w-12 h-12 animate-bounce" /> :
              <Mic className="w-12 h-12" />}
           </button>
         </div>
 
-        <div className="text-center space-y-4 w-full max-w-md h-32">
+        <div aria-live="polite" className="text-center space-y-4 w-full max-w-md min-h-32">
           {state === 'idle' && (
-            <p className="text-lg text-gray-500 font-medium">Tap the mic and start speaking...</p>
+            <p className="text-lg text-gray-500 font-medium">{supported ? 'Tap the mic and say a supported phrase below.' : 'Choose a command button below.'}</p>
           )}
           {state === 'listening' && (
             <p className="text-xl text-green-600 font-bold animate-pulse">Listening...</p>
@@ -213,16 +212,20 @@ export default function VoiceAssistantPage() {
         <h3 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2 uppercase tracking-wide">
           <Terminal size={16} /> Supported Commands
         </h3>
+        <form className="flex flex-wrap gap-2 mb-4" onSubmit={e => { e.preventDefault(); if (typedCommand.trim()) { recognitionRef.current?.abort(); setTranscript(typedCommand); processCommand(typedCommand); } }}>
+          <label className="flex-1 text-sm">Tamil or English command<input className="input-field mt-1" value={typedCommand} onChange={e => setTypedCommand(e.target.value)} /></label><button className="btn-primary self-end" disabled={!typedCommand.trim()}>Go</button>
+        </form>
+        <p className="text-xs text-gray-500 mb-4">Matches the fixed phrases shown below. Other speech locales are selectable, but only Tamil and English commands are matched.</p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {COMMANDS.map((cmd, i) => (
             <button
               key={i}
               onClick={() => handleManualCommand(cmd)}
-              disabled={state !== 'idle' && !supported}
+
               className="flex items-center gap-2 p-3 bg-gray-50 hover:bg-green-50 rounded-lg border border-gray-200 hover:border-green-300 transition-colors text-left text-sm font-medium text-gray-700 hover:text-green-700"
             >
               <span className="text-xl">{cmd.icon}</span>
-              <span>{cmd.text}</span>
+              <span>{language === 'ta' ? cmd.tamil : cmd.text}</span>
             </button>
           ))}
         </div>

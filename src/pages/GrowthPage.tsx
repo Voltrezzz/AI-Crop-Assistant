@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { db } from '@/db/database';
 import { Field, CropType, GrowthStage, GrowthRecord } from '@/types';
 import { cn, formatDate, capitalize } from '@/utils';
@@ -12,7 +12,6 @@ const WHEAT_STAGES: GrowthStage[] = ['germination', 'tillering', 'stem_extension
 export default function GrowthPage() {
   const { user } = useAuthStore();
   const location = useLocation();
-  const navigate = useNavigate();
   const initialFieldId = location.state?.fieldId;
 
   const [fields, setFields] = useState<Field[]>([]);
@@ -22,55 +21,29 @@ export default function GrowthPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadFields();
+    let cancelled = false;
+    async function load() {
+      const allFields = user?.id ? await db.fields.where('userId').equals(user.id).toArray() : [];
+      if (cancelled) return;
+      setFields(allFields);
+      setSelectedFieldId(previous => allFields.some(f => f.id === previous) ? previous : (allFields[0]?.id || ''));
+      setLoading(false);
+    }
+    void load().catch(error => { console.error(error); if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
   }, [user?.id]);
 
   useEffect(() => {
-    if (selectedFieldId) {
-      loadFieldData(Number(selectedFieldId));
-    } else {
-      setField(null);
-      setHistory([]);
+    let cancelled = false;
+    async function load() {
+      const fieldData = selectedFieldId ? await db.fields.get(Number(selectedFieldId)) : undefined;
+      const owned = fieldData?.userId === user?.id ? fieldData : undefined;
+      const records = owned && user?.id ? await db.growthRecords.where('userId').equals(user.id).and(record => record.fieldId === selectedFieldId).toArray() : [];
+      if (!cancelled) { setField(owned || null); setHistory(records); }
     }
-  }, [selectedFieldId]);
-
-  const loadFields = async () => {
-    setLoading(true);
-    try {
-      if (!user?.id) {
-        setFields([]);
-        setSelectedFieldId('');
-        return;
-      }
-      const allFields = await db.fields.where('userId').equals(user.id).toArray();
-      setFields(allFields);
-      if (!selectedFieldId && allFields.length > 0) {
-        setSelectedFieldId(allFields[0].id!);
-      }
-    } catch (error) {
-      console.error('Failed to load fields', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadFieldData = async (fieldId: number) => {
-    try {
-      if (!user?.id) return;
-      const fieldData = await db.fields.get(fieldId);
-      if (fieldData?.userId === user.id) {
-        setField(fieldData);
-        const records = await db.growthRecords.where('userId').equals(user.id).and((record) => record.fieldId === fieldId).toArray();
-        records.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setHistory(records);
-      } else {
-        setField(null);
-        setHistory([]);
-      }
-    } catch (error) {
-      console.error('Failed to load field data', error);
-    }
-  };
+    void load().catch(console.error);
+    return () => { cancelled = true; };
+  }, [selectedFieldId, user?.id]);
 
   if (loading && fields.length === 0) {
     return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div></div>;
@@ -90,7 +63,7 @@ export default function GrowthPage() {
           <h1 className="text-2xl font-bold text-gray-900">Growth Monitoring</h1>
           <p className="text-gray-500 text-sm mt-1">Track crop development and receive stage-specific advice</p>
         </div>
-        
+
         <div className="w-full sm:w-64">
           <select
             value={selectedFieldId}
@@ -113,6 +86,7 @@ export default function GrowthPage() {
         </div>
       ) : (
         <>
+          <p className="mb-3 text-sm text-gray-500">{history.length} growth records saved for this field.</p>
           {/* Progress Overview Card */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -136,26 +110,25 @@ export default function GrowthPage() {
               <div className="overflow-hidden h-3 mb-4 text-xs flex rounded-full bg-gray-100">
                 <div style={{ width: `${progressPercentage}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500 transition-all duration-1000"></div>
               </div>
-              
+
               <div className="relative flex justify-between w-full">
                 {stages.map((stage, idx) => {
                   const isPast = idx < currentStageIndex;
                   const isCurrent = idx === currentStageIndex;
-                  const isFuture = idx > currentStageIndex;
-                  
+
                   return (
                     <div key={stage} className="flex flex-col items-center group relative -mt-10">
                       <div className={cn(
                         "w-6 h-6 rounded-full flex items-center justify-center border-2 mb-2 z-10",
-                        isPast ? "bg-green-500 border-green-500 text-white" : 
-                        isCurrent ? "bg-white border-green-500 text-green-500 shadow-sm" : 
+                        isPast ? "bg-green-500 border-green-500 text-white" :
+                        isCurrent ? "bg-white border-green-500 text-green-500 shadow-sm" :
                         "bg-white border-gray-200 text-gray-300"
                       )}>
-                        {isPast ? <Check className="w-3 h-3" /> : 
-                         isCurrent ? <div className="w-2 h-2 rounded-full bg-green-500" /> : 
+                        {isPast ? <Check className="w-3 h-3" /> :
+                         isCurrent ? <div className="w-2 h-2 rounded-full bg-green-500" /> :
                          <span className="text-[10px]">{idx + 1}</span>}
                       </div>
-                      
+
                       {/* Only show text on larger screens or current stage on mobile */}
                       <span className={cn(
                         "text-[10px] md:text-xs font-medium text-center max-w-[60px] md:max-w-[80px]",

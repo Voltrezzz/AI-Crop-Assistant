@@ -1,6 +1,6 @@
-import { CropType, Disease, RiskLevel } from '@/types';
-import { calculateSeverity } from './severity';
-import { getDiseaseInfo } from '../services/diseaseDatabase';
+import { CropType } from '@/types';
+
+
 
 export interface CropAIModel {
   load(): Promise<void>;
@@ -51,7 +51,7 @@ export class DemoCropAIModel implements CropAIModel {
     };
 
     const confidence = generateConfidence(selectedScenario);
-    
+
     switch (selectedScenario) {
       case 'paddy_healthy':
         return {

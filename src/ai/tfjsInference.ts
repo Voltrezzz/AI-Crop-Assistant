@@ -6,8 +6,8 @@ const CLASSES_URL = `${import.meta.env.BASE_URL}models/crop-disease/classes.json
 const EXPECTED_CLASS_COUNT = 17;
 
 // Prototype-only acceptance heuristics. These values are not scientifically validated.
-// Confidence and margin are calculated after filtering to the selected crop and
-// renormalizing that crop's probabilities to sum to 1.
+// Confidence and margin use the original probability distribution across all
+// classes. The selected crop is checked against the model's top class.
 const MIN_RETURNED_CONFIDENCE = 0.35;
 const NORMAL_CONFIDENCE = 0.45;
 const NORMAL_MARGIN = 0.05;
@@ -117,58 +117,49 @@ export async function classifyCropImage(imageData: string, crop: CropType) {
   ) / 2);
 
   const expectedPrefix = crop === 'paddy' ? 'Rice_' : 'Wheat_';
-  const cropProbabilities = probabilities
+  const rankedAll = probabilities
     .map((confidence, index) => ({ confidence, className: classes[index] }))
-    .filter(({ className }) => className.startsWith(expectedPrefix));
-  const cropProbabilityTotal = cropProbabilities.reduce((sum, item) => sum + item.confidence, 0);
-  if (cropProbabilities.length === 0 || !Number.isFinite(cropProbabilityTotal) || cropProbabilityTotal <= 0) {
-    throw new CropModelError('model_mismatch', `The model has no valid classes for the selected ${crop} crop.`);
-  }
-
-  const ranked = cropProbabilities
-    .map(({ confidence, className }) => ({ confidence: confidence / cropProbabilityTotal, className }))
     .sort((a, b) => b.confidence - a.confidence);
-  const [best, second] = ranked;
-  const margin = best ? best.confidence - (second?.confidence ?? 0) : 0;
-  const isExtremelyAmbiguous = margin < EXTREME_AMBIGUITY_MARGIN;
-  const isNormalConfidence = Boolean(best && best.confidence >= NORMAL_CONFIDENCE && margin >= NORMAL_MARGIN);
+
+  const bestAll = rankedAll[0];
+  const secondAll = rankedAll[1];
 
   if (import.meta.env.DEV) {
-    console.groupCollapsed(`[Marudham 360] ${crop} crop-specific model probabilities`);
-    console.table(ranked.slice(0, 3).map(({ className, confidence }) => ({
+    console.groupCollapsed(`[Marudham 360] Model probabilities`);
+    console.table(rankedAll.slice(0, 3).map(({ className, confidence }) => ({
       className,
       probability: `${(confidence * 100).toFixed(2)}%`,
     })));
-    console.info('Prototype heuristic decision', {
-      inference: 'mean of original and horizontal-flip predictions',
-      confidence: best ? `${(best.confidence * 100).toFixed(2)}%` : 'unavailable',
-      topTwoMargin: `${(margin * 100).toFixed(2)}%`,
-      decision: !best || best.confidence < MIN_RETURNED_CONFIDENCE || isExtremelyAmbiguous
-        ? 'reject'
-        : isNormalConfidence ? 'accept' : 'accept-low-confidence',
-      thresholds: {
-        minimumConfidence: '35%',
-        normalConfidence: '45%',
-        normalMargin: '5%',
-        extremeAmbiguityMargin: '2%',
-      },
-    });
     console.groupEnd();
   }
 
-  if (!best || best.confidence < MIN_RETURNED_CONFIDENCE || isExtremelyAmbiguous) {
+  // Reject if the model's top prediction is for a completely different crop.
+  if (bestAll && !bestAll.className.startsWith(expectedPrefix)) {
+    throw new CropModelError(
+      'crop_mismatch',
+      `This image appears to be ${friendlyLabel(bestAll.className).split(' ')[0]}, but you selected ${crop}. Please select the correct crop or upload a clear image.`
+    );
+  }
+
+  const margin = bestAll ? bestAll.confidence - (secondAll?.confidence ?? 0) : 0;
+  const isExtremelyAmbiguous = margin < EXTREME_AMBIGUITY_MARGIN;
+  const isNormalConfidence = Boolean(bestAll && bestAll.confidence >= NORMAL_CONFIDENCE && margin >= NORMAL_MARGIN);
+
+  const isVeryLowConfidence = !bestAll || bestAll.confidence < 0.15;
+  if (isVeryLowConfidence) {
     throw new CropModelError('uncertain', 'Unable to confidently identify a supported crop condition. Please upload a clear rice or wheat crop/leaf image.');
   }
 
-  const disease = best.className
+  const disease = bestAll.className
     .replace(expectedPrefix, '')
     .replace(/([a-z])([A-Z])/g, '$1_$2')
     .toLowerCase();
+
   return {
-    className: best.className,
+    className: bestAll.className,
     disease,
-    diseaseName: friendlyLabel(best.className),
-    confidence: best.confidence,
-    isLowConfidence: !isNormalConfidence,
+    diseaseName: friendlyLabel(bestAll.className),
+    confidence: bestAll.confidence,
+    isLowConfidence: !isNormalConfidence || bestAll.confidence < MIN_RETURNED_CONFIDENCE || isExtremelyAmbiguous,
   };
 }

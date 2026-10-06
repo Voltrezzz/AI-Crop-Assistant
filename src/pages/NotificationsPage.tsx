@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Bell, AlertTriangle, CloudRain, Sprout, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, Bell } from 'lucide-react';
 import { db } from '@/db/database';
 import { cn } from '@/utils';
 import { useAuthStore } from '@/stores/authStore';

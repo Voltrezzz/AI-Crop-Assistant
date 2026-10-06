@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Download, Calendar, MapPin, Search, CheckCircle, Plus } from 'lucide-react';
+import { FileText, Download, Calendar, MapPin, Plus } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import { db } from '@/db/database';
 import { Scan, Field } from '@/types';
@@ -19,7 +19,7 @@ export default function ReportsPage() {
   const [reports, setReports] = useState<Report[]>([]);
   const [fields, setFields] = useState<Field[]>([]);
   const [scans, setScans] = useState<Scan[]>([]);
-  
+
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedField, setSelectedField] = useState<string>('all');
 
@@ -34,7 +34,7 @@ export default function ReportsPage() {
       const allFields = await db.fields.where('userId').equals(user.id).toArray();
       const allScans = await db.scans.where('userId').equals(user.id).toArray();
       allScans.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      
+
       setFields(allFields);
       setScans(allScans);
 
@@ -54,15 +54,15 @@ export default function ReportsPage() {
 
   const generateReport = async () => {
     setIsGenerating(true);
-    
+
     try {
       const doc = new jsPDF();
       const now = new Date();
       const dateStr = formatDate(now.toISOString());
-      
+
       let targetScans = scans;
       let fieldName = 'All Fields';
-      
+
       if (selectedField !== 'all') {
         const fieldIdNum = Number(selectedField);
         targetScans = scans.filter(s => s.fieldId === fieldIdNum);
@@ -73,13 +73,13 @@ export default function ReportsPage() {
       doc.setFontSize(22);
       doc.setTextColor(21, 128, 61); // Green 700
       doc.text('Marudham 360 - Crop Health Report', 20, 20);
-      
+
       doc.setFontSize(12);
       doc.setTextColor(75, 85, 99); // Gray 600
       doc.text(`Generated: ${dateStr}`, 20, 30);
       doc.text(`Farmer: ${user?.name || 'Marudham 360 user'}`, 20, 36);
       doc.text(`Field Scope: ${fieldName}`, 20, 42);
-      
+
       doc.setDrawColor(229, 231, 235); // Gray 200
       doc.line(20, 48, 190, 48);
 
@@ -88,7 +88,7 @@ export default function ReportsPage() {
       doc.text('Recent Scan Results', 20, 60);
 
       let yPos = 70;
-      
+
       if (targetScans.length === 0) {
         doc.setFontSize(12);
         doc.text('No scans recorded for this selection.', 20, yPos);
@@ -98,11 +98,11 @@ export default function ReportsPage() {
             doc.addPage();
             yPos = 20;
           }
-          
+
           doc.setFontSize(12);
           doc.setTextColor(31, 41, 55);
           doc.text(`Scan ${index + 1} - ${formatDate(scan.date)}`, 20, yPos);
-          
+
           doc.setFontSize(11);
           doc.setTextColor(75, 85, 99);
           doc.text(`Diagnosis: ${scan.disease}`, 25, yPos + 6);
@@ -110,7 +110,7 @@ export default function ReportsPage() {
           doc.text(`Severity: ${formatSeverity(scan.severity)}`, 25, yPos + 18);
           doc.text(`Health Score: ${formatHealthScore(scan.healthScore)}`, 25, yPos + 24);
           doc.text(`Risk: ${formatRisk(scan.risk)}`, 25, yPos + 30);
-          
+
           yPos += 41;
         });
       }
@@ -131,7 +131,7 @@ export default function ReportsPage() {
         fieldName: fieldName,
         type: 'On-Demand Health Report'
       };
-      
+
       const updatedReports = [newReport, ...reports];
       setReports(updatedReports);
       if (user?.id) localStorage.setItem(`cropsense_reports_${user.id}`, JSON.stringify(updatedReports));
@@ -152,7 +152,7 @@ export default function ReportsPage() {
         <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <Plus className="w-5 h-5 text-green-600" /> Generate New Report
         </h2>
-        
+
         <div className="flex flex-wrap items-end gap-4">
           <div className="flex-1 min-w-[200px]">
             <label className="block text-sm font-medium text-gray-700 mb-1">Select Field</label>
@@ -167,7 +167,7 @@ export default function ReportsPage() {
               ))}
             </select>
           </div>
-          
+
           <button
             onClick={generateReport}
             disabled={isGenerating}
@@ -186,7 +186,7 @@ export default function ReportsPage() {
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">Past Reports</h2>
-        
+
         {reports.length === 0 ? (
           <p className="text-gray-500 italic">No reports generated yet.</p>
         ) : (
@@ -205,7 +205,7 @@ export default function ReportsPage() {
                     </div>
                   </div>
                 </div>
-                <button 
+                <button
                   disabled
                   className="p-2 text-gray-300 cursor-not-allowed rounded-lg"
                   title="Generated PDF files are downloaded immediately and are not retained by Marudham 360."

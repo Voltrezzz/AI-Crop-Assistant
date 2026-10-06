@@ -1,11 +1,7 @@
+import { Satellite, Sprout, Tractor, Package, IndianRupee, FolderLock, Recycle } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard, ScanLine, Map, History, Cloud, AlertTriangle,
-  BookOpen, TrendingUp, FileText, Settings, Menu, X, Bell, Wifi, WifiOff, HardDrive, FlaskConical,
-  User, Leaf, Droplets, LandPlot, MessageCircle, Dog, Landmark,
-  Store, BarChart3, Bug, Mic, ChevronDown, ChevronUp, LogOut, Users, Scale
-} from 'lucide-react';
+import { LayoutDashboard, ScanLine, Map, History, Cloud, AlertTriangle, BookOpen, TrendingUp, FileText, Settings, Menu, X, Bell, Wifi, WifiOff, FlaskConical, User, Leaf, Droplets, LandPlot, MessageCircle, Dog, Landmark, Store, BarChart3, Bug, Mic, ChevronDown, ChevronUp, LogOut, Users, Scale } from 'lucide-react';
 import { cn } from '@/utils';
 import { useAuthStore } from '@/stores/authStore';
 import { useSettingsStore } from '@/stores/settingsStore';
@@ -27,14 +23,20 @@ const navSections: NavSection[] = [
     title: 'Overview',
     items: [
       { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+      { path: '/satellite', label: 'Satellite Monitoring', icon: <Satellite size={20} /> },
       { path: '/analyzer', label: 'Scan Leaf', icon: <ScanLine size={20} /> },
       { path: '/chatbot', label: 'AI Chatbot', icon: <MessageCircle size={20} /> },
       { path: '/voice', label: 'Voice Assistant', icon: <Mic size={20} /> },
+      { path: '/offline', label: 'Offline Status', icon: <WifiOff size={20} /> },
     ],
   },
   {
     title: 'Farm Management',
     items: [
+      { path: '/crop-plan', label: 'Crop Planning', icon: <Sprout size={20} /> },
+      { path: '/farm-memory', label: 'Farm Memory', icon: <BookOpen size={20} /> },
+      { path: '/post-harvest', label: 'Post-Harvest', icon: <Package size={20} /> },
+      { path: '/marketplace', label: 'Manpower & Equipment', icon: <Tractor size={20} /> },
       { path: '/fields', label: 'My Fields', icon: <Map size={20} /> },
       { path: '/land', label: 'Farm Overview', icon: <LandPlot size={20} /> },
       { path: '/irrigation', label: 'Water Irrigation', icon: <Droplets size={20} /> },
@@ -45,6 +47,7 @@ const navSections: NavSection[] = [
   {
     title: 'Crop Health',
     items: [
+      { path: '/health-alerts', label: 'Health & Alerts', icon: <AlertTriangle size={20} /> },
       { path: '/history', label: 'Crop History', icon: <History size={20} /> },
       { path: '/weather', label: 'Weather', icon: <Cloud size={20} /> },
       { path: '/risk', label: 'Disease Risk', icon: <AlertTriangle size={20} /> },
@@ -55,6 +58,8 @@ const navSections: NavSection[] = [
   {
     title: 'Market & Finance',
     items: [
+      { path: '/finance', label: 'Farm Finance', icon: <IndianRupee size={20} /> },
+      { path: '/livelihood', label: 'Rural Enterprise', icon: <Recycle size={20} /> },
       { path: '/market', label: 'Market Analysis', icon: <BarChart3 size={20} /> },
       { path: '/loans', label: 'Loans & Schemes', icon: <Landmark size={20} /> },
       { path: '/shops', label: 'Fertilizer Shops', icon: <Store size={20} /> },
@@ -63,6 +68,7 @@ const navSections: NavSection[] = [
   {
     title: 'Community',
     items: [
+      { path: '/community', label: 'Community & Experts', icon: <Users size={20} /> },
       { path: '/friends', label: 'Friends', icon: <Users size={20} /> },
       { path: '/compare', label: 'Compare Farms', icon: <Scale size={20} /> },
     ],
@@ -76,6 +82,7 @@ const navSections: NavSection[] = [
   {
     title: 'Other',
     items: [
+      { path: '/documents', label: 'Document Locker', icon: <FolderLock size={20} /> },
       { path: '/reports', label: 'Reports', icon: <FileText size={20} /> },
       { path: '/settings', label: 'Settings', icon: <Settings size={20} /> },
     ],
@@ -144,9 +151,6 @@ export default function AppShell() {
     };
   }, []);
 
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     loadSettings();
@@ -185,7 +189,7 @@ export default function AppShell() {
               {section.items.map((item) => (
                 <button
                   key={item.path}
-                  onClick={() => navigate(item.path)}
+                  onClick={() => { setSidebarOpen(false); navigate(item.path); }}
                   className={cn(
                     'w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors',
                     isActive(item.path)
@@ -312,7 +316,7 @@ export default function AppShell() {
 
         {/* Page content */}
         <main className="flex-1 overflow-y-auto bg-gray-50 pb-20 transition-colors dark:bg-slate-950 lg:pb-4">
-          <Outlet />
+          <Outlet key={`${user?.id}:${location.pathname}`} />
         </main>
 
         {/* Mobile bottom nav */}
@@ -323,7 +327,7 @@ export default function AppShell() {
             return (
               <button
                 key={item.path}
-                onClick={() => navigate(item.path)}
+                onClick={() => { setSidebarOpen(false); navigate(item.path); }}
                 className={cn(
                   'flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-colors min-w-[60px]',
                   isScan

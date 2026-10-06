@@ -12,33 +12,40 @@ export default function FieldsPage() {
   const { user } = useAuthStore();
 
   useEffect(() => {
+    const loadFields = async () => {
+      try {
+        if (!user?.id) {
+          setFields([]);
+          return;
+        }
+        const allFields = await db.fields.where('userId').equals(user.id).toArray();
+        setFields(allFields);
+      } catch (error) {
+        console.error('Failed to load fields', error);
+      }
+    };
     loadFields();
   }, [user?.id]);
-
-  const loadFields = async () => {
-    try {
-      if (!user?.id) {
-        setFields([]);
-        return;
-      }
-      const allFields = await db.fields.where('userId').equals(user.id).toArray();
-      setFields(allFields);
-    } catch (error) {
-      console.error('Failed to load fields', error);
-    }
-  };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-green-900">My Fields</h1>
-        <button
-          onClick={() => navigate('/fields/new')}
-          className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
-        >
-          <Plus className="w-5 h-5" />
-          <span>Add Field</span>
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate('/crop-plan')}
+            className="flex items-center gap-2 bg-white text-green-700 border border-green-200 hover:bg-green-50 px-4 py-2 rounded-lg transition-colors font-medium"
+          >
+            <span>AI Crop Plan</span>
+          </button>
+          <button
+            onClick={() => navigate('/fields/new')}
+            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+          >
+            <Plus className="w-5 h-5" />
+            <span className="hidden sm:inline">Add Field</span>
+          </button>
+        </div>
       </div>
 
       {fields.length === 0 ? (

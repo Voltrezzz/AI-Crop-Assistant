@@ -26,7 +26,7 @@ function getStoredTheme(): AppSettings['theme'] {
 }
 
 const defaultSettings: AppSettings = {
-  language: 'en',
+  language: 'ta',
   theme: 'light',
   notifications: true,
   autoSync: true,
@@ -39,7 +39,7 @@ let settingsOperation = 0;
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   settings: null,
-  language: 'en',
+  language: 'ta',
   theme: getStoredTheme(),
   loading: false,
   initializeTheme: () => applyTheme(get().theme),
@@ -61,7 +61,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       set({ settings: { ...current, theme }, language: current.language, theme, loading: false });
     } else {
       if (operation !== settingsOperation) return;
-      set({ settings: null, language: 'en', loading: false });
+      set({ settings: null, language: 'ta', loading: false });
     }
   },
   updateSettings: async (updates) => {
@@ -103,6 +103,6 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   },
   reset: () => {
     settingsOperation += 1;
-    set({ settings: null, language: 'en', loading: false });
+    set({ settings: null, language: 'ta', loading: false });
   }
 }));
