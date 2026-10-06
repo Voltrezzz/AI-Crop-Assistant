@@ -318,3 +318,19 @@ test('location preview validates coordinates and metre-based area without invent
   assert.throws(()=>locationPreviewGeometry({latitude:13,longitude:80,label:'Test'},999),/size/);
   await assert.rejects(searchSatellitePlaces('x'),/village/);
 });
+
+test('vegetation comparisons reject missing or same-date data and export only actual observation values', async () => {
+  const { vegetationChange, observationAgeDays, satelliteCsv } = await import('../src/utils/satelliteSummary');
+  const previous = {id:'S2A_OLD',date:'2026-09-26T00:00:00Z',cloudCover:10,stats:{method:'baseline-harmonized-v1' as const,mean:0.2,min:0,max:0.5,validPixels:20,validPercent:100}};
+  const current = {...previous,id:'S2A_NEW',date:'2026-10-03T00:00:00Z',stats:{...previous.stats,mean:0.4}};
+  assert.equal(vegetationChange(current,previous)?.delta,0.2);
+  assert.equal(vegetationChange(previous,current),undefined);
+  assert.equal(vegetationChange(current,{...previous,date:current.date}),undefined);
+  assert.equal(vegetationChange(current,{...previous,stats:undefined}),undefined);
+  assert.equal(observationAgeDays(current.date,Date.parse('2026-10-06T00:00:00Z')),3);
+  assert.equal(observationAgeDays('invalid'),null);
+  const csv = satelliteCsv([current,{...previous,stats:undefined}]);
+  assert.match(csv,/'?mean_ndvi/);
+  assert.match(csv,/"0.4"/);
+  assert.match(csv,/"S2A_OLD","10","","","","",""/);
+});

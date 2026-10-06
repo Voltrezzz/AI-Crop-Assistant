@@ -143,3 +143,42 @@ test('location access denial provides a map and place fallback without searching
     assert.equal((screen.getByRole('button',{name:'Show satellite preview'}) as HTMLButtonElement).disabled,true);
   } finally { if (original) Object.defineProperty(globalThis.navigator,'geolocation',original); else Reflect.deleteProperty(globalThis.navigator,'geolocation'); }
 });
+
+test('vegetation preview survives map clicks, switches layers and compares real scene values for the same area', async () => {
+  const originalFetch = globalThis.fetch;
+  const shapes: any[] = [];
+  globalThis.fetch = (async (url,init) => {
+    if (String(url).includes('/search')) return Response.json({features:[['S2A_NEW','2026-10-03'],['S2A_OLD','2026-09-26']].map(([id,date])=>({id,properties:{datetime:date+'T00:00:00Z','eo:cloud_cover':10,'s2:processing_baseline':'03.00'},assets:{B04:{},B08:{}}}))});
+    if (String(url).includes('tilejson')) return Response.json({tiles:['https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/{z}/{x}/{y}?item='+ (String(url).includes('S2A_OLD') ? 'S2A_OLD' : 'S2A_NEW')]});
+    shapes.push(JSON.parse(String(init?.body)).geometry);
+    return Response.json({properties:{statistics:{'(B08-B04)/(B08+B04)':{mean:String(url).includes('S2A_OLD') ? 0.2 : 0.4,min:0.1,max:0.6,valid_pixels:20,valid_percent:100}}}});
+  }) as typeof fetch;
+  try {
+    render(<MemoryRouter><SatelliteHealthPage /></MemoryRouter>);
+    assert.equal(screen.queryByText('NDVI vegetation signal'),null);
+    assert.match(screen.getByText(/Background image only/).textContent!,/no vegetation/);
+    fireEvent.click(screen.getByRole('button',{name:'Tap selected map'}));
+    fireEvent.click(screen.getByRole('button',{name:'Show satellite preview'}));
+    await screen.findByText('Mean NDVI');
+    await screen.findByText('Sentinel-2 vegetation colours are visible');
+    await waitFor(() => assert.equal((screen.getByRole('button',{name:'Show satellite preview'}) as HTMLButtonElement).disabled,false));
+    fireEvent.click(screen.getByRole('button',{name:'Tap selected map'}));
+    assert.ok(screen.getByText('Mean NDVI'));
+    assert.ok(screen.getByText(/Saved mean NDVI 0.400/));
+    fireEvent.click(screen.getByRole('button',{name:'Aerial background'}));
+    assert.ok(screen.getByText(/Background image only/));
+    assert.equal(screen.queryByText('NDVI vegetation signal'),null);
+    fireEvent.click(screen.getByRole('button',{name:'Blend both'}));
+    assert.equal((screen.getByRole('slider') as HTMLInputElement).value,'80');
+    fireEvent.click(screen.getByRole('button',{name:'Vegetation colours',exact:true}));
+    fireEvent.click(screen.getByRole('button',{name:'Compare with earlier date'}));
+    await screen.findByText(/Mean NDVI increased: \+0.200/);
+    assert.deepEqual(shapes[0],shapes[1]);
+    assert.ok(screen.getByRole('heading',{name:/Earlier-date vegetation map/}));
+    assert.equal(await db.fieldBoundaries.count(),0);
+    await waitFor(() => assert.equal((screen.getByRole('button',{name:'Change location on map'}) as HTMLButtonElement).disabled,false));
+    fireEvent.click(screen.getByRole('button',{name:'Change location on map'}));
+    fireEvent.click(screen.getAllByRole('button',{name:'Tap selected map'})[0]);
+    assert.equal(screen.queryByText('Mean NDVI'),null);
+  } finally { globalThis.fetch = originalFetch; }
+});
