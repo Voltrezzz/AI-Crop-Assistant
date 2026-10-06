@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import { Search, Scale, Map, HeartPulse, Activity, ShieldAlert, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from '@/hooks/useTranslation';
 import { getComparisonData } from '@/services/socialService';
-import { ComparisonResult, Field } from '@/types';
+import { ComparisonResult } from '@/types';
 import { useFieldStore } from '@/stores/fieldStore';
+import PrototypeNotice from '@/components/PrototypeNotice';
 
 export default function ComparePage() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [remoteData, setRemoteData] = useState<ComparisonResult | null>(null);
-  
+
   const myFields = useFieldStore(state => state.fields);
   const myPrimaryField = myFields[0]; // Just comparing the first field for simplicity
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
-    
+
     setLoading(true);
     try {
       const data = await getComparisonData(query);
@@ -82,6 +81,7 @@ export default function ComparePage() {
       </header>
 
       <div className="flex-1 overflow-y-auto p-4">
+        <PrototypeNotice>This comparison feature uses a fabricated demo profile for illustration purposes.</PrototypeNotice>
         {!remoteData ? (
           <div className="h-full flex flex-col items-center justify-center text-center max-w-sm mx-auto">
             <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-full flex items-center justify-center mb-4 text-primary-600">
@@ -104,12 +104,12 @@ export default function ComparePage() {
                 <Map size={18} className="text-primary-600" />
                 Field & Crop Details
               </div>
-              
+
               {renderComparisonRow('Crop Type', myPrimaryField?.crop, remoteData.fields[0]?.crop, <Activity size={16} />)}
               {renderComparisonRow('Variety', myPrimaryField?.variety, remoteData.fields[0]?.variety, <Activity size={16} />)}
               {renderComparisonRow('Area', `${myPrimaryField?.area || 0} ${myPrimaryField?.areaUnit || 'acres'}`, `${remoteData.fields[0]?.area || 0} ${remoteData.fields[0]?.areaUnit || 'acres'}`, <Map size={16} />)}
               {renderComparisonRow('Growth Stage', myPrimaryField?.growthStage, remoteData.fields[0]?.growthStage, <HeartPulse size={16} />)}
-              
+
               <div className="px-4 py-3 bg-gray-50 dark:bg-slate-800/50 border-y border-gray-200 dark:border-slate-700 font-semibold text-gray-900 dark:text-white flex items-center gap-2 mt-4">
                 <HeartPulse size={18} className="text-primary-600" />
                 Health & Risk

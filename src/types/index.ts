@@ -67,6 +67,9 @@ export interface Scan {
   cloudId?: string;
   userId?: number;
   fieldId?: number;
+  cropCycleId?: number;
+  locationLat?: number;
+  locationLng?: number;
   fieldCloudId?: string;
   crop: CropType;
   disease: Disease;
@@ -103,12 +106,14 @@ export interface Field {
   id?: number;
   cloudId?: string;
   userId?: number;
+  farmId?: number;
   name: string;
   area: number;
   areaUnit: string;
   crop: CropType;
   variety: string;
   location: string;
+  boundaries?: string;
   plantingDate: string;
   expectedHarvest: string;
   growthStage: GrowthStage;
@@ -248,6 +253,7 @@ export interface DiseaseInfo {
 
 export interface CropCycle {
   id?: number;
+  cloudId?: string;
   userId?: number;
   fieldId: number;
   crop: CropType;
@@ -279,6 +285,9 @@ export interface IrrigationRecord {
   id?: number;
   userId?: number;
   fieldId?: number;
+  cropCycleId?: number;
+  locationLat?: number;
+  locationLng?: number;
   fieldName: string;
   landArea: number;
   landAreaUnit: 'acres' | 'hectares' | 'bigha';
@@ -458,6 +467,9 @@ export interface HarvestAnalysis {
   id?: number;
   userId?: number;
   fieldId?: number;
+  cropCycleId?: number;
+  locationLat?: number;
+  locationLng?: number;
   crop: string;
   variety: string;
   estimatedYieldKg: number;
@@ -554,7 +566,7 @@ export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
   or: 'ଓଡ଼ିଆ',
 };
 
-export interface DocumentFile { id?: number; userId?: number; name: string; type: string; size: number; date: string; dataUrl?: string; }
+export interface DocumentFile { id?: number; userId?: number; name: string; type: string; size: number; date: string; dataUrl?: string; encryptedData?: import('@/utils/documentCrypto').EncryptedDocument; expiryDate?: string; category?: string; }
 
 // --- Social & Chat ---
 
@@ -588,3 +600,91 @@ export interface ComparisonResult {
   scans: Scan[];
   landParcels: LandParcel[];
 }
+
+// --- Phase 2: Core Data Model ---
+
+export interface Farm {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  name: string;
+  location?: string;
+  areaAcres?: number;
+  soilType?: string;
+  createdAt: string;
+}
+
+export interface FieldBoundary {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  fieldId: number;
+  geoJson: string;
+  createdAt: string;
+}
+
+export type FarmActivityType = 'sowing' | 'irrigation' | 'fertilizer' | 'pesticide' | 'observation' | 'harvest' | 'other';
+
+export interface FarmActivity {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  fieldId: number;
+  cropCycleId?: number;
+  type: FarmActivityType;
+  title: string;
+  description?: string;
+  date: string;
+  cost?: number;
+  createdAt: string;
+}
+
+export interface FertilizerRecord {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  fieldId: number;
+  cropCycleId?: number;
+  fertilizerType: string;
+  quantityKg: number;
+  date: string;
+  cost?: number;
+}
+
+export interface PesticideRecord {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  fieldId: number;
+  cropCycleId?: number;
+  pesticideName: string;
+  quantityLiters: number;
+  date: string;
+  cost?: number;
+}
+
+export interface ObservationRecord {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  fieldId: number;
+  cropCycleId?: number;
+  note: string;
+  date: string;
+  imageUrls?: string[];
+}
+
+export interface ProductionRecord {
+  id?: number;
+  cloudId?: string;
+  userId?: number;
+  fieldId: number;
+  cropCycleId?: number;
+  quantityKg: number;
+  quality?: string;
+  date: string;
+}
+export interface InventoryBatch { id?: number; cloudId?: string; userId?: number; fieldId?: number; cropCycleId?: number; crop: string; variety: string; qualityGrade: string; quantity: number; quantityUnit: string; harvestDate: string; storageLocation?: string; status: 'stored' | 'sold' | 'lost'; }
+
+
+export interface SaleRecord { id?: number; cloudId?: string; userId: number; inventoryBatchId: number; quantitySold: number; pricePerUnit: number; totalRevenue: number; saleDate: string; }

@@ -1,5 +1,5 @@
 import { ComparisonResult, User } from '@/types';
-import { db } from '@/db/database';
+
 
 // In a real app, this would hit the Supabase edge function or direct DB query with RLS.
 // For now, we simulate finding a user by Contract ID / User ID and returning mock public data.
@@ -9,7 +9,7 @@ export const getComparisonData = async (query: string): Promise<ComparisonResult
 
   // In this demo, if they search for 'DEMO-123' or similar, we return a mock result
   // otherwise, we check if it matches the current user (which isn't useful for comparison but just in case)
-  
+
   if (query.length < 3) return null;
 
   // Mock public data for a remote user
@@ -55,7 +55,7 @@ export const syncDeviceContacts = async (): Promise<Partial<User>[]> => {
       console.warn('Contact selection failed:', ex);
     }
   }
-  
+
   // Fallback to mock contacts
   return [
     { name: 'Kannan', phone: '+91 98765 11111', cloudId: 'kannan-123' },

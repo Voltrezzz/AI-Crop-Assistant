@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Thermometer, Droplets, CloudRain, AlertCircle, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Activity, Thermometer, Droplets, CloudRain, ShieldAlert, CheckCircle2 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { db } from '@/db/database';
 import { cn, getRiskColor } from '@/utils';
@@ -21,16 +21,16 @@ export default function RiskPage() {
       }
       const allFields = await db.fields.where('userId').equals(user.id).toArray();
       setFields(allFields);
-      
+
       // Calculate a dummy overall risk based on some logic
       const weather = await db.weather.toArray();
       const currentW = weather[weather.length - 1] || { humidity: 82, rainfall: 15, temperature: 30 };
-      
+
       let score = 20;
       if (currentW.humidity > 80) score += 30;
       if (currentW.rainfall > 10) score += 20;
       if (currentW.temperature > 28 && currentW.temperature < 32) score += 10;
-      
+
       setRiskScore(Math.min(100, score));
       if (score < 30) setOverallRisk('Low');
       else if (score < 60) setOverallRisk('Medium');
@@ -71,7 +71,7 @@ export default function RiskPage() {
         {/* Overall Risk Gauge */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center justify-center text-center">
           <h2 className="text-lg font-semibold text-gray-700 mb-6">Overall Farm Risk</h2>
-          
+
           <div className="relative w-48 h-24 mb-4 flex items-end justify-center overflow-hidden">
             {/* Background Arch */}
             <svg className="absolute w-48 h-48" viewBox="0 0 140 140">
@@ -98,7 +98,7 @@ export default function RiskPage() {
               {overallRisk}
             </div>
           </div>
-          
+
           <p className="text-sm text-gray-500 mt-2">
             Risk Score: <span className="font-semibold text-gray-700">{riskScore}/100</span>
           </p>
@@ -117,7 +117,7 @@ export default function RiskPage() {
               </div>
               <p className="text-sm text-gray-600">Elevated humidity strongly favors fungal spore germination and spread.</p>
             </div>
-            
+
             <div className="p-4 rounded-xl border border-orange-100 bg-orange-50/50">
               <div className="flex items-center gap-2 mb-2">
                 <CloudRain className="text-blue-600 w-5 h-5" />
@@ -125,7 +125,7 @@ export default function RiskPage() {
               </div>
               <p className="text-sm text-gray-600">Wet leaf surfaces allow pathogens to infect plant tissues more easily.</p>
             </div>
-            
+
             <div className="p-4 rounded-xl border border-yellow-100 bg-yellow-50/50">
               <div className="flex items-center gap-2 mb-2">
                 <Thermometer className="text-orange-500 w-5 h-5" />
@@ -161,7 +161,7 @@ export default function RiskPage() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
                 <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6b7280' }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#6b7280' }} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                 />
                 <Area type="monotone" dataKey="risk" stroke={riskColorHex} strokeWidth={3} fillOpacity={1} fill="url(#colorRisk)" />

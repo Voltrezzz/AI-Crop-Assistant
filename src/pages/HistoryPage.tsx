@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '@/db/database';
-import { Scan, Field } from '@/types';
+import { Scan } from '@/types';
 import { capitalize, cn, formatConfidence, formatDate, formatHealthScore, formatSeverity, getSeverityColor } from '@/utils';
 import { Filter, Search, ChevronRight, AlertCircle, Leaf, Wheat } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
@@ -19,37 +19,35 @@ export default function HistoryPage() {
   const [filterField, setFilterField] = useState<string>('all');
 
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        if (!user?.id) {
+          setFields({});
+          setScans([]);
+          return;
+        }
+        const allFields = await db.fields.where('userId').equals(user.id).toArray();
+        const fieldMap: Record<number, string> = {};
+        allFields.forEach(f => {
+          if (f.id) fieldMap[f.id] = f.name;
+        });
+        setFields(fieldMap);
+
+        const allScans = await db.scans.where('userId').equals(user.id).toArray();
+        allScans.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        const enhancedScans = allScans.map(scan => ({
+          ...scan,
+          fieldName: scan.fieldId ? fieldMap[scan.fieldId] : 'Unknown Field'
+        }));
+        setScans(enhancedScans);
+      } catch (error) {
+        console.error('Failed to load history', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     loadData();
   }, [user?.id]);
-
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      if (!user?.id) {
-        setFields({});
-        setScans([]);
-        return;
-      }
-      const allFields = await db.fields.where('userId').equals(user.id).toArray();
-      const fieldMap: Record<number, string> = {};
-      allFields.forEach(f => {
-        if (f.id) fieldMap[f.id] = f.name;
-      });
-      setFields(fieldMap);
-
-      const allScans = await db.scans.where('userId').equals(user.id).toArray();
-      allScans.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      const enhancedScans = allScans.map(scan => ({
-        ...scan,
-        fieldName: scan.fieldId ? fieldMap[scan.fieldId] : 'Unknown Field'
-      }));
-      setScans(enhancedScans);
-    } catch (error) {
-      console.error('Failed to load history', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredScans = scans.filter(scan => {
     if (filterCrop !== 'all' && scan.crop !== filterCrop) return false;
@@ -69,9 +67,9 @@ export default function HistoryPage() {
         <div className="flex items-center text-gray-500 mr-2">
           <Filter className="w-5 h-5 mr-2" /> Filters:
         </div>
-        
-        <select 
-          value={filterCrop} 
+
+        <select
+          value={filterCrop}
           onChange={(e) => setFilterCrop(e.target.value)}
           className="bg-gray-50 border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:border-green-500"
         >
@@ -80,8 +78,8 @@ export default function HistoryPage() {
           <option value="wheat">Wheat</option>
         </select>
 
-        <select 
-          value={filterSeverity} 
+        <select
+          value={filterSeverity}
           onChange={(e) => setFilterSeverity(e.target.value)}
           className="bg-gray-50 border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:border-green-500"
         >
@@ -92,8 +90,8 @@ export default function HistoryPage() {
           <option value="critical">Critical</option>
         </select>
 
-        <select 
-          value={filterField} 
+        <select
+          value={filterField}
           onChange={(e) => setFilterField(e.target.value)}
           className="bg-gray-50 border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:border-green-500"
         >
@@ -116,8 +114,8 @@ export default function HistoryPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="divide-y divide-gray-100">
             {filteredScans.map((scan) => (
-              <div 
-                key={scan.id} 
+              <div
+                key={scan.id}
                 onClick={() => navigate(`/history/${scan.id}`)}
                 className="p-5 hover:bg-gray-50 cursor-pointer transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center"
               >
@@ -133,7 +131,7 @@ export default function HistoryPage() {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex-1 min-w-0 w-full">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1">
                     <div>
@@ -144,7 +142,7 @@ export default function HistoryPage() {
                       {formatSeverity(scan.severity)}
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center gap-4 mt-3">
                     <div className="flex items-center gap-1.5 text-sm text-gray-600">
                       {scan.crop === 'paddy' ? <Leaf className="w-4 h-4 text-green-500" /> : <Wheat className="w-4 h-4 text-amber-500" />}
@@ -160,7 +158,7 @@ export default function HistoryPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <ChevronRight className="w-6 h-6 text-gray-300 hidden sm:block flex-shrink-0" />
               </div>
             ))}

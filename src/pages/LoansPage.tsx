@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/db/database';
-import { Loan, LoanType, GovernmentScheme, LoanStatus } from '@/types';
+import { Loan, LoanType, GovernmentScheme } from '@/types';
 import { cn, formatDate } from '@/utils';
-import { Briefcase, Landmark, Info, FileText, BadgeCheck, ExternalLink, Plus } from 'lucide-react';
+import { Briefcase, Landmark, FileText, BadgeCheck, ExternalLink, Plus } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useAuthStore } from '@/stores/authStore';
 import PrototypeNotice from '@/components/PrototypeNotice';
@@ -36,7 +36,7 @@ export default function LoansPage() {
           { userId: user.id, loanType: 'equipment', bankName: 'NABARD', accountNumber: 'xxxx-xxxx-9012', principalAmount: 300000, interestRate: 9, tenureMonths: 36, emiAmount: 9540, startDate: '2024-05-01', endDate: '2027-05-01', amountPaid: 120000, amountRemaining: 180000, status: 'active', nextPaymentDate: '2026-09-10', notes: '' },
         ]);
       }
-      
+
       const schemeCount = await db.governmentSchemes.where('userId').equals(user.id).count();
       if (schemeCount === 0) {
         await db.governmentSchemes.bulkAdd([
@@ -110,7 +110,6 @@ export default function LoansPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {loans.map(loan => {
-              const progress = (loan.amountPaid / loan.principalAmount) * 100;
               const data = [
                 { name: 'Paid', value: loan.amountPaid, color: '#16a34a' },
                 { name: 'Remaining', value: loan.amountRemaining, color: '#ef4444' }
@@ -124,7 +123,7 @@ export default function LoansPage() {
                     </div>
                     <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase tracking-wider">{loan.status}</span>
                   </div>
-                  
+
                   <div className="flex items-center gap-6 mb-6">
                     <div className="w-24 h-24 shrink-0">
                       <ResponsiveContainer width="100%" height="100%">
@@ -176,8 +175,8 @@ export default function LoansPage() {
         <div className="space-y-6">
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {schemeCategories.map(cat => (
-              <button 
-                key={cat} 
+              <button
+                key={cat}
                 onClick={() => setSchemeFilter(cat)}
                 className={cn("px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors border", schemeFilter === cat ? "bg-green-600 text-white border-green-600" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50")}
               >
@@ -199,18 +198,18 @@ export default function LoansPage() {
                     </span>
                   )}
                 </div>
-                
+
                 <h3 className="font-bold text-lg text-gray-800 mb-1">{scheme.schemeName}</h3>
                 <p className="text-xs text-gray-500 mb-4">{scheme.ministry}</p>
                 <p className="text-sm text-gray-700 mb-4 flex-1 line-clamp-3">{scheme.description}</p>
-                
+
                 <div className="bg-gray-50 rounded-lg p-3 mb-4 text-sm">
                   <p className="font-medium text-gray-800 mb-1 flex items-center gap-1.5"><FileText className="w-4 h-4 text-gray-500"/> Key Benefits:</p>
                   <ul className="list-disc list-inside text-gray-600 space-y-0.5">
                     {scheme.benefits.slice(0, 2).map((b, i) => <li key={i} className="truncate">{b}</li>)}
                   </ul>
                 </div>
-                
+
                 <button className={cn("w-full py-2 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2", scheme.isApplied ? "bg-gray-100 text-gray-500 cursor-default" : "bg-green-600 text-white hover:bg-green-700")}>
                   {scheme.isApplied ? 'Already Applied' : 'Apply Now'} {!scheme.isApplied && <ExternalLink className="w-4 h-4"/>}
                 </button>

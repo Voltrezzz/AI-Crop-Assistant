@@ -61,6 +61,13 @@ export default function AnalyzerPage() {
       const confidence = Math.round(prediction.confidence * 10000) / 10000;
       const requestedFieldId = Number(location.state?.fieldId);
       let fieldId: number | undefined;
+        let locationLat: number | undefined;
+        let locationLng: number | undefined;
+        try {
+          const pos = await new Promise<GeolocationPosition>((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { timeout: 3000 }));
+          locationLat = pos.coords.latitude;
+          locationLng = pos.coords.longitude;
+        } catch { console.log('Location not available'); }
       if (Number.isSafeInteger(requestedFieldId)) {
         const requestedField = await db.fields.get(requestedFieldId);
         if (requestedField?.userId === user.id && requestedField.crop === selectedCrop) {
@@ -70,6 +77,8 @@ export default function AnalyzerPage() {
       const id = await db.scans.add({
         userId: user.id,
         fieldId,
+          locationLat,
+          locationLng,
         crop: selectedCrop,
         disease: prediction.disease,
         diseaseName: metadata.displayName,

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '@/db/database';
 import { Scan, Field } from '@/types';
 import { cn, formatConfidence, formatDate, formatDateTime, formatHealthScore, formatRisk, formatSeverity, getSeverityColor, capitalize } from '@/utils';
-import { ArrowLeft, MapPin, Droplets, Wind, Thermometer, AlertTriangle, ShieldCheck, FileText, Camera } from 'lucide-react';
+import { ArrowLeft, Droplets, Wind, Thermometer, AlertTriangle, ShieldCheck, FileText, Camera } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
 
 export default function ScanDetailPage() {
@@ -17,48 +17,46 @@ export default function ScanDetailPage() {
   const [activeTab, setActiveTab] = useState<'cultural' | 'chemical' | 'organic'>('cultural');
 
   useEffect(() => {
+    const loadScanDetails = async (scanId: number) => {
+      try {
+        if (!user?.id) {
+          setScan(null);
+          setField(null);
+          setPrevScan(null);
+          return;
+        }
+        const scanData = await db.scans.get(scanId);
+        if (scanData?.userId !== user.id) {
+          setScan(null);
+          setField(null);
+          setPrevScan(null);
+          return;
+        }
+        if (scanData) {
+          setScan(scanData);
+          if (scanData.fieldId) {
+            const fieldData = await db.fields.get(scanData.fieldId);
+            setField(fieldData || null);
+
+            // Find previous scan for comparison
+            const allFieldScans = await db.scans.where('userId').equals(user.id).and((scan) => scan.fieldId === scanData.fieldId).toArray();
+            allFieldScans.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            const currentIndex = allFieldScans.findIndex(s => s.id === scanId);
+            if (currentIndex !== -1 && currentIndex < allFieldScans.length - 1) {
+              setPrevScan(allFieldScans[currentIndex + 1]);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load scan details', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     if (id) {
       loadScanDetails(parseInt(id, 10));
     }
   }, [id, user?.id]);
-
-  const loadScanDetails = async (scanId: number) => {
-    setLoading(true);
-    try {
-      if (!user?.id) {
-        setScan(null);
-        setField(null);
-        setPrevScan(null);
-        return;
-      }
-      const scanData = await db.scans.get(scanId);
-      if (scanData?.userId !== user.id) {
-        setScan(null);
-        setField(null);
-        setPrevScan(null);
-        return;
-      }
-      if (scanData) {
-        setScan(scanData);
-        if (scanData.fieldId) {
-          const fieldData = await db.fields.get(scanData.fieldId);
-          setField(fieldData || null);
-
-          // Find previous scan for comparison
-          const allFieldScans = await db.scans.where('userId').equals(user.id).and((scan) => scan.fieldId === scanData.fieldId).toArray();
-          allFieldScans.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-          const currentIndex = allFieldScans.findIndex(s => s.id === scanId);
-          if (currentIndex !== -1 && currentIndex < allFieldScans.length - 1) {
-            setPrevScan(allFieldScans[currentIndex + 1]);
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Failed to load scan details', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div></div>;
@@ -78,7 +76,7 @@ export default function ScanDetailPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex justify-between items-center mb-6">
-        <button 
+        <button
           onClick={() => navigate('/history')}
           className="flex items-center text-green-700 hover:text-green-800 transition-colors"
         >
@@ -90,9 +88,9 @@ export default function ScanDetailPage() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
         <div className="md:flex">
           <div className="md:w-2/5 bg-gray-100 relative">
-            <img 
-              src={scan.imageData} 
-              alt={scan.diseaseName} 
+            <img
+              src={scan.imageData}
+              alt={scan.diseaseName}
               className="w-full h-64 md:h-full object-cover"
             />
             <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-sm">
@@ -104,7 +102,7 @@ export default function ScanDetailPage() {
               </div>
             </div>
           </div>
-          
+
           <div className="p-6 md:w-3/5">
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -198,34 +196,34 @@ export default function ScanDetailPage() {
       {!isHealthy && scan.recommendations && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
           <div className="p-4 bg-gray-50 border-b border-gray-100 flex gap-2 overflow-x-auto">
-            <button 
+            <button
               onClick={() => setActiveTab('cultural')}
               className={cn("px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors", activeTab === 'cultural' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50')}
             >
               Cultural Control
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('chemical')}
               className={cn("px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors", activeTab === 'chemical' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50')}
             >
               Chemical Control
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('organic')}
               className={cn("px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors", activeTab === 'organic' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50')}
             >
               Organic Options
             </button>
           </div>
-          
+
           <div className="p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
               <ShieldCheck className="w-5 h-5 mr-2 text-green-600" />
               {activeTab === 'cultural' ? 'Cultural & Preventive Measures' : activeTab === 'chemical' ? 'Chemical Treatments' : 'Organic Solutions'}
             </h3>
             <ul className="space-y-3">
-              {(activeTab === 'cultural' ? scan.recommendations.culturalPractices : 
-                activeTab === 'chemical' ? scan.recommendations.chemicalControl : 
+              {(activeTab === 'cultural' ? scan.recommendations.culturalPractices :
+                activeTab === 'chemical' ? scan.recommendations.chemicalControl :
                 scan.recommendations.organicOptions).map((rec, idx) => (
                 <li key={idx} className="flex items-start">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 mr-3 flex-shrink-0"></span>
@@ -233,7 +231,7 @@ export default function ScanDetailPage() {
                 </li>
               ))}
             </ul>
-            
+
             {scan.recommendations.precautions && scan.recommendations.precautions.length > 0 && (
               <div className="mt-6 pt-4 border-t border-gray-100">
                 <h4 className="text-sm font-bold text-red-800 mb-2 flex items-center">
@@ -297,13 +295,13 @@ export default function ScanDetailPage() {
 
       {/* Action Buttons */}
       <div className="flex gap-4">
-        <button 
+        <button
           onClick={() => navigate('/analyzer', { state: { fieldId: scan.fieldId } })}
           className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
         >
           <Camera className="w-5 h-5" /> Scan Again
         </button>
-        <button 
+        <button
           className="flex-1 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
           onClick={() => alert('Report generation not implemented in prototype')}
         >
