@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Leaf, Activity, Layers, ScanLine, CloudSun, Droplets, Wind, AlertTriangle, Settings, Bell, Mic, TrendingUp } from 'lucide-react';
+import { Leaf, Activity, Layers, ScanLine, CloudSun, Droplets, Wind, AlertTriangle, Settings, Bell, Mic, TrendingUp, Satellite, ArrowRight } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { db } from '@/db/database';
 import { cn } from '@/utils';
@@ -83,6 +83,11 @@ export default function DashboardPage() {
           <p className="text-neutral-500">Here's your farm overview for today.</p>
         </div>
 
+        <button onClick={() => navigate('/satellite')} className="w-full rounded-2xl bg-green-800 text-white p-5 sm:p-6 text-left flex items-center gap-4 shadow-sm hover:bg-green-900">
+          <Satellite size={36} className="shrink-0" />
+          <span className="flex-1"><span className="block text-xl font-bold">Satellite Preview</span><span className="block text-sm text-green-100 mt-1">Choose your location and see real Sentinel-2 imagery. No JSON needed.</span></span>
+          <ArrowRight className="shrink-0" />
+        </button>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-2xl shadow-sm border border-neutral-200 cursor-pointer" onClick={() => navigate('/fields')}>
             <div className="flex items-center gap-3 mb-2 text-neutral-500">

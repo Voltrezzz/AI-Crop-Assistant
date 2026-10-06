@@ -306,3 +306,15 @@ test('version 11 upgrade retains module drafts and adds satellite cache', async 
   assert.equal((await upgraded.moduleDrafts.get(42))?.title,'Retained question');
   assert.equal(await upgraded.satelliteSearches.count(),0); upgraded.close();
 });
+
+test('location preview validates coordinates and metre-based area without inventing a farm boundary', async () => {
+  const { locationPreviewGeometry, searchSatellitePlaces } = await import('../src/services/satelliteLocationService');
+  const shape = locationPreviewGeometry({latitude:13,longitude:80,label:'Test'},250);
+  assert.equal(shape.coordinates[0].length,5);
+  assert.deepEqual(shape.coordinates[0][0],shape.coordinates[0][4]);
+  assert.ok(Math.abs((shape.coordinates[0][2][1]-shape.coordinates[0][0][1])*111320-500)<0.001);
+  for (const latitude of [NaN,Infinity,81,-81]) assert.throws(()=>locationPreviewGeometry({latitude,longitude:80,label:'Test'}),/location/);
+  assert.throws(()=>locationPreviewGeometry({latitude:13,longitude:181,label:'Test'}),/location/);
+  assert.throws(()=>locationPreviewGeometry({latitude:13,longitude:80,label:'Test'},999),/size/);
+  await assert.rejects(searchSatellitePlaces('x'),/village/);
+});

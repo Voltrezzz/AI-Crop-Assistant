@@ -85,16 +85,15 @@ test('satellite page requires an owned boundary and persists scene results witho
   }) as typeof fetch;
   try {
     const view = render(<MemoryRouter initialEntries={['/fields/1/satellite']}><Routes><Route path="/fields/:id/satellite" element={<SatelliteHealthPage />} /></Routes></MemoryRouter>);
+    fireEvent.click(screen.getByText('Advanced: saved fields, exact boundary and date filters'));
     await screen.findByText(/Own satellite field · 2 acres/);
     assert.equal(screen.queryByText('Other satellite field'),null);
-    assert.equal(screen.queryByRole('button',{ name:'Search scenes' }),null);
+    assert.equal((screen.getByRole('button',{ name:'Show satellite preview' }) as HTMLButtonElement).disabled,true);
     assert.equal(searches,0);
     fireEvent.change(screen.getByLabelText('Field boundary GeoJSON'),{ target:{ value:'{"type":"Polygon","coordinates":[[[80.27,13.082],[80.2715,13.082],[80.2715,13.0835],[80.27,13.082]]]}' } });
     fireEvent.click(screen.getByRole('button',{ name:'Save boundary' }));
     await screen.findByText('Saved boundary ready for satellite search.');
-    fireEvent.click(screen.getByRole('button',{ name:'Search scenes' }));
-    await screen.findByText('Load NDVI map and statistics');
-    fireEvent.click(screen.getByRole('button',{ name:/Scene clouds: 10.0%/ }));
+    fireEvent.click(screen.getByRole('button',{ name:'Show satellite preview' }));
     await screen.findByText('Mean NDVI');
     assert.equal((await db.satelliteSearches.toArray())[0].scenes[0].stats?.mean,0.4);
     view.unmount();
@@ -102,4 +101,45 @@ test('satellite page requires an owned boundary and persists scene results witho
     await screen.findByText('Saved mean NDVI 0.400');
     assert.equal(searches,1);
   } finally { globalThis.fetch = originalFetch; }
+});
+
+test('location satellite preview searches a place and loads the latest scene without a field or JSON', async () => {
+  const originalFetch = globalThis.fetch;
+  let submitted: any;
+  globalThis.fetch = (async (url, init) => {
+    if (String(url).includes('photon.komoot.io')) return Response.json({features:[{geometry:{type:'Point',coordinates:[80.27,13.082]},properties:{name:'Test village',state:'Tamil Nadu'}}]});
+    if (String(url).includes('/search')) { submitted = JSON.parse(String(init?.body)); return Response.json({features:[{id:'S2A_TEST',properties:{datetime:'2026-10-03T00:00:00Z','eo:cloud_cover':10,'s2:processing_baseline':'03.00'},assets:{B04:{},B08:{}}}]}); }
+    if (String(url).includes('tilejson')) return Response.json({tiles:['https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/{z}/{x}/{y}?item=S2A_TEST']});
+    return Response.json({properties:{statistics:{'(B08-B04)/(B08+B04)':{mean:0.4,min:0.1,max:0.6,valid_pixels:20,valid_percent:100}}}});
+  }) as typeof fetch;
+  try {
+    render(<MemoryRouter><SatelliteHealthPage /></MemoryRouter>);
+    assert.equal(screen.queryByRole('textbox',{name:'Field boundary GeoJSON'}),null);
+    assert.equal(submitted,undefined);
+    fireEvent.change(screen.getByLabelText('Village, town or district'),{target:{value:'Test village'}});
+    fireEvent.click(screen.getByRole('button',{name:'Find place'}));
+    fireEvent.click(await screen.findByRole('button',{name:'Test village, Tamil Nadu'}));
+    assert.equal(submitted,undefined);
+    await screen.findByText(/not your exact field boundary/);
+    fireEvent.click(screen.getByRole('button',{name:'Show satellite preview'}));
+    await screen.findByText('Mean NDVI');
+    assert.equal(submitted.intersects.type,'Polygon');
+    const ring = submitted.intersects.coordinates[0];
+    assert.ok(Math.abs((ring[0][0]+ring[1][0])/2-80.27) < 1e-9);
+    assert.ok(Math.abs((ring[0][1]+ring[2][1])/2-13.082) < 1e-9);
+    assert.equal(await db.fieldBoundaries.count(),0);
+    assert.equal(await db.satelliteSearches.count(),0);
+  } finally { globalThis.fetch = originalFetch; }
+});
+
+test('location access denial provides a map and place fallback without searching satellites', async () => {
+  const original = Object.getOwnPropertyDescriptor(globalThis.navigator,'geolocation');
+  Object.defineProperty(globalThis.navigator,'geolocation',{configurable:true,value:{getCurrentPosition:(_success: any, failure: any) => failure({code:1})}});
+  try {
+    render(<MemoryRouter><SatelliteHealthPage /></MemoryRouter>);
+    fireEvent.click(screen.getByRole('button',{name:'Use my current location'}));
+    await screen.findByRole('alert');
+    assert.match(screen.getByRole('alert').textContent!,/search a place, or tap the map/);
+    assert.equal((screen.getByRole('button',{name:'Show satellite preview'}) as HTMLButtonElement).disabled,true);
+  } finally { if (original) Object.defineProperty(globalThis.navigator,'geolocation',original); else Reflect.deleteProperty(globalThis.navigator,'geolocation'); }
 });

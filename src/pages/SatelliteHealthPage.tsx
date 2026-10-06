@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Satellite, Download, RefreshCw } from 'lucide-react';
+import { Satellite, Download, MapPin, LocateFixed, Search } from 'lucide-react';
 import { db } from '@/db/database';
 import { useAuthStore } from '@/stores/authStore';
 import { parseFieldBoundary } from '@/utils/fieldBoundary';
 import { SentinelService, ownedSatelliteField, saveSatelliteBoundary, saveSatelliteSearch, type SatelliteScene, type SatelliteSearch, type SatelliteGeometry } from '@/services/sentinelService';
+import { locationPreviewGeometry, searchSatellitePlaces, type SatelliteLocation } from '@/services/satelliteLocationService';
 const SatelliteMap = lazy(() => import('@/components/SatelliteMap'));
 
 export default function SatelliteHealthPage() {
@@ -20,10 +21,21 @@ export default function SatelliteHealthPage() {
   const [error, setError] = useState(''), [tileError, setTileError] = useState('');
   const [busy, setBusy] = useState(false), [savingBoundary, setSavingBoundary] = useState(false);
   const [boundaryInput, setBoundaryInput] = useState('');
+  const [location, setLocation] = useState<SatelliteLocation>();
+  const [halfWidth, setHalfWidth] = useState(250);
+  const [placeQuery, setPlaceQuery] = useState('');
+  const [places, setPlaces] = useState<SatelliteLocation[]>([]);
+  const [finding, setFinding] = useState(false);
+  const [locating, setLocating] = useState(false);
   const [startDate, setStartDate] = useState(() => { const date = new Date(); date.setDate(date.getDate()-90); return date.toISOString().slice(0,10); });
   const [endDate, setEndDate] = useState(() => new Date().toISOString().slice(0,10));
   const [maxCloud, setMaxCloud] = useState('40');
   const request = useRef<AbortController | null>(null);
+  const placeRequest = useRef<AbortController | null>(null);
+  const mounted = useRef(true);
+  const mapSection = useRef<HTMLElement | null>(null);
+  useEffect(() => { if (tileUrl) mapSection.current?.scrollIntoView?.({ behavior:'smooth', block:'start' }); }, [tileUrl]);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; request.current?.abort(); placeRequest.current?.abort(); }; }, []);
   useEffect(() => {
     let cancelled = false;
     async function load() {
@@ -40,87 +52,108 @@ export default function SatelliteHealthPage() {
     void load();
     return () => { cancelled = true; request.current?.abort(); };
   }, [id,userId]);
+  const boundary = location ? JSON.stringify(locationPreviewGeometry(location,halfWidth)) : context?.boundary;
+  const geometry = boundary ? JSON.parse(boundary) as SatelliteGeometry : undefined;
+  const positions = boundary ? parseFieldBoundary(boundary) : undefined;
   const scene = saved?.scenes.find(s => s.id === selectedId);
-  const geometry = context?.boundary ? JSON.parse(context.boundary) as SatelliteGeometry : undefined;
-  const positions = context?.boundary ? parseFieldBoundary(context.boundary) : undefined;
+  const areaName = location ? location.label : context?.field.name || 'Choose a location';
+  function resetResults() { request.current?.abort(); setBusy(false); setSaved(null); setSelectedId(''); setTileUrl(undefined); setTileError(''); setError(''); }
+  function pickLocation(next: SatelliteLocation) {
+    if (busy || savingBoundary) return;
+    try { locationPreviewGeometry(next,halfWidth); resetResults(); setLocation(next); setPlaces([]); }
+    catch (e) { setError(e instanceof Error ? e.message : 'Invalid location.'); }
+  }
+  async function findPlaces(event: React.FormEvent) {
+    event.preventDefault(); if (finding) return;
+    const controller = new AbortController(); placeRequest.current?.abort(); placeRequest.current = controller;
+    setFinding(true); setError(''); setPlaces([]);
+    try { const matches = await searchSatellitePlaces(placeQuery,controller.signal); if (!controller.signal.aborted) { setPlaces(matches); if (!matches.length) setError('No places found. Try your district name or tap the map.'); } }
+    catch { if (!controller.signal.aborted) setError('Place search is unavailable. Tap the map to choose your location.'); }
+    finally { if (!controller.signal.aborted) setFinding(false); }
+  }
+  function useCurrentLocation() {
+    if (!navigator.geolocation) { setError('Location is unavailable in this browser. Search a place or tap the map.'); return; }
+    setLocating(true); setError('');
+    navigator.geolocation.getCurrentPosition(position => {
+      if (!mounted.current) return;
+      setLocating(false);
+      pickLocation({ latitude:position.coords.latitude, longitude:position.coords.longitude, label:`Current location (accuracy about ${Math.round(position.coords.accuracy)} m)` });
+    }, () => { if (mounted.current) { setLocating(false); setError('Could not get your location. Allow location access, search a place, or tap the map.'); } }, { enableHighAccuracy:true,timeout:15000,maximumAge:60000 });
+  }
   async function importBoundary() {
     if (!userId || !id || savingBoundary || busy) return;
     setSavingBoundary(true); setError('');
     try {
-      const boundary = await saveSatelliteBoundary(userId,Number(id),boundaryInput);
-      const ctx = await ownedSatelliteField(userId,Number(id)); setContext(ctx); setBoundaryInput(boundary);
-      setSaved(null); setSelectedId(''); setTileUrl(undefined); setTileError('');
+      const imported = await saveSatelliteBoundary(userId,Number(id),boundaryInput);
+      const ctx = await ownedSatelliteField(userId,Number(id)); setContext(ctx); setBoundaryInput(imported); setLocation(undefined); resetResults();
     } catch (e) { setError(e instanceof Error ? e.message : 'Unable to save boundary.'); }
     finally { setSavingBoundary(false); }
   }
+  async function persist(result: SatelliteSearch) { if (!location && id) await saveSatelliteSearch(result); }
+  async function retrieveScene(result: SatelliteSearch, selected: SatelliteScene, shape: SatelliteGeometry, controller: AbortController) {
+    setSelectedId(selected.id);
+    const results = await Promise.allSettled([SentinelService.tiles(selected,controller.signal), SentinelService.statistics(selected,shape,controller.signal)]);
+    if (controller.signal.aborted) return;
+    if (results[0].status === 'fulfilled') setTileUrl(results[0].value); else setTileError('NDVI imagery is unavailable for this date. Choose another observation below.');
+    if (results[1].status === 'fulfilled') {
+      const stats = results[1].value;
+      const next = { ...result, scenes:result.scenes.map(s => s.id === selected.id ? { ...s, stats } : s) };
+      await persist(next); if (!controller.signal.aborted) setSaved(next);
+    } else setError('Area statistics are unavailable for this date. The image may still load; choose another date.');
+  }
   async function search() {
-    if (!userId || !id || !context?.boundary || !geometry || busy) return;
+    if (!userId || !boundary || !geometry || busy || locating) return;
     const controller = new AbortController(); request.current?.abort(); request.current = controller;
-    setBusy(true); setError(''); setTileError(''); setTileUrl(undefined);
+    setBusy(true); setError(''); setTileError(''); setTileUrl(undefined); setSaved(null); setSelectedId('');
     try {
       const scenes = await SentinelService.search(geometry,startDate,endDate,Number(maxCloud),controller.signal);
       if (controller.signal.aborted) return;
-      const result = { userId, fieldId:Number(id), boundary:context.boundary, scenes, fetchedAt:new Date().toISOString(), startDate, endDate, maxCloudCover:Number(maxCloud) };
-      await saveSatelliteSearch(result);
-      if (!controller.signal.aborted) { setSaved(result); setSelectedId(''); }
-    } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : 'Satellite search failed. Check your connection.'); }
+      const result = { userId, fieldId:id ? Number(id) : 0, boundary, scenes, fetchedAt:new Date().toISOString(), startDate, endDate, maxCloudCover:Number(maxCloud) };
+      await persist(result);
+      if (!controller.signal.aborted) { setSaved(result); if (scenes[0]) await retrieveScene(result,scenes[0],geometry,controller); }
+    } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : 'Satellite preview failed. Check your connection.'); }
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
   async function loadScene(selected: SatelliteScene) {
     if (!saved || !geometry || busy) return;
     const controller = new AbortController(); request.current?.abort(); request.current = controller;
-    setBusy(true); setError(''); setTileError(''); setTileUrl(undefined); setSelectedId(selected.id);
-    try {
-      const results = await Promise.allSettled([SentinelService.tiles(selected,controller.signal), SentinelService.statistics(selected,geometry,controller.signal)]);
-      if (controller.signal.aborted) return;
-      if (results[0].status === 'fulfilled') setTileUrl(results[0].value); else setTileError('NDVI imagery is unavailable for this scene. Try another date.');
-      if (results[1].status === 'fulfilled') {
-        const stats = results[1].value;
-        const result = { ...saved, scenes:saved.scenes.map(s => s.id === selected.id ? { ...s, stats } : s) };
-        await saveSatelliteSearch(result); if (!controller.signal.aborted) setSaved(result);
-      } else setError('Field statistics are unavailable for this scene. The map may still load; try another date.');
-    } catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : 'Unable to load scene.'); }
+    setBusy(true); setError(''); setTileError(''); setTileUrl(undefined);
+    try { await retrieveScene(saved,selected,geometry,controller); }
+    catch (e) { if (!controller.signal.aborted) setError(e instanceof Error ? e.message : 'Unable to load scene.'); }
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
   function exportScenes() {
     if (!saved) return;
-    const url = URL.createObjectURL(new Blob([JSON.stringify(saved,null,2)],{ type:'application/json' }));
-    const a = document.createElement('a'); a.href=url; a.download='field-satellite-history.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url),1000);
+    const url = URL.createObjectURL(new Blob([JSON.stringify({ ...saved, areaName, mode:location ? 'location-preview' : 'field-boundary' },null,2)],{ type:'application/json' }));
+    const a = document.createElement('a'); a.href=url; a.download='satellite-preview-history.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url),1000);
   }
-  return <div className="max-w-6xl mx-auto p-4 lg:p-8 pb-28 space-y-6">
-    <header><h1 className="text-3xl font-bold flex items-center gap-3"><Satellite className="text-green-700" />Satellite Monitoring</h1><p className="text-gray-600 mt-2">Sentinel-2 scenes, field boundaries and NDVI imagery.</p></header>
-    <section className="card space-y-3"><label className="block font-medium">Select field<select className="input-field mt-2" value={id || ''} onChange={e => navigate(e.target.value ? `/fields/${e.target.value}/satellite` : '/satellite')}><option value="">Choose a saved field</option>{fields?.map(f => <option key={f.id} value={f.id}>{f.name} · {f.crop}</option>)}</select></label>
-      {fields?.length === 0 && <p>No fields yet. <Link className="text-green-700 underline" to="/fields/new">Add a field</Link> to begin.</p>}
-      <p className="text-sm text-gray-600">Searches send the selected boundary to Microsoft Planetary Computer. Satellite data and map tiles require internet. Saved scene metadata and statistics are available locally after retrieval.</p>
+  return <div className="max-w-6xl mx-auto p-4 lg:p-8 pb-28 space-y-5">
+    <header className="rounded-2xl bg-green-800 text-white p-5 sm:p-7"><h1 className="text-3xl font-bold flex items-center gap-3"><Satellite size={32} />Satellite Monitoring</h1><p className="mt-2 text-green-100">See satellite imagery for your location. No JSON needed.</p></header>
+    <section className="card space-y-4"><h2 className="font-bold text-xl">1. Choose your location</h2>
+      <form onSubmit={event => void findPlaces(event)} className="flex flex-col sm:flex-row gap-3"><label className="flex-1 font-medium">Village, town or district<input className="input-field mt-1" value={placeQuery} onChange={e => setPlaceQuery(e.target.value)} placeholder="e.g. Thanjavur, Tamil Nadu" maxLength={200} /></label><button disabled={finding || busy || locating || placeQuery.trim().length < 2} className="btn-secondary self-end inline-flex gap-2 items-center"><Search size={18} />{finding ? 'Finding places…' : 'Find place'}</button></form>
+      {places.length > 0 && <div className="space-y-2" aria-label="Place results">{places.map((place,index) => <button key={index} disabled={busy} onClick={() => pickLocation(place)} className="block w-full text-left rounded-xl border border-green-200 p-3 hover:bg-green-50"><MapPin className="inline mr-2" size={18} />{place.label}</button>)}</div>}
+      <button disabled={locating || busy || savingBoundary} onClick={useCurrentLocation} className="btn-secondary inline-flex items-center gap-2"><LocateFixed size={18} />{locating ? 'Getting your location…' : 'Use my current location'}</button>
+      <p className="text-sm text-gray-600">Or zoom in and tap your farm on the map below. Current location is useful when you are at the farm. Place search sends your search text to Photon; map tiles and satellite requests send the chosen area to map providers and Microsoft Planetary Computer. Nothing is sent to satellite services until you choose “Show satellite preview”.</p>
+      {location && <div className="rounded-xl bg-green-50 dark:bg-green-950 p-4 space-y-2"><p className="font-semibold">Selected: {location.label}</p><p className="text-sm">{location.latitude.toFixed(5)}, {location.longitude.toFixed(5)}</p><label className="text-sm">Preview area<select disabled={busy || locating} className="input-field mt-1" value={halfWidth} onChange={e => { resetResults(); setHalfWidth(Number(e.target.value)); }}><option value={100}>200 m × 200 m</option><option value={250}>500 m × 500 m</option><option value={500}>1 km × 1 km</option></select></label><p className="text-xs">This square is an approximate area around your point, not your exact field boundary. Tap the map to refine the location.</p></div>}
+      <button disabled={!geometry || busy || savingBoundary || locating} onClick={() => void search()} className="btn-primary w-full sm:w-auto text-lg inline-flex items-center justify-center gap-2"><Satellite size={22} />{busy ? 'Loading satellite preview…' : 'Show satellite preview'}</button>
+      {!geometry && <p className="text-sm text-gray-500">Select a place, use your location, or tap the map to enable the preview.</p>}
     </section>
     {error && <p role="alert" className="bg-red-50 text-red-800 p-4 rounded-xl">{error}</p>}
-    {id && !context && !error && <p role="status">Loading your field…</p>}
-    {context && <>
-      <section className="card space-y-3"><div className="flex flex-wrap justify-between gap-2"><h2 className="font-bold text-lg">{context.field.name} · {context.field.area} {context.field.areaUnit}</h2><Link className="text-green-700 underline" to={`/fields/${id}`}>Field details</Link></div>
-        <p className="text-sm text-gray-600">Paste your field's GeoJSON Polygon or Feature with longitude, latitude coordinates. No sample location is substituted. Small fields may contain only a few 10 m satellite pixels.</p>
-        <label className="block text-sm">Field boundary GeoJSON<textarea className="input-field mt-1 font-mono text-xs" rows={4} value={boundaryInput} onChange={e => setBoundaryInput(e.target.value)} placeholder='{"type":"Polygon","coordinates":[[[longitude,latitude],...]]}' /></label>
-        <button disabled={savingBoundary || busy || !boundaryInput.trim()} onClick={() => void importBoundary()} className="btn-secondary">{savingBoundary ? 'Saving…' : 'Save boundary'}</button>
-        {context.boundary && <p role="status" className="text-green-700 text-sm">Saved boundary ready for satellite search.</p>}
-      </section>
-      {geometry && positions && <>
-        <section className="card space-y-4"><h2 className="font-bold text-lg">Search Sentinel-2 scenes</h2><div className="grid sm:grid-cols-3 gap-3">
-          <label className="text-sm">From<input type="date" className="input-field mt-1" value={startDate} onChange={e => setStartDate(e.target.value)} /></label>
-          <label className="text-sm">To<input type="date" className="input-field mt-1" value={endDate} onChange={e => setEndDate(e.target.value)} /></label>
-          <label className="text-sm">Maximum scene cloud cover (%)<input type="number" min={0} max={100} className="input-field mt-1" value={maxCloud} onChange={e => setMaxCloud(e.target.value)} /></label>
-        </div><button disabled={busy || savingBoundary} onClick={() => void search()} className="btn-primary inline-flex items-center gap-2"><RefreshCw size={17} />{busy ? 'Loading satellite data…' : 'Search scenes'}</button>
-        <p className="text-xs text-gray-500">Returns up to 12 recent intersecting scenes. Scene-level cloud cover does not measure clouds over your exact field. NDVI uses raw band values with the provider’s baseline-04.00+ offset correction.</p></section>
-        <div className="grid lg:grid-cols-3 gap-5"><section className="card space-y-3"><h2 className="font-bold text-lg">Scene history</h2>
-          {!saved ? <p>Run a search to find dated observations.</p> : <><p className="text-xs text-gray-500">Saved {new Date(saved.fetchedAt).toLocaleString()} · {saved.startDate} to {saved.endDate}</p>{saved.scenes.length === 0 && <p>No matching scenes. Widen the date range or cloud limit.</p>}{saved.scenes.map(s => <button disabled={busy} onClick={() => void loadScene(s)} key={s.id} className={`w-full text-left border p-3 rounded-xl ${selectedId === s.id ? 'border-green-600 bg-green-50 dark:bg-green-950' : 'border-gray-200 dark:border-slate-700'}`}><span className="font-semibold">{new Date(s.date).toLocaleString()}</span><span className="block text-sm">Scene clouds: {s.cloudCover === null ? 'Unknown' : `${s.cloudCover.toFixed(1)}%`}</span><span className="block text-xs">{s.stats ? `Saved mean NDVI ${s.stats.mean.toFixed(3)}` : 'Load NDVI map and statistics'}</span></button>)}<button onClick={exportScenes} className="btn-secondary inline-flex gap-2 items-center"><Download size={16} />Export history</button></>}
-        </section><section className="lg:col-span-2 card space-y-4"><h2 className="font-bold text-lg">{tileUrl ? 'Sentinel-2 NDVI layer' : 'Saved field boundary'}</h2>
-          {tileError && <p role="alert" className="text-amber-800">{tileError}</p>}
-          <div className="rounded-xl overflow-hidden"><Suspense fallback={<p>Loading map…</p>}><SatelliteMap key={context.boundary} positions={positions} tileUrl={tileUrl} name={context.field.name} onTileError={() => setTileError('Some satellite tiles failed to load. The Esri basemap is not the NDVI layer. Retry this scene or another date.')} /></Suspense></div>
-          <p className="text-xs text-gray-500">Blue outline: saved field. Esri imagery is a background layer with its own date. NDVI colours: red (lower) → yellow → green (higher), scaled −1 to 1. The satellite layer can extend beyond the field outline.</p>
-          {scene?.stats && <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">{[['Mean NDVI',scene.stats.mean.toFixed(3)],['Range',`${scene.stats.min.toFixed(2)}–${scene.stats.max.toFixed(2)}`],['Valid pixels',scene.stats.validPixels],['Valid data',`${scene.stats.validPercent.toFixed(1)}%`]].map(([label,value]) => <div key={label} className="rounded-lg bg-green-50 dark:bg-green-950 p-3"><p className="text-xs">{label}</p><p className="font-bold mt-1">{value}</p></div>)}</div>}
-          <p className="bg-amber-50 text-amber-900 p-3 rounded-xl text-sm">NDVI is a vegetation signal, not a disease diagnosis. These statistics are not masked using a field-specific cloud classifier; clouds, shadows, water, soil and field edges can bias them. Low NDVI alone cannot identify nutrient deficiency or justify treatment.</p>
-          <div className="flex flex-wrap gap-3"><Link className="btn-secondary" to="/analyzer">Ground-check with a crop scan</Link><Link className="btn-secondary" to="/add-activity">Record field observation</Link></div>
-          <a className="text-xs text-green-700 underline" href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a" target="_blank" rel="noreferrer">Source: Copernicus Sentinel-2 L2A on Microsoft Planetary Computer</a>
-        </section></div>
-      </>}
-    </>}
+    <section ref={mapSection} className="card space-y-4 scroll-mt-4"><div className="flex flex-wrap items-start justify-between gap-2"><div><h2 className="font-bold text-xl">2. {tileUrl ? 'Your satellite preview' : 'Choose a point on the map'}</h2><p className="text-sm text-gray-600">{areaName}</p></div>{scene && <span className="rounded-full bg-green-50 text-green-800 px-3 py-2 text-sm">Observation: {new Date(scene.date).toLocaleDateString()}</span>}</div>
+      {tileError && <p role="alert" className="text-amber-800">{tileError}</p>}
+      <div className="rounded-xl overflow-hidden"><Suspense fallback={<p>Loading map…</p>}><SatelliteMap key={boundary || 'location-picker'} positions={positions} tileUrl={tileUrl} center={location ? [location.latitude,location.longitude] : undefined} name={areaName} onPick={busy || locating || savingBoundary ? undefined : (latitude,longitude) => pickLocation({latitude,longitude,label:'Point selected on map'})} onTileError={() => setTileError('Some NDVI tiles failed to load. The background image is not the NDVI layer. Try another observation.')} /></Suspense></div>
+      <div className="flex flex-wrap items-center gap-3 text-sm"><span className="font-semibold">NDVI vegetation signal</span><span>Lower</span><span className="h-3 w-36 rounded-full bg-gradient-to-r from-red-600 via-yellow-300 to-green-700" /><span>Higher</span></div>
+      <p className="text-xs text-gray-500">Blue outline: selected area. The background is Esri imagery with its own date. The coloured Sentinel-2 layer appears after loading a preview; it may extend beyond the outline.</p>
+      {scene?.stats && <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">{[['Mean NDVI',scene.stats.mean.toFixed(3)],['Range',`${scene.stats.min.toFixed(2)}–${scene.stats.max.toFixed(2)}`],['Valid pixels',scene.stats.validPixels],['Valid data',`${scene.stats.validPercent.toFixed(1)}%`]].map(([label,value]) => <div key={label} className="rounded-lg bg-green-50 dark:bg-green-950 p-3"><p className="text-xs">{label}</p><p className="font-bold mt-1">{value}</p></div>)}</div>}
+      {saved && <div className="space-y-3"><h3 className="font-semibold">Other observations</h3>{saved.scenes.length === 0 && <p>No matching observations. Try another location or widen the filters below.</p>}<div className="grid sm:grid-cols-3 gap-2">{saved.scenes.map(s => <button disabled={busy || locating} onClick={() => void loadScene(s)} key={s.id} className={`text-left border p-3 rounded-xl ${selectedId === s.id ? 'border-green-600 bg-green-50 dark:bg-green-950' : 'border-gray-200 dark:border-slate-700'}`}><span className="font-semibold">{new Date(s.date).toLocaleDateString()}</span><span className="block text-sm">Scene clouds: {s.cloudCover === null ? 'Unknown' : `${s.cloudCover.toFixed(1)}%`}</span><span className="block text-xs">{s.stats ? `Saved mean NDVI ${s.stats.mean.toFixed(3)}` : 'Load NDVI map and statistics'}</span></button>)}</div><button onClick={exportScenes} className="btn-secondary inline-flex gap-2 items-center"><Download size={16} />Export history</button><p className="text-xs text-gray-500">{location ? 'Location preview history stays on this page; export it to keep a copy. Your saved field boundary is unchanged.' : 'Field observation metadata and statistics are saved locally.'}</p></div>}
+      <p className="bg-amber-50 text-amber-900 p-3 rounded-xl text-sm">NDVI is a vegetation signal, not a disease diagnosis. Clouds, shadows, water, soil and buildings can affect the result. Area statistics are not cloud-masked or crop-only. A location preview does not identify your farm boundary.</p>
+      <a className="text-xs text-green-700 underline" href="https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a" target="_blank" rel="noreferrer">Source: Copernicus Sentinel-2 L2A on Microsoft Planetary Computer</a>
+    </section>
+    <details className="card"><summary className="cursor-pointer font-semibold">Advanced: saved fields, exact boundary and date filters</summary><div className="space-y-4 mt-4">
+      <label className="block font-medium">Select field<select disabled={busy || locating} className="input-field mt-2" value={id || ''} onChange={e => navigate(e.target.value ? `/fields/${e.target.value}/satellite` : '/satellite')}><option value="">Location preview only</option>{fields?.map(f => <option key={f.id} value={f.id}>{f.name} · {f.crop}</option>)}</select></label>
+      {context && <><h3 className="font-bold">{context.field.name} · {context.field.area} {context.field.areaUnit}</h3><Link className="text-green-700 underline" to={`/fields/${id}`}>Field details</Link><label className="block text-sm">Field boundary GeoJSON<textarea className="input-field mt-1 font-mono text-xs" rows={4} value={boundaryInput} onChange={e => setBoundaryInput(e.target.value)} /></label><button disabled={savingBoundary || busy || locating || !boundaryInput.trim()} onClick={() => void importBoundary()} className="btn-secondary">{savingBoundary ? 'Saving…' : 'Save boundary'}</button>{context.boundary && <p className="text-green-700 text-sm">Saved boundary ready for satellite search.</p>}{location && context.boundary && <button className="btn-secondary" disabled={busy || locating} onClick={() => { resetResults(); setLocation(undefined); }}>Use saved field boundary</button>}</>}
+      <div className="grid sm:grid-cols-3 gap-3"><label className="text-sm">From<input disabled={busy} type="date" className="input-field mt-1" value={startDate} onChange={e => setStartDate(e.target.value)} /></label><label className="text-sm">To<input disabled={busy} type="date" className="input-field mt-1" value={endDate} onChange={e => setEndDate(e.target.value)} /></label><label className="text-sm">Maximum scene cloud cover (%)<input disabled={busy} type="number" min={0} max={100} className="input-field mt-1" value={maxCloud} onChange={e => setMaxCloud(e.target.value)} /></label></div>
+      <p className="text-xs text-gray-500">Up to 12 intersecting scenes. Scene clouds describe the whole satellite scene, not your exact area. The latest available observation loads automatically; this is not a live camera. Internet is required.</p>
+    </div></details>
   </div>;
 }

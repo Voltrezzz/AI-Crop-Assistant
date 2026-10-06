@@ -104,3 +104,13 @@ Replaced fixed mock Sentinel observations with public Sentinel-2 STAC search, da
 Live API checks with a synthetic polygon verified scene metadata, baseline 05.13, HTTP 200 PNG output, CORS '*', and real polygon statistics. Evidence in docs/satellite-api-verification.json. This is not an assessment of a user's field. DOM tests stub map rendering; no native browser raster or live microphone certification is claimed. Details in docs/sih2026-modules.md supersede the previous sample-satellite notes.
 
 Final checks: 28 tests, lint, production build and git diff --check passed. Existing large-chunk/mixed-import warnings and unrelated dependency advisories remain. No deployment, push, production backend configuration, external message or production migration was performed.
+
+## Location-first satellite preview — 6 October 2026
+
+The user requested an easier-to-find satellite preview based on location instead of requiring JSON. Added a large dashboard shortcut and moved Satellite Monitoring immediately below Dashboard in the sidebar/mobile drawer. The default page supports place search (Photon/OpenStreetMap), current location with browser permission, and clicking the map. No saved field or JSON is needed. It analyses an explicitly labelled 200 m, 500 m or 1 km square centred on the selected point; it does not replace or invent an owned field boundary. The newest Sentinel-2 scene, map and statistics load with one button, and the page scrolls to the resulting map. Exact boundaries and date/cloud filters remain under Advanced.
+
+Location previews remain on the current page and can be exported; they do not enter field-boundary cloud sync. Provider transmission and approximate-area interpretation are disclosed. Permission denial and unavailable place search offer map selection instead. No geolocation permission was granted during agent verification.
+
+31 regression/DOM tests passed, including no-field/no-JSON place selection, newest-scene loading, denied geolocation fallback and coordinate/area validation. Lint and build passed. In the fresh local production preview, real Thanjavur place lookup returned results, and the latest 3 October Sentinel-2 observation rendered with mean NDVI 0.388 and 2,652 valid pixels for the selected 500 m square. This is a public place preview, not an assessment of the user's farm. The old local preview origin had stale service-worker chunks; verification used a fresh origin.
+
+Deployment is now authorized by the user's explicit instruction to deploy. The first prototype deployment merged PR #1 and passed GitHub Actions; this location improvement is the next authorized update.

@@ -23,6 +23,7 @@ const navSections: NavSection[] = [
     title: 'Overview',
     items: [
       { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+      { path: '/satellite', label: 'Satellite Monitoring', icon: <Satellite size={20} /> },
       { path: '/analyzer', label: 'Scan Leaf', icon: <ScanLine size={20} /> },
       { path: '/chatbot', label: 'AI Chatbot', icon: <MessageCircle size={20} /> },
       { path: '/voice', label: 'Voice Assistant', icon: <Mic size={20} /> },
@@ -47,7 +48,6 @@ const navSections: NavSection[] = [
     title: 'Crop Health',
     items: [
       { path: '/health-alerts', label: 'Health & Alerts', icon: <AlertTriangle size={20} /> },
-      { path: '/satellite', label: 'Satellite Monitoring', icon: <Satellite size={20} /> },
       { path: '/history', label: 'Crop History', icon: <History size={20} /> },
       { path: '/weather', label: 'Weather', icon: <Cloud size={20} /> },
       { path: '/risk', label: 'Disease Risk', icon: <AlertTriangle size={20} /> },
